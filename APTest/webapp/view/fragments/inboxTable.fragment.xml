@@ -1,0 +1,104 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+	<Table items="{oInboxModel>/workBoxDtos}" class="inboxTableCls sapUiSizeCompact" sticky="ColumnHeaders" mode="MultiSelect">
+								<columns>
+									<Column width="11%" hAlign="Center">
+										<Label text="{i18n>inboxRequestID}" design="Bold" wrapping="true" class="inboxTable"/>
+									</Column>
+									<Column width="15%" hAlign="Center">
+										<Label text="Vendor" design="Bold" wrapping="true" class="inboxTable"/>
+									</Column>
+									<!--<Column width="9em" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">-->
+									<!--	<Label text="Vendor Name" design="Bold" wrapping="true" class="inboxTable"/>-->
+									<!--</Column>-->
+									<Column width="11%" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+										<Label text="Invoice No." design="Bold" wrapping="true" class="inboxTable"/>
+									</Column>
+									<Column width="11%" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+										<Label text="Invoice Date" design="Bold" class="inboxTable"/>
+									</Column>
+									<Column width="11%" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+										<Label text="Invoice Type" design="Bold" class="inboxTable"/>
+									</Column>
+									<Column width="11%" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">
+										<Label text="Value" design="Bold" wrapping="true" class="inboxTable"/>
+									</Column>
+									<!--<Column width="8em" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">-->
+									<!--	<Label text="Assigned To" design="Bold" wrapping="true" class="inboxTable"/>-->
+									<!--</Column>-->
+									<!--<Column width="7em" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">-->
+									<!--	<Label text="Created At" design="Bold" class="inboxTable"/>-->
+									<!--</Column>-->
+									<Column width="11%" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">
+										<Label text="Due Date" design="Bold" class="inboxTable"/>
+									</Column>
+									<Column width="15%" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">
+										<Label text="Process Status" design="Bold" wrapping="true" class="inboxTable"/>
+									</Column>
+									<Column></Column>
+								</columns>
+								<items>
+									<ColumnListItem>
+										<Link text="{oInboxModel>requestId}" press="onRowSelect"/>
+										<Text text="{oInboxModel>vendorId}-{oInboxModel>vendorName}"/>
+										<Text text="{oInboxModel>extInvNum}"/>
+										<Text text="{oInboxModel>invoiceDate}"/>
+										<Text text="{oInboxModel>invoiceType}"/>
+										<Text text="{oInboxModel>invoiceTotal}"/>
+										<!--<Text text="{oInboxModel>assignedTo}"/>-->
+										<!--{path : 'oInboxModel>createdAt', formatter: 'ui.incture.APTest.util.Formatter.getDate'}-->
+										<!--<Text text=""/>-->
+										<Text text="{oInboxModel>dueDate}"/>
+										<Text text="{oInboxModel>lifecycleStatus}"/>
+									</ColumnListItem>
+								</items>
+							</Table>
+	<!--<Table items="{oInboxModel>/workBoxDtos}" class="inboxTableCls sapUiSizeCompact vBoxCls" sticky="ColumnHeaders">-->
+	<!--	<columns>-->
+	<!--		<Column width="11em" hAlign="Center">-->
+	<!--			<Label text="RequestID" design="Bold" wrapping="true" class="inboxTable"/>-->
+	<!--		</Column>-->
+	<!--		<Column width="6em" hAlign="Center">-->
+	<!--			<Label text="Vendor Id" design="Bold" wrapping="true" class="inboxTable"/>-->
+	<!--		</Column>-->
+	<!--		<Column width="17em" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">-->
+	<!--			<Label text="Vendor Name" design="Bold" wrapping="true" class="inboxTable"/>-->
+	<!--		</Column>-->
+	<!--		<Column width="7em" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">-->
+	<!--			<Label text="Invoice No." design="Bold" wrapping="true" class="inboxTable"/>-->
+	<!--		</Column>-->
+	<!--		<Column width="8em" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">-->
+	<!--			<Label text="Invoice Date" design="Bold" class="inboxTable"/>-->
+	<!--		</Column>-->
+	<!--		<Column width="8em" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">-->
+	<!--			<Label text="Value" design="Bold" wrapping="true" class="inboxTable"/>-->
+	<!--		</Column>-->
+	<!--		<Column width="13em" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">-->
+	<!--			<Label text="Assigned To" design="Bold" wrapping="true" class="inboxTable"/>-->
+	<!--		</Column>-->
+	<!--		<Column width="7em" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">-->
+	<!--			<Label text="Created At" design="Bold" class="inboxTable"/>-->
+	<!--		</Column>-->
+	<!--		<Column width="7em" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">-->
+	<!--			<Label text="Due Date" design="Bold" class="inboxTable"/>-->
+	<!--		</Column>-->
+	<!--		<Column width="10em" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">-->
+	<!--			<Label text="Process Status" design="Bold" wrapping="true" class="inboxTable"/>-->
+	<!--		</Column>-->
+	<!--		<Column></Column>-->
+	<!--	</columns>-->
+	<!--	<items>-->
+	<!--		<ColumnListItem>-->
+	<!--			<Text text="{oInboxModel>requestId}"/>-->
+	<!--			<Text text="{oInboxModel>vendorId}"/>-->
+	<!--			<Text text="{oInboxModel>vendorName}"/>-->
+	<!--			<Text text="{oInboxModel>sapInvoiceNo}"/>-->
+	<!--			<Text text="{oInboxModel>dateEnded}"/>-->
+	<!--			<Text text="{oInboxModel>invoiceValue}"/>-->
+	<!--			<Text text="{oInboxModel>updatedBy}"/>-->
+	<!--			<Text text="{oInboxModel>postingDate}"/>-->
+	<!--			<Text text="{oInboxModel>postingDate}"/>-->
+	<!--			<Text text="{oInboxModel>status}"/>-->
+	<!--		</ColumnListItem>-->
+	<!--	</items>-->
+	<!--</Table>-->
+</core:FragmentDefinition>

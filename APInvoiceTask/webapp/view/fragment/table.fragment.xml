@@ -1,0 +1,89 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
+	controllerName="ui.incture.APInvoiceTask.controller.baseCoder" id="prefix1">
+	<Table id="idNonPo" class="invTabScroll" items="{ path: 'postDataModel>/listNonPoItem', templateShareable : true }">
+		<columns>
+			<Column width="10em" hAlign="Center" id="glaccountCol">
+				<Label text="{i18n>GLAccount}" design="Bold" required="true"/>
+			</Column>
+			<Column width="16em" hAlign="Center" id="descriptionCol">
+				<Label text="{i18n>Description}" design="Bold"/>
+			</Column>
+			<Column width="10em" hAlign="Center" id="debtCredCol">
+				<Label text="{i18n>DebtCred}" design="Bold"/>
+			</Column>
+			<Column width="9em" hAlign="Center" id="amountCol">
+				<Label text="{i18n>Amount}" design="Bold" required="true"/>
+			</Column>
+			<Column width="12em" hAlign="Center" id="costcenterCol">
+				<Label text="{i18n>CostCentre}" design="Bold" required="true"/>
+			</Column>
+			<Column width="9em" hAlign="Center" id="orderCol">
+				<Label text="{i18n>Order}" design="Bold"/>
+			</Column>
+			<Column width="9em" hAlign="Center" id="pfCol">
+				<Label text="{i18n>ProfitCentre}" design="Bold"/>
+			</Column>
+			<Column hAlign="Center" id="textCol">
+				<Label text="{i18n>Text}" design="Bold" required="true"/>
+			</Column>
+			<Column hAlign="Center" id="comcdCol">
+				<Label text="{i18n>CoCd}" design="Bold"/>
+			</Column>
+			<Column id="deleteBtnCol">
+				<Label text="{i18n>Action}" design="Bold"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Input class="tbCellBorder glaccount" value="{postDataModel>glAccount}" filterSuggests="false"
+						suggestionItems="{path:'glAccountModel>/d/results', templateShareable : true }" tooltip="{postDataModel>glCode}"
+						suggestionItemSelected="glDescription" showSuggestion="true" suggest="glAccountSuggest" change="getGLaccountValue"
+						valueState="{postDataModel>glError}">
+						<suggestionItems>
+							<core:ListItem text="{path:'glAccountModel>GLAccounts',formatter:'ui.incture.APInvoiceTask.util.formatter.removeZero'}"
+								additionalText="{glAccountModel>GLAccDesc}"/>
+						</suggestionItems>
+					</Input>
+					<Input class="tbCellBorderNone sapUiTinyMarginEnd" editable="false" value="{postDataModel>materialDescription}"
+						tooltip="{postDataModel>materialDescription}"/>
+					<Select selectedKey="{postDataModel>crDbIndicator}" change="amountCal" class="dropDownCss tableDropDownCss tbCellBorder"
+						tooltip="{postDataModel>materialDescription}">
+						<core:Item text="Debit" key="H"/>
+						<core:Item text="Credit" key="S"/>
+					</Select>
+					<Input class="tbCellBorder amountstate sapUiTinyMarginEnd" type="Number" value="{postDataModel>netValue}" change="amountCal"
+						valueState="{postDataModel>amountError}"/>
+					<Input class="tbCellBorder costcenterstate sapUiTinyMarginEnd" value="{postDataModel>costCenter}" tooltip="{postDataModel>costCenter}"
+						suggestionItems="{ path:'costCenterModel>/d/results', templateShareable : true}" filterSuggests="false" showSuggestion="true"
+						suggest="costCenterSuggest" liveChange="handlecostCentreInput" change="onChangeCostCenter" valueState="{postDataModel>costCenterError}">
+						<suggestionItems>
+							<core:ListItem text="{costCenterModel>CostCenters}" additionalText="{costCenterModel>CostCenterDesc}"/>
+						</suggestionItems>
+					</Input>
+					<Input class="tbCellBorderChange sapUiTinyMarginEnd" value="{postDataModel>internalOrderId}" tooltip="{postDataModel>internalOrderId}"
+						suggestionItems="{path:'internalOrderModel>/d/results', templateShareable : true}" filterSuggests="false" showSuggestion="true"
+						suggest="internalOrderSuggest">
+						<suggestionItems>
+							<core:ListItem text="{path:'internalOrderModel>IntOrdNumber', formatter:'ui.incture.APInvoiceTask.util.formatter.removeZero'}"
+								additionalText="{internalOrderModel>IntOrdDesc}"/>
+						</suggestionItems>
+					</Input>
+					<Input class="tbCellBorderChange sapUiTinyMarginEnd" value="{postDataModel>profitCentre}" tooltip="{postDataModel>profitCentre}"/>
+					<Input class="tbCellBorder sapUiTinyMarginEnd" width="100%" value="{postDataModel>itemText}" tooltip="{postDataModel>text}"
+						valueState="{postDataModel>itemTextError}" change="onChangeText"/>
+					<Input class="tbCellBorderChange sapUiTinyMarginEnd" width="100%" value="{postDataModel>companyCode}" tooltip="{postDataModel>companyCode}"
+						suggestionItems="{path:'companyCodeModel>/d/results', templateShareable : true}" filterSuggests="false" showSuggestion="true"
+						suggest="companyCodeSuggest">
+						<suggestionItems>
+							<core:ListItem text="{companyCodeModel>CompCodeDesc}"
+								additionalText="{path : 'companyCodeModel>CompCode' , formatter:'ui.incture.APInvoiceTask.util.formatter.removeZero'}"/>
+						</suggestionItems>
+					</Input>
+					<Button type="Emphasized" icon="sap-icon://sys-cancel" tooltip="Delete" press="deleteNonPoData"
+						class="tableBtnAlignMent tableSelectionChkBox dynamicCls sapUiTinyMarginEnd"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

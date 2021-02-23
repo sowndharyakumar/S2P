@@ -1,0 +1,323 @@
+<core:View controllerName="ui.incture.APInvoiceTask.controller.View1" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+	xmlns:grid="sap.ui.layout.cssgrid" xmlns:f="sap.f" xmlns:w="sap.ui.integration.widgets" xmlns:core="sap.ui.core"
+	xmlns:fm="sap.ui.layout.form" xmlns:viz="sap.viz.ui5.controls" xmlns:vizFeeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:vizData="sap.viz.ui5.data" xmlns:layout="sap.ui.layout">
+	<App id="app">
+		<pages>
+			<Page id="page" title="Accounts Payable Dashboard" showHeader="false">
+				<OverflowToolbar class="incturePrimaryClass">
+					<Title text="{i18n>AccountsPayableDashboard}" class="inctureTitleClass"></Title>
+					<ToolbarSpacer/>
+					<Image src="./Image/Cherrywork.png" width="10%"/>
+				</OverflowToolbar>
+				<fm:SimpleForm maxContainerCols="4" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="6" emptySpanL="0"
+					emptySpanM="0" columnsL="4" columnsM="2" class="removeSpace">
+					<fm:content>
+						<VBox height="6rem" class="sapUiTinyMarginTop cardCls">
+							<Link text="7" class="totalTxt errorTxt" textAlign="Center" press="onLink"></Link>
+							<Text text="OverDue Invoices" textAlign="Center"></Text>
+							<!--<VBox class="viewMoreCls readyInvView">-->
+							<!--	<Text text="View more" textAlign="Center"></Text>-->
+							<!--</VBox>-->
+						</VBox>
+						<VBox height="6rem" class="sapUiTinyMarginTop cardCls">
+							<Link text="20" class="totalTxt warningTxt" textAlign="Center" press="onLink"/>
+							<Text text="Invoices with Error" textAlign="Center"></Text>
+							<!--<VBox class="viewMoreCls completedView">-->
+							<!--	<Text text="View more" textAlign="Center"></Text>-->
+							<!--</VBox>-->
+						</VBox>
+						<VBox height="6rem" class="sapUiTinyMarginTop cardCls">
+							<Link text="24" class="totalTxt pendingTxt" textAlign="Center" press="onLink"/>
+							<Text text="Invoices Pending Today" textAlign="Center"></Text>
+							<!--<VBox class="viewMoreCls xyzView">-->
+							<!--	<Text text="View more" textAlign="Center"></Text>-->
+							<!--</VBox>-->
+						</VBox>
+						<VBox height="6rem" class="sapUiTinyMarginTop cardCls">
+							<Link text="{oDashboardModel>/poInvoice}" class="totalTxt" textAlign="Center" press="onLinkPressPo"/>
+							<Text text="PO Invoices" textAlign="Center"></Text>
+							<!--<VBox class="viewMoreCls exceptionView">-->
+							<!--	<Text text="View more" textAlign="Center"></Text>-->
+							<!--</VBox>-->
+						</VBox>
+						<VBox height="6rem" class="sapUiTinyMarginTop cardCls">
+							<Link text="{oDashboardModel>/nonpoInvoice}" class="totalTxt" textAlign="Center" press="onLinkPressNonpo"/>
+							<Text text="Non-PO Invoices" textAlign="Center"></Text>
+							<!--<VBox class="viewMoreCls queryView">-->
+							<!--	<Text text="View more" textAlign="Center"></Text>-->
+							<!--</VBox>-->
+						</VBox>
+						<VBox height="6rem" class="sapUiTinyMarginTop cardCls">
+							<Link text="52" class="totalTxt" textAlign="Center" press="onLink"/>
+							<Text text="Invoices awaiting Approval" textAlign="Center"></Text>
+							<!--<VBox class="viewMoreCls pobasedView">-->
+							<!--	<Text text="View more" textAlign="Center"></Text>-->
+							<!--</VBox>-->
+						</VBox>
+					</fm:content>
+				</fm:SimpleForm>
+				<!--<fm:SimpleForm maxContainerCols="4" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="6" emptySpanL="0"-->
+				<!--	emptySpanM="0" columnsL="4" columnsM="2" visible="false" id="linkId">-->
+				<!--	<fm:content>-->
+				<!--		<core:Fragment fragmentName="ui.incture.APInvoiceTask.view.fragments.inboxTable" type="XML"/>-->
+				<!--	</fm:content>-->
+				<!--</fm:SimpleForm>-->
+				<!--<fm:SimpleForm maxContainerCols="4" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="6" emptySpanL="0"-->
+				<!--	emptySpanM="0" columnsL="4" columnsM="2" class="">-->
+				<!--	<fm:content>-->
+				<grid:CSSGrid id="grid1">
+					<!--gridTemplateColumns="2fr 2fr 1fr" gridTemplateRows="auto" gridGap="0.5rem"-->
+					<grid:customLayout>
+						<grid:GridResponsiveLayout layoutChange="onLayoutChange">
+							<grid:layoutS>
+								<grid:GridSettings gridTemplateColumns="auto" gridTemplateRows="auto" gridGap="0.5rem"></grid:GridSettings>
+							</grid:layoutS>
+							<grid:layoutM>
+								<grid:GridSettings gridTemplateColumns="1fr 1fr 1fr" gridTemplateRows="auto" gridGap="0.5rem"></grid:GridSettings>
+							</grid:layoutM>
+							<grid:layoutL>
+								<grid:GridSettings gridTemplateColumns="2fr 2fr 1fr" gridTemplateRows="auto" gridGap="0.5rem"></grid:GridSettings>
+							</grid:layoutL>
+							<grid:layoutXL>
+								<grid:GridSettings gridTemplateColumns="2fr 2fr 1fr" gridTemplateRows="auto" gridGap="0.5rem"></grid:GridSettings>
+							</grid:layoutXL>
+						</grid:GridResponsiveLayout>
+					</grid:customLayout>
+					<VBox class="vBoxCls">
+						<!--<core:HTML content="&lt;div id=&quot;donutId&quot;&gt; &lt;/div&gt;" afterRendering="ondonut"/>-->
+						<viz:VizFrame height="313px" xmlns="sap.viz" id="oDonutChart" vizType="donut" width="auto" selectData="onClickDonutData"
+							vizProperties="{legendGroup: { layout: { position: 'right' } },interaction: {selectability: {mode: 'SINGLE'}},plotArea: { drawingEffect: 'glossy' },title:{ text:'Overall Exception wise count',style:{color:'#000000'}}}">
+							<!--,legendGroup: { layout: { position: 'bottom' } }-->
+							<viz:dataset>
+								<vizData:FlattenedDataset data="{sampleDatajson>/items}">
+									<vizData:dimensions>
+										<vizData:DimensionDefinition name="status" value="{sampleDatajson>status}"/>
+									</vizData:dimensions>
+									<vizData:measures>
+										<vizData:MeasureDefinition name="count" value="{sampleDatajson>count}"/>
+									</vizData:measures>
+								</vizData:FlattenedDataset>
+							</viz:dataset>
+							<viz:feeds>
+								<vizFeeds:FeedItem uid="size" type="Measure" values='count'/>
+								<vizFeeds:FeedItem uid="color" type="Dimension" values="status"/>
+							</viz:feeds>
+						</viz:VizFrame>
+					</VBox>
+					<VBox class="vBoxCls">
+						<viz:VizFrame height="313px" uiConfig="{applicationSet:'fiori'}" vizType='bar' width="auto" selectData="onClickBarData" id="barChart"
+							vizProperties="{interaction: {selectability: {mode: 'SINGLE'}},plotArea: { drawingEffect: 'glossy' ,dataLabel: { position: 'inside' ,visible: true} },title:{ text:'Invoices Pending by Vendor',style:{color:'#000000'}},legend : { visible: false }}">
+							<viz:dataset>
+								<vizData:FlattenedDataset data="{barDatajson>/items}">
+									<vizData:dimensions>
+										<vizData:DimensionDefinition name="Vendor" value="{barDatajson>task}"/>
+									</vizData:dimensions>
+									<vizData:measures>
+										<vizData:MeasureDefinition name="Count" value="{barDatajson>count}"/>
+										<vizData:MeasureDefinition name="Vendor" value="{barDatajson>task}"/>
+									</vizData:measures>
+								</vizData:FlattenedDataset>
+							</viz:dataset>
+							<viz:feeds>
+								<vizFeeds:FeedItem id='valueAxisFeed1' uid="valueAxis" type="Measure" values="Count"/>
+								<vizFeeds:FeedItem id='categoryAxisFeed1' uid="categoryAxis" type="Dimension" values="Vendor"/>
+							</viz:feeds>
+						</viz:VizFrame>
+					</VBox>
+					<VBox class="vBoxCls quickLinkCls sapUiTinyMarginEnd">
+						<Title text="Quick Link" class="linkBegin sapUiTinyMarginTop"/>
+						<Link text="Go to Inbox" class="linkCls sapUiTinyMarginBegin" press="onNavToInbox"></Link>
+						<Link text="Create E-Invoice" class="linkCls sapUiTinyMarginBegin" press="onNavToEinvoice"></Link>
+						<Link text="Create Payment Request" class="linkCls sapUiTinyMarginBegin" press="onNavToPaymentRequest"></Link>
+						<!--	<Link text="Sample Report1" enabled="false" class="linkCls"></Link>-->
+						<!--<Link text="Sample Report1" enabled="false" class="linkCls"></Link>-->
+					</VBox>
+				</grid:CSSGrid>
+				<!--	</fm:content>-->
+				<!--</fm:SimpleForm>-->
+				<!--<fm:SimpleForm maxContainerCols="4" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="6" emptySpanL="0"-->
+				<!--	emptySpanM="0" columnsL="4" columnsM="2" visible="false" id="graphId">-->
+				<!--	<fm:content>-->
+				<!--		<core:Fragment fragmentName="ui.incture.APInvoiceTask.view.fragments.inboxTable" type="XML"/>-->
+				<!--	</fm:content>-->
+				<!--</fm:SimpleForm>-->
+				<fm:SimpleForm maxContainerCols="4" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="6" emptySpanL="0"
+					emptySpanM="0" columnsL="4" columnsM="2" class="">
+					<fm:content>
+						<VBox class="vBoxCls">
+							<viz:VizFrame uiConfig="{applicationSet:'fiori'}" selectData="onClickAging" height='300px' width="100%" id="agingChart"
+								vizProperties="{interaction: {selectability: {mode: 'SINGLE'}},plotArea: { drawingEffect: 'glossy' ,colorPalette:['#007553','#00B380','#09B363','#0DFF8E','#18F24B','#A0F533'] ,dataLabel: { position: 'inside' ,visible: true} }, title: { text : 'Aging Report',style:{color:'#000000'}},valueAxis: { title: { visible: false} }}"
+								vizType='column'>
+								<viz:dataset>
+									<vizData:FlattenedDataset data="{reportModel>/listOfReponse}">
+										<vizData:dimensions>
+											<vizData:DimensionDefinition name="User" value="{reportModel>user}"/>
+										</vizData:dimensions>
+										<vizData:measures>
+											<vizData:MeasureDefinition name="overDue" value="{reportModel>overDue}"/>
+											<vizData:MeasureDefinition name="+7 days" value="{reportModel>+7 days}"/>
+											<vizData:MeasureDefinition name="+14 days" value="{reportModel>+14 days}"/>
+											<vizData:MeasureDefinition name="+21 days" value="{reportModel>+21 days}"/>
+											<vizData:MeasureDefinition name="+28 days" value="{reportModel>+28 days}"/>
+											<vizData:MeasureDefinition name=">28 days" value="{reportModel>>28 days}"/>
+											</vizData:measures>
+										</vizData:FlattenedDataset>
+									</viz:dataset>
+									<viz:feeds>
+										<vizFeeds:FeedItem id='week5' uid="valueAxis" type="Measure" values="overDue"/>
+										<vizFeeds:FeedItem id='week1' uid="valueAxis" type="Measure" values="+7 days"/>
+										<vizFeeds:FeedItem id='week2' uid="valueAxis" type="Measure" values="+14 days"/>
+										<vizFeeds:FeedItem id='week3' uid="valueAxis" type="Measure" values="+21 days"/>
+										<vizFeeds:FeedItem id='week4' uid="valueAxis" type="Measure" values="+28 days"/>
+										<vizFeeds:FeedItem id='week6' uid="valueAxis" type="Measure" values=">28 days"/>
+											<vizFeeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="User"/>
+										</viz:feeds>
+									</viz:VizFrame>
+								</VBox>
+								<!--<VBox class="vBoxCls">-->
+								<!--<viz:VizFrame height="313px" uiConfig="{applicationSet:'fiori'}" vizType='bar' width="auto"-->
+								<!--	vizProperties="{title:{ text:'Top 5 Exceptions'},legend : { visible: false }}">-->
+								<!--	<viz:dataset>-->
+								<!--		<vizData:FlattenedDataset data="{barDatajson>/milk}">-->
+								<!--			<vizData:dimensions>-->
+								<!--				<vizData:DimensionDefinition name="Type" value="{barDatajson>Type}"/>-->
+								<!--			</vizData:dimensions>-->
+								<!--			<vizData:measures>-->
+								<!--				<vizData:MeasureDefinition name="Revenue" value="{barDatajson>Revenue}"/>-->
+								<!--				<vizData:MeasureDefinition name="Type" value="{barDatajson>Type}"/>-->
+								<!--			</vizData:measures>-->
+								<!--		</vizData:FlattenedDataset>-->
+								<!--	</viz:dataset>-->
+								<!--	<viz:feeds>-->
+								<!--		<vizFeeds:FeedItem id='valueAxisFeed1' uid="valueAxis" type="Measure" values="Revenue"/>-->
+								<!--		<vizFeeds:FeedItem id='categoryAxisFeed1' uid="categoryAxis" type="Dimension" values="Type"/>-->
+								<!--	</viz:feeds>-->
+								<!--</viz:VizFrame height="313px">-->
+								<!--</VBox>-->
+								<!--<VBox class="vBoxCls">-->
+								<!--<viz:VizFrame uiConfig="{applicationSet:'fiori'}" vizType='bar' id="oBarFrame" width="auto"-->
+								<!--	vizProperties="{title:{ text:'Category wise top 5 pending queries'},legend : { visible: false }}">-->
+								<!--	<viz:dataset>-->
+								<!--		<vizData:FlattenedDataset data="{barDatjson>/milk}">-->
+								<!--			<vizData:dimensions>-->
+								<!--				<vizData:DimensionDefinition name="Type" value="{barDatjson>Type}"/>-->
+								<!--			</vizData:dimensions>-->
+								<!--			<vizData:measures>-->
+								<!--				<vizData:MeasureDefinition name="Revenue" value="{barDatjson>Revenue}"/>-->
+								<!--				<vizData:MeasureDefinition name="Type" value="{barDatjson>Type}"/>-->
+								<!--			</vizData:measures>-->
+								<!--		</vizData:FlattenedDataset>-->
+								<!--	</viz:dataset>-->
+								<!--	<viz:feeds>-->
+								<!--		<vizFeeds:FeedItem id='valueAxisFeed2' uid="valueAxis" type="Measure" values="Revenue"/>-->
+								<!--		<vizFeeds:FeedItem id='categoryAxisFeed3' uid="categoryAxis" type="Dimension" values="Type"/>-->
+								<!--	</viz:feeds>-->
+								<!--</viz:VizFrame>-->
+								<!--</VBox>-->
+								<!--	<VBox class="vBoxCls">-->
+								<!--<viz:VizFrame height="313px" id="idVizFrame" uiConfig="{applicationSet:'fiori'}" vizType='area' width="auto" vizProperties="{title:{ text:'Productivity',fontColor:'red'}}">-->
+								<!--		<viz:dataset>-->
+								<!--			<vizData:FlattenedDataset data="{areaDatajson>/milk}">-->
+								<!--				<vizData:dimensions>-->
+								<!--					<vizData:DimensionDefinition name="Week" value="{areaDatajson>Week}"/>-->
+								<!--				</vizData:dimensions>-->
+								<!--				<vizData:measures>-->
+								<!--					<vizData:MeasureDefinition name="Revenue" value="{areaDatajson>Revenue}"/>-->
+								<!--					<vizData:MeasureDefinition name="Cost" value="{areaDatajson>Type}"/>-->
+								<!--				</vizData:measures>-->
+								<!--			</vizData:FlattenedDataset>-->
+								<!--		</viz:dataset>-->
+								<!--		<viz:feeds>-->
+								<!--			<vizFeeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure" values="Revenue"/>-->
+								<!--			<vizFeeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="Week"/>-->
+								<!--		</viz:feeds>-->
+								<!--	</viz:VizFrame>-->
+								<!--</VBox>-->
+								<!--<VBox class="vBoxCls" alignItems="Center">-->
+								<!--	<FlexBox id="id_Gauge2"/>-->
+								<!--	<FlexBox id="id_Gauge3"/>-->
+								<!--</VBox>-->
+							</fm:content>
+						</fm:SimpleForm>
+						<!--<fm:SimpleForm maxContainerCols="4" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="6" emptySpanL="0"-->
+						<!--	emptySpanM="0" columnsL="4" columnsM="2" visible="false" id="agingId">-->
+						<!--	<fm:content>-->
+						<!--		<core:Fragment fragmentName="ui.incture.APInvoiceTask.view.fragments.inboxTable" type="XML"/>-->
+						<!--	</fm:content>-->
+						<!--</fm:SimpleForm>-->
+						<fm:SimpleForm maxContainerCols="4" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="6" emptySpanL="0"
+							emptySpanM="0" columnsL="4" columnsM="2" class="">
+							<fm:content>
+								<VBox class="vBoxCls">
+									<viz:VizFrame height="313px" uiConfig="{applicationSet:'fiori'}" vizType='column' width="auto" selectData="onClickColumn" id="columnChart"
+										vizProperties="{legend:{isScrollable:'true',label:{style:{fontSize:'10px'}}},valueAxis:{visible:'false'},categoryAxis: { label: { rotation: 'false', angle: '0', truncatedLabelRatio: '100' } },interaction: {selectability: {mode: 'SINGLE'}},plotArea: { drawingEffect: 'glossy' ,colorPalette:['#5bbe52','#315a35'] ,dataLabel: { position: 'inside' ,visible: true} },title:{text:'Total and Pending Invoices by Department',style:{color:'#000000',fontSize:'14px'}}}">
+										<viz:dataset>
+											<vizData:FlattenedDataset data="{totalInvjson>/items}">
+												<vizData:dimensions>
+													<vizData:DimensionDefinition name="type" value="{totalInvjson>type}"/>
+												</vizData:dimensions>
+												<vizData:measures>
+													<vizData:MeasureDefinition name="Total Invoices" value="{totalInvjson>TotalInvoices}"/>
+													<vizData:MeasureDefinition name="Pending Invoices" value="{totalInvjson>PendingInvoices}"/>
+												</vizData:measures>
+											</vizData:FlattenedDataset>
+										</viz:dataset>
+										<viz:feeds>
+											<vizFeeds:FeedItem id="count" uid="valueAxis" type="Measure" values="Total Invoices"/>
+											<vizFeeds:FeedItem id="counter" uid="valueAxis" type="Measure" values="Pending Invoices"/>
+											<vizFeeds:FeedItem uid="categoryAxis" type="Dimension" values="type"/>
+										</viz:feeds>
+									</viz:VizFrame>
+								</VBox>
+								<VBox class="vBoxCls">
+									<viz:VizFrame height="313px" xmlns="sap.viz" vizType="area" width="auto" selectData="onClickArea" id="areaChart"
+										vizProperties="{categoryAxis: { label: { rotation: 'false', angle: '0', truncatedLabelRatio: '100' } },interaction: {selectability: {mode: 'SINGLE'}},plotArea: { drawingEffect: 'glossy' } ,colorPalette:['#5bbe52'],title:{ text:'Invoices by invoice Due date',style:{color:'#000000'}},legendGroup: {layout: { position: 'bottom' } }}">
+										<viz:dataset>
+											<vizData:FlattenedDataset data="{areajson>/milk}">
+												<vizData:dimensions>
+													<vizData:DimensionDefinition name="month" value="{areajson>month}"/>
+												</vizData:dimensions>
+												<vizData:measures>
+													<vizData:MeasureDefinition name="count" value="{areajson>count}"/>
+												</vizData:measures>
+											</vizData:FlattenedDataset>
+										</viz:dataset>
+										<viz:feeds>
+											<vizFeeds:FeedItem uid="valueAxis" type="Measure" values="count"/>
+											<vizFeeds:FeedItem uid="categoryAxis" type="Dimension" values="month"/>
+										</viz:feeds>
+									</viz:VizFrame>
+								</VBox>
+								<VBox class="vBoxCls">
+									<viz:VizFrame height="313px" uiConfig="{applicationSet:'fiori'}" vizType='bar' id="oBarFrame" width="auto" selectData="onClickNBarData"
+										vizProperties="{interaction: {selectability: {mode: 'SINGLE'}},plotArea: { drawingEffect: 'glossy' ,dataLabel: { position: 'inside' ,visible: true} },title:{ text:'Category wise top 5 pending',style:{color:'#000000'}},legend : { visible: false }}">
+										<viz:dataset>
+											<vizData:FlattenedDataset data="{barDatjson>/milk}">
+												<vizData:dimensions>
+													<vizData:DimensionDefinition name="Type" value="{barDatjson>Type}"/>
+												</vizData:dimensions>
+												<vizData:measures>
+													<vizData:MeasureDefinition name="count" value="{barDatjson>count}"/>
+													<vizData:MeasureDefinition name="Type" value="{barDatjson>Type}"/>
+												</vizData:measures>
+											</vizData:FlattenedDataset>
+										</viz:dataset>
+										<viz:feeds>
+											<vizFeeds:FeedItem id='valueAxisFeed2' uid="valueAxis" type="Measure" values="count"/>
+											<vizFeeds:FeedItem id='categoryAxisFeed3' uid="categoryAxis" type="Dimension" values="Type"/>
+										</viz:feeds>
+									</viz:VizFrame>
+								</VBox>
+							</fm:content>
+						</fm:SimpleForm>
+						<!--<fm:SimpleForm maxContainerCols="4" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="6" emptySpanL="0"-->
+						<!--	emptySpanM="0" columnsL="4" columnsM="2" visible="false" id="chartId">-->
+						<!--	<fm:content>-->
+						<!--		<core:Fragment fragmentName="ui.incture.APInvoiceTask.view.fragments.inboxTable" type="XML"/>-->
+						<!--	</fm:content>-->
+						<!--</fm:SimpleForm>-->
+					</Page>
+				</pages>
+			</App>
+		</core:View>

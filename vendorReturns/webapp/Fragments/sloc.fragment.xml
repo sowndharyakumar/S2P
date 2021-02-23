@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:ui="sap.ui.table" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<SelectDialog title="Plant" liveChange="onLiveChangeDivision" confirm="handleAddSloc" cancel="handleCancelDivision"
+		items="{SLOCModel>/results}" class="sapUiSizeCompact">
+		<StandardListItem title="{SLOCModel>storageLocation}({SLOCModel>storageLocationDesc})" type="Active" tooltip="{SLOCModel>storageLocation}({SLOCModel>storageLocationDesc})"/>
+	</SelectDialog>
+</core:FragmentDefinition>

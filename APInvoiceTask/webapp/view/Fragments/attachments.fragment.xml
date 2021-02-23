@@ -1,0 +1,30 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified"
+	xmlns:f="sap.ui.layout.form">
+	<Dialog class="sapUiSizeCompact" showHeader="false">
+		<content>
+			<Toolbar class="inctureAttachmentFragTlbr">
+				<Label text="Attachments" design="Bold"/>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://decline" press="closeSaveFragmentShow"/>
+			</Toolbar>
+			<VBox width="100%">
+				<HBox>
+					<Label text="Upload File :" class="sapUiSmallMargin"/>
+					<u:FileUploader style="Transparent" maximumFileSize="5" fileType="{exchangeRequestModel>/attachFileType}" buttonText="Browse"
+						buttonOnly="true" typeMissmatch="handleTypeMisMatch" fileSizeExceed="attachFileSizeExceed" change="onBeforeUploadStarts"
+						tooltip="Upload your file to the Sharepoint server" mimeType="application/pdf" class="sapUiTinyMargin"/>
+				</HBox>
+				<List showSeparators="Inner" growing="true" growingThreshold="4" items="{exchangeRequestModel>/documents}">
+					<FeedListItem sender="{exchangeRequestModel>documentTitle}" iconDensityAware="false" senderActive="false"
+						text="{exchangeRequestModel>fileName}" icon="sap-icon://document"/>
+				</List>
+			</VBox>
+		</content>
+		<beginButton>
+			<Button text="OK" press="okExchangeRequest"></Button>
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" press="onCancelAttchments"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

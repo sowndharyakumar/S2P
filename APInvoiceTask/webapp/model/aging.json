@@ -1,0 +1,58 @@
+{
+	"listOfReponse": [{
+			"user": "Natalie",
+			"firstWeekCount": 34,
+			"secondWeekCount" :52,
+			"thirdWeekCount":10,
+			"fourthWeekCount":13
+	},
+	{
+			"user": "Carlos",
+			"firstWeekCount": 12,
+			"secondWeekCount" :34,
+			"thirdWeekCount":12,
+			"fourthWeekCount":11
+	},
+	{
+			"user": "Marlene",
+			"firstWeekCount": 45,
+			"secondWeekCount" :0,
+			"thirdWeekCount":34,
+			"fourthWeekCount":5
+	},
+	{
+			"user": "Jessica",
+			"firstWeekCount": 0,
+			"secondWeekCount" :45,
+			"thirdWeekCount":12,
+			"fourthWeekCount":4
+	},{
+			"user": "CRodriguez",
+			"firstWeekCount": 34,
+			"secondWeekCount" :52,
+			"thirdWeekCount":10,
+			"fourthWeekCount":13
+	},
+	{
+			"user": "KHussein",
+			"firstWeekCount": 12,
+			"secondWeekCount" :34,
+			"thirdWeekCount":12,
+			"fourthWeekCount":11
+	},
+	{
+			"user": "Jeremy",
+			"firstWeekCount": 45,
+			"secondWeekCount" :0,
+			"thirdWeekCount":34,
+			"fourthWeekCount":5
+	},
+	{
+			"user": "Chris",
+			"firstWeekCount": 0,
+			"secondWeekCount" :45,
+			"thirdWeekCount":12,
+			"fourthWeekCount":4
+	}
+	]
+}

@@ -1,0 +1,117 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout"
+	xmlns:fb="sap.ui.comp.filterbar">
+	<VBox>
+		<OverflowToolbar>
+			<Label text="{i18n>Search}" design="Bold"></Label>
+			<ToolbarSpacer/>
+		</OverflowToolbar>
+		<fb:FilterBar reset="onReset" search="onSearch" showFilterConfiguration="false" useToolbar="false" showGoOnFB="false">
+			<fb:filterItems>
+				<fb:FilterItem name="B" label="Invoice No.">
+					<fb:control>
+						<Input value="{invoiceItemModel>/invoiceNo}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="J" label="Company Code">
+					<fb:control>
+						<Text text="{invoiceItemModel>/companyCode}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="D" label="Vendor">
+					<fb:control>
+						<Text text="{invoiceItemModel>/vendorId}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="E" label="Invoice date From">
+					<fb:control>
+						<DatePicker value="{invoiceItemModel>/invoiceDateFrom}" valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd" placeholder="YYYY-MM-DD"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="F" label="Invoice date To" change="onBillDateSelectionTo">
+					<fb:control>
+						<DatePicker value="{invoiceItemModel>/invoiceDateTo}" valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd" placeholder="YYYY-MM-DD"/>
+					</fb:control>
+				</fb:FilterItem>
+			</fb:filterItems>
+		</fb:FilterBar>
+		<OverflowToolbar>
+			<ToolbarSpacer/>
+			<Button icon="sap-icon://close-command-field" press="onPressPreviousRange" tooltip="{i18n>PreviousRange}" enabled="{baseModel>/datePrev}"/>
+			<Button icon="sap-icon://open-command-field" class="sapUiTinyMarginBegin" press="onPressNextRange" tooltip="{i18n>NextRange}"
+				enabled="{baseModel>/dateNext}"/>
+			<Button icon="sap-icon://search" text="{i18n>Search}" type="Emphasized" press="onInvoiceSearchoData" tooltip="{i18n>Search}"
+				enabled="{baseModel>/display}"></Button>
+			<Button icon="sap-icon://refresh" text="{i18n>Clear}" press="onResetSearchInvoice" tooltip="{i18n>Clear}" enabled="{baseModel>/display}"></Button>
+			<ToolbarSpacer visible="false"/>
+		</OverflowToolbar>
+		<VBox visible="{baseModel>/invoiceTableVisiblity}">
+			<OverflowToolbar>
+				<Label text="{invoiceSearchModel>/invoiceItemsLength}"/>
+				<ToolbarSpacer/>
+				<!--<SearchField width="30%" search="liveSearchInvoice" liveChange="liveSearchInvoice"></SearchField>-->
+				<Button icon="sap-icon://action-settings" press="personalizationInvDetails" tooltip="{i18n>InvoicePersonalization}"
+					enabled="{baseModel>/InvSetting}"></Button>
+				<Button text="{i18n>Next}" press="onPressReturnNext" type="Emphasized" enabled="{baseModel>/InvNext}"></Button>
+			</OverflowToolbar>
+			<!--<Table popinLayout="GridSmall" showNoData="false"></Table>-->
+			<ScrollContainer class="crtMinListHeight crtScrollBar" horizontal="true" vertical="true"
+				visible="{dashBoardModel>/graphCommentListVisiblity}" height="{baseModel>/invoiceTableLength}">
+				<Table items="{invoiceItemModel>/array}" mode="MultiSelect" alternateRowColors="true" selectionChange="onSelectItemsFromInvoice"
+					growing="true" growingThreshold="10" id="poTableId">
+					<columns>
+						<Column minScreenWidth="Small" demandPopin="true" hAlign="Center">
+							<Label text="{i18n>Material}" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">
+							<Label text="Material Description" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">
+							<Label text="Invoice Number" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">
+							<Label text="Item Number" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">
+							<Label text="Invoice Qty" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">
+							<Label text="Invoice Uom" wrapping="false" design="Bold"/>
+						</Column>
+						<!--<Column minScreenWidth="Small" demandPopin="true" width="8rem" hAlign="Center">-->
+						<!--	<Label text="Base Uom" wrapping="false" design="Bold"/>-->
+						<!--</Column>-->
+						<!--<Column minScreenWidth="Small" demandPopin="true" width="9rem" hAlign="Right">-->
+						<!--	<Label text="Purchase Uom" wrapping="false" design="Bold" required="true"/>-->
+						<!--</Column>-->
+						<!--<Column minScreenWidth="Small" demandPopin="true" width="9rem" hAlign="Right">-->
+						<!--	<Label text="Po Number" wrapping="false" design="Bold"/>-->
+						<!--</Column>-->
+						<!--<Column minScreenWidth="Small" demandPopin="true" hAlign="Center" width="7rem">-->
+						<!--	<Label text="Po Item" wrapping="false" design="Bold"/>-->
+						<!--</Column>-->
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">
+							<Label text="Unit Price" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">
+							<Label text="Net Price" wrapping="false" design="Bold"/>
+						</Column>
+					</columns>
+					<ColumnListItem>
+						<Text text="{path:'invoiceItemModel>Material',formatter:'com.incture.vendorReturns.util.Formatter.removeZero'}"/>
+						<Text text="{invoiceItemModel>MaterialDescription}"/>
+						<Text text="{invoiceItemModel>InvoiceNumber}"/>
+						<Text text="{invoiceItemModel>InvoiceItemNumber}"/>
+						<Text text="{invoiceItemModel>InvoiceQty}"/>
+						<Text text="{invoiceItemModel>InvoiceUom}"/>
+						<!--<Input value="{invoiceItemModel>BaseUom}"/>-->
+						<!--<Input value="{invoiceItemModel>PurchaseUom}"/>-->
+						<!--<Text text="{invoiceItemModel>PoNumber}"/>-->
+						<!--<Text text="{invoiceItemModel>PoItem}"/>-->
+						<Text text="{invoiceItemModel>UnitPrice}"/>
+						<Text text="{invoiceItemModel>NetPrice}"/>
+					</ColumnListItem>
+				</Table>
+			</ScrollContainer>
+		</VBox>
+	</VBox>
+</core:FragmentDefinition>

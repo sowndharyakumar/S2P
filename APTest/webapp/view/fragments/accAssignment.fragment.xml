@@ -1,0 +1,48 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:l="sap.ui.layout">
+	<Dialog showHeader="false" contentWidth="70%" class="dialogClass">
+		<beginButton>
+			<Button text="{i18n>OK}" press="okAccAss"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>Cancel}" press="closeAccAss"/>
+		</endButton>
+		<Table items="{oInvoiceModel>/accAssignLineItem}">
+			<headerToolbar>
+				<OverflowToolbar>
+					<Title text="{i18n>glCoding}"></Title>
+					<ToolbarSpacer></ToolbarSpacer>
+					<Button icon="sap-icon://add" tooltip="{i18n>addGlAccount}" press="onAddGlAccount"></Button>
+				</OverflowToolbar>
+			</headerToolbar>
+			<columns>
+				<Column><Label text="{i18n>glAcc}" required="true"/></Column>
+				<Column><Label text="{i18n>accDesc}"/></Column>
+				<Column><Label text="{i18n>dcIndicator}"/></Column>
+				<Column><Label text="{i18n>costCenter}" required="true"/></Column>
+				<Column><Label text="{i18n>internalOrd}"/></Column>
+				<Column><Label text="{i18n>profitCenter}"/></Column>
+				<Column><Label text="{i18n>wbsElement}"/></Column>
+				<Column><Label text="{i18n>asset}"/></Column>
+				<Column><Label text="{i18n>amount}" required="true"/></Column>
+			</columns>
+			<items>
+				<ColumnListItem vAlign="Middle">
+					<cells>
+						<Input value="{oInvoiceModel>sGlAccount}" change="onChangesglAccount" valueState="{oInvoiceModel>sGlAccountError}"></Input>
+						<Text text="{oInvoiceModel>sGlDesc}"></Text>
+						<Select selectedKey="{oInvoiceModel>sDcIndicator}">
+							<core:Item key="D" text="{i18n>debit}"></core:Item>
+							<core:Item key="C" text="{i18n>credit}"></core:Item>
+						</Select>
+						<Input value="{oInvoiceModel>sCostCenter}" change="onChangescostCenter" valueState="{oInvoiceModel>scostCenterError}"></Input>
+						<Input value="{oInvoiceModel>sInternalOrd}"></Input>
+						<Input value="{oInvoiceModel>sProfitCenter}"></Input>
+						<Input value="{oInvoiceModel>sWbsElement}"></Input>
+						<Input value="{oInvoiceModel>sAsset}"></Input>
+						<Input value="{oInvoiceModel>sAmount}" change="onChangeAmount" valueState="{oInvoiceModel>amountError}"></Input>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</Dialog>
+</core:FragmentDefinition>

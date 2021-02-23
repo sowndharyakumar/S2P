@@ -1,0 +1,148 @@
+<mvc:View controllerName="ui.incture.APInvoiceTask.controller.paymentRequest" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+	xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core">
+	<Page id="page">
+		<customHeader>
+			<OverflowToolbar class="incturePrimaryClass">
+				<content>
+					<Button icon="sap-icon://nav-back" class="inctureIconClass" press="navBackPaymentReq"/>
+					<Title text="Payment Request" class="inctureTitleClass inctureMarginLeftTitleClass"></Title>
+					<ToolbarSpacer></ToolbarSpacer>
+				</content>
+			</OverflowToolbar>
+		</customHeader>
+		<content>
+			<layout:Grid id="grid" vSpacing="0" hSpacing="4" defaultSpan="L4 M6 S12" class="sapUiSizeCompact" width="100%">
+				<layout:content>
+					<VBox>
+						<Label text="Request 367" class="inctureText"/>
+						<Label text="Request Name : Trip to Bangalore"/>
+						<HBox>
+							<Label text="Purpose :"/>
+							<Text text="Customer Visit" class="sapUiTinyMarginBegin"/>
+						</HBox>
+					</VBox>
+					<VBox></VBox>
+					<VBox width="100%">
+						<Toolbar width="100%" class="inctureToolbar">
+							<Button text="Attachments" class="inctureTbrBtn"/>
+							<Button text="Print/Email" class="inctureTbrBtn"/>
+							<Button text="Delete Request" class="inctureTbrBtn"/>
+							<Button text="Submit Request" class="inctureTbrBtn"/>
+						</Toolbar>
+						<HBox justifyContent="End">
+							<Label text="Status : "/>
+							<Text text="Not Submitted" class="sapUiTinyMarginBegin"/>
+						</HBox>
+						<HBox justifyContent="End">
+							<Label text="Amount : "/>
+							<Text text="INR 20000.00" class="sapUiTinyMarginBegin"/>
+						</HBox>
+					</VBox>
+				</layout:content>
+			</layout:Grid>
+			<Toolbar class="inctureSegmentContainToolbar">
+				<SegmentedButton class="sapUiSizeCompact inctureSegBtn">
+					<items>
+						<SegmentedButtonItem text="Request" key="Request" class="segbtn1"/>
+						<SegmentedButtonItem text="Segments" key="Segments" class="segItembtn"/>
+						<SegmentedButtonItem text="Expenses" key="Expenses" class="segItembtn"/>
+						<SegmentedButtonItem text="Approval Flow" key="Approval Flow" class="segItembtn"/>
+						<SegmentedButtonItem text="Audit Trail" key="Audit Trail" class="segItembtn"/>
+					</items>
+				</SegmentedButton>
+			</Toolbar>
+			<layout:Splitter width="100%">
+				<VBox>
+					<Toolbar class="inctureToolbar sapUiSizeCompact">
+						<Button icon="sap-icon://add" text="{i18n>NewExpenses}" tooltip="{i18n>AddNew}" class="inctureBtnTxt sapUiSizeCompact" press="onAddRow"/>
+						<Button text="Delete" class="sapUiSizeCompact inctureDeleteBtn" press="onDeleteRow"/>
+					</Toolbar>
+					<Table class="inctureTableExp" id="inctureTableExpenses" mode="MultiSelect" items="{mTableModel>/listOfItems}">
+						<columns>
+							<Column hAlign="Center">
+								<Label text="{i18n>Date}" design="Bold"/>
+							</Column>
+							<Column hAlign="Center">
+								<Label text="{i18n>Expense}" design="Bold"/>
+							</Column>
+							<Column hAlign="Center">
+								<Label text="{i18n>Amount}" design="Bold"/>
+							</Column>
+							<Column hAlign="Center">
+								<Label text="{i18n>Requested}" design="Bold"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<DatePicker class="tbCellBorderNone" placeholder="MM/DD/YYYY" value="{mTableModel>/date}" valueFormat="yyyy-MM-dd"
+										displayFormat="MM/dd/YYYY"/>
+									<Input class="tbCellBorderNone sapUiTinyMarginEnd" value="{mTableModel>expenses}"/>
+									<Input class="tbCellBorderNone sapUiTinyMarginEnd" type="Number" value="{mTableModel>amount}"/>
+									<Input class="tbCellBorderNone sapUiTinyMarginEnd" value="{mTableModel>currency}" tooltip="{mTableModel>reuested}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+					<OverflowToolbar class="inctureOverflowTool">
+						<ToolbarSpacer/>
+						<VBox>
+							<Label text="TOTAL AMOUNT"/>
+							<Text text="INR 20,900.00"/>
+							<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+						</VBox>
+						<VBox>
+							<Label text="TOTAL REQUESTED"/>
+							<Text text="INR 20,900.00"/>
+							<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+						</VBox>
+					</OverflowToolbar>
+					<layoutData>
+						<layout:SplitterLayoutData size="40%" resizable="false" class="sapUiLargeMarginBegin"/>
+					</layoutData>
+				</VBox>
+				<VBox>
+					<HBox class="sapUiSmallMarginTop">
+						<Label text="Expense" class="sapUiMediumMarginBegin "/>
+						<Input width="13rem" class="inctureInputcls sapUiSmallMarginBegin"/>
+					</HBox>
+					<VBox>
+						<Label text="To create a new expense click the appropriate expense type below or the type expense type in the field above"
+							class="sapUiLargeMarginBegin"/>
+						<Label text="To edit an existing expense.Click the expense on the left side of the page." class="sapUiLargeMarginBegin"/>
+						<layout:Grid vSpacing="0" hSpacing="2" defaultSpan="L3" class="expGrid sapUiLargeMarginTop" width="100%">
+							<layout:content>
+								<VBox width="100%">
+									<Label text="Communication" design="Bold" class="sapUiTinyMarginTop"/>
+									<Text text="Entertainment" class="sapUiTinyMarginTop"/>
+									<Label text="HR" class="sapUiTinyMarginTop"/>
+									<Text text="Professional Membership" class="sapUiTinyMarginTop"/>
+								</VBox>
+								<VBox width="100%">
+									<Label text="Meals - Travel" class="sapUiTinyMarginTop"/>
+									<Label text="Daily Travel Allowance" design="Bold" class="sapUiTinyMarginTop"/>
+									<Label text="Other" class="sapUiTinyMarginTop"/>
+									<Label text="Booking Fees" class="sapUiTinyMarginTop"/>
+									<Label text="Cash Advance- Prepaid Card" class="sapUiTinyMarginTop"/>
+									<Label text="Laundry" class="sapUiTinyMarginTop"/>
+								</VBox>
+								<VBox width="100%">
+									<Label text="Travel Expenses" class="sapUiTinyMarginTop"/>
+									<Label text="Accomodation" design="Bold" class="sapUiTinyMarginTop"/>
+									<Label text="Airfare" design="Bold" class="sapUiTinyMarginTop"/>
+									<Label text="Car Hire" design="Bold" class="sapUiTinyMarginTop"/>
+									<Label text="Meals" design="Bold" class="sapUiTinyMarginTop"/>
+									<Label text="Train" design="Bold" class="sapUiTinyMarginTop"/>
+									<Label text="Visa Pass" design="Bold" class="sapUiTinyMarginTop"/>
+								</VBox>
+							</layout:content>
+						</layout:Grid>
+						<layoutData>
+							<layout:SplitterLayoutData size="auto"/>
+						</layoutData>
+					</VBox>
+				</VBox>
+			</layout:Splitter>
+		</content>
+	</Page>
+</mvc:View>

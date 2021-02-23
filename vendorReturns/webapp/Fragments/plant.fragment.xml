@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:ui="sap.ui.table" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<SelectDialog title="Plant" liveChange="onLiveChangeDivision" confirm="handleAddplant" cancel="handleCancelDivision"
+		items="{plantModel>/results}" class="sapUiSizeCompact">
+		<StandardListItem title="{plantModel>plant}({plantModel>name})" type="Active" tooltip="{plantModel>plant}({plantModel>name})"/>
+	</SelectDialog>
+</core:FragmentDefinition>

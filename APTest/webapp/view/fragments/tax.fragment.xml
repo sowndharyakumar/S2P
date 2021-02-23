@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml">
+	 <Dialog draggable="true" class="taxDialogWidth"
+	 	type= 'Message'
+		title="{i18n>TaxData}" >
+		<beginButton>
+			<Button text="{i18n>OK}" press="taxDialogBtnPress" />
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>Cancel}" press="taxDialogBtnPress" />
+		</endButton>
+		<content>
+			<Table
+				items="{taxModel>/taxItem}"
+				class="ssdTable invTabScroll sapUiSizeCompact">
+				<columns>
+					<Column width="3em" hAlign="Center">
+						<Label text="D/C" design="Bold" />
+					</Column>
+					<Column width="7em" hAlign="Center">
+						<Label text="{i18n>TaxDoc.Currency}" design="Bold" />
+					</Column>
+					<Column width="5em" hAlign="Center">
+						<Label text="{i18n>TaxCode}" design="Bold" />
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<InputBase width="100%" enabled="false" value="Debit" textAlign="Center"/>
+							<InputBase width="100%" enabled="false" value="EUR" textAlign="Center"/>
+							<InputBase enabled="false" width="100%" value="{taxModel>taxCode}"  textAlign="Center"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<VBox class="sapUiTinyMarginTop">
+		<HBox>
+			<Label text="{i18n>InvoiceTaxAmount:}" class="taxCls"/>
+			<Text text="{taxModel>/netTaxValue}" class="taxClass sapUiTinyMarginBegin" />
+		</HBox>
+		</VBox>
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

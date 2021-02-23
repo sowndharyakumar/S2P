@@ -1,0 +1,47 @@
+/* Enter your custom styles here */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+:root {
+    --primary-color: 0, 84, 167;
+    --Primary-color-hs: 210, 100%;
+    --Primary-color-l: 65%;
+    --error-color: #F05B5B;
+    --Error-color-hs: 0, 83%;
+    --Error-color-l: 65%;
+    --warning-color: #E09D00;
+    --Warning-color-hs: 42, 100%;
+    --Warning-color-l: 44%;
+    --info-color: #0092D1;
+    --Info-color-hs: 198, 100%;
+    --Info-color-l: 41%;
+    --default-color: #647987;
+    --success-color: #00A834;
+    --inputFill-color: white;
+    --gray-0: white;
+    --gray-1: #FAFAF9;
+    --gray-2: #F3F2F2;
+    --gray-3: #ECEBEA;
+    --gray-4: #DDDBDA;
+    --gray-5: #868686;
+    --gray-6: #676767;
+    --gray-7: #555555;
+    --gray-8: #2E2E2E;
+    --gray-9: #1C1C1C;
+    --font-family: 'Roboto', sans-serif;
+    --ui-color-1: #880000;
+    --ui-color-2: #bb0000;
+    --ui-color-3: #E78C07;
+    --ui-color-4: #2B7C2B;
+    --ui-color-5: #427CAC;
+    --ui-color-6: #925ace;
+    --ui-color-7: #ab21Be;
+    --ui-color-8: #1a9898;
+}
+.sapMListTblHeader>.sapMTableTH {
+    background: #eff7ff;
+}
+.attachmentListClass.sapMSLI {
+    height: 2rem !important;
+}
+.attachmentCls.sapMTB {
+    height: 3rem;
+}

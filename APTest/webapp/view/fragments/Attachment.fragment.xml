@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified"
+	xmlns:f="sap.ui.layout.form">
+	<Dialog class="sapUiSizeCompact" title="{i18n>Attachments}">
+		<HBox width="100%" justifyContent="SpaceAround">
+			<u:FileUploader style="Emphasized" maximumFileSize="5" fileType="{oPoSuggestionModel>/attachFileType}" icon="sap-icon://add"
+				buttonText="Add" buttonOnly="true" typeMissmatch="handleTypeMisMatch" fileSizeExceed="attachFileSizeExceed"
+				change="onBeforeUploadStarts" tooltip="Upload your file" visible="{oInvoiceModel>/posted}"/>
+			<SearchField placeholder="Search" liveChange="onSearcAttach" class="sapUiSmallMarginEnd sapUiSizeCompact dynamicCls"></SearchField>
+		</HBox>
+		<VBox width="100%" items="{attachmentModel>/docManagerDto}" id="attachListItems">
+			<!--<List showSeparators="Inner" growing="true" growingThreshold="4" items="{attachmentModel>/docManagerDto}">-->
+			<Toolbar class="atachmentCls sapUiTinyMarginBottom" width="100%">
+				<FeedListItem sender="{attachmentModel>fileName}" iconDensityAware="false" activeIcon="{attachmentModel>folderName}"
+					senderPress="fnUploadDoc" detailPress="fnUploadDoc">
+					<!--<FeedListItemAction icon="sap-icon://delete" press="fnDeleteAttachment"/>-->
+				</FeedListItem>
+				<ToolbarSpacer></ToolbarSpacer>
+				<Button icon="sap-icon://delete" press="fnDeleteAttachment" visible="{oInvoiceModel>/posted}" width="10%"/>
+			</Toolbar>
+			<!--text="{attachmentModel>fileName}"-->
+			<!--</List>-->
+		</VBox>
+		<endButton>
+			<Button text="{i18n>Close}" press="onCloseAttchments"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

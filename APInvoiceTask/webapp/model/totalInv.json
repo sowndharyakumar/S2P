@@ -1,0 +1,30 @@
+{
+	"items": [{
+			"type": "Operations",
+			"TotalInvoices": "31",
+			"PendingInvoices":"10"
+		}, {
+			"type": "Marketing",
+			"TotalInvoices": "90",
+			"PendingInvoices":"20"
+		}, {
+			"type": "Finance",
+			"TotalInvoices": "23",
+			"PendingInvoices":"34"
+		}, {
+			"type": "Partner Mangement",
+			"TotalInvoices": "90",
+			"PendingInvoices":"46"
+		}, {
+			"type": "Talent Management",
+			"TotalInvoices": "53",
+			"PendingInvoices":"78"
+		},
+		 {
+			"type": "CEO's Office",
+			"TotalInvoices": "43",
+			"PendingInvoices":"62"
+		}
+
+	]
+}

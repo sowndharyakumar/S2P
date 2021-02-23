@@ -1,0 +1,34 @@
+{
+	"welcomeFile": "/index.html",
+	"authenticationMethod": "route",
+	"logout": {
+		"logoutEndpoint": "/do/logout"
+	},
+	"routes": [{
+		"source": "^/InctureApDest",
+		"target": "/",
+		"destination": "InctureApDest"
+	}, {
+		"source": "^/Incture_DEC",
+		"target": "/",
+		"destination": "Incture_DEC"
+	}, {
+		"source": "^/VendorReturns",
+		"target": "/",
+		"destination": "VendorReturns",
+		"csrfProtection": false
+	}, {
+		"source": "^/DEC_NEW",
+		"target": "/",
+		"destination": "DEC_NEW"
+	},{
+		"source": "^/SPUserDetails",
+		"target": "/",
+		"destination": "SPUserDetails"
+	}, {
+		"source": "^(.*)$",
+		"target": "$1",
+		"service": "html5-apps-repo-rt",
+		"authenticationType": "xsuaa"
+	}]
+}

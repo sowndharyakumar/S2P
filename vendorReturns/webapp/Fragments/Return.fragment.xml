@@ -1,0 +1,117 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:ui="sap.ui.table" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:u="sap.ui.unified">
+	<VBox>
+		<IconTabBar expandable="false" id="ID_TAB_BAR_PROV_APP" expanded="true" select="onTabSelection" showOverflowSelectList="true">
+			<items>
+				<IconTabFilter key="Return" text="{i18n>Return}">
+					<VBox>
+						<Text text="{i18n>attachInfo}" class="iopFontClass ipowbAttachmentTextClass sapUiTinyMarginBottom"/>
+						<u:FileUploader id="idTMFileUploader" tooltip="{i18n>Uploadyourfile}" change="onFileUploadChange" fileAllowed="fileAllowed"
+							icon="sap-icon://open-folder" multiple="true" buttonText="{i18n>SelectaFile}" sameFilenameAllowed="false" buttonOnly="true"
+							value="{baseModel>/attachmentValue}"/>
+						<VBox items="{returnModel>/attachmentObject}">
+							<OverflowToolbar class="sapUiSmallMargin attachmentCls" width="100%">
+								<FeedListItem sender="{returnModel>fileName}" iconDensityAware="false" senderPress="fnUploadDoc"></FeedListItem>
+								<ToolbarSpacer></ToolbarSpacer>
+								<Button icon="sap-icon://delete" press="onRemoveAttachmennt" width="5%"/>
+							</OverflowToolbar>
+						</VBox>
+					</VBox>
+					<VBox>
+						<OverflowToolbar>
+							<Label text="Remarks"/>
+						</OverflowToolbar>
+						<FeedInput post="onPostComment" showIcon="false" maxLength="199" value="{returnModel>/inputComment}"
+							visible="{baseModel>/postCommentVisible}"/>
+						<List items="{returnModel>/returnsCommentsList}" showSeparators="Inner" growing="true" growingThreshold="4">
+							<FeedListItem sender="{returnModel>createdBy}" iconDensityAware="false"
+								timestamp="{path:'returnModel>createdAt', formatter:'com.incture.vendorReturns.util.Formatter.commentDate'}" text="{returnModel>comment}"></FeedListItem>
+						</List>
+					</VBox>
+					<OverflowToolbar>
+						<Label text="{returnModel>/returnLength}"/>
+						<Label text="{i18n>Amount}"/>
+						<Text text="{returnModel>/returnAmountTotal}"/>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://less" press="returnDeleteRow" tooltip="{i18n>Delete}"></Button>
+						<Button icon="sap-icon://undo" press="returnUndoDelete" tooltip="{i18n>Undo}"></Button>
+						<Button icon="sap-icon://action-settings" press="personalizationInvDetails" tooltip="{i18n>ReturnPersonalization}"
+							enabled="{baseModel>/RetSetting}"></Button>
+					</OverflowToolbar>
+					<ScrollContainer class="crtMinListHeight crtScrollBar" horizontal="true" vertical="true" height="{baseModel>/returnTableLength}">
+						<Table items="{returnModel>/aReturn}" alternateRowColors="true" class="sapUiSizeCompact" popinLayout="GridSmall" growing="true"
+							growingScrollToLoad="true" sticky="ColumnHeaders" id="ReturnTableId" mode="MultiSelect">
+							<columns>
+								<Column minScreenWidth="Small" demandPopin="true" width="5rem" hAlign="Center">
+									<Label text="{i18n>Material}" wrapping="false" design="Bold"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="false" width="6rem" hAlign="Center">
+									<Label text="GR Number" wrapping="false" design="Bold"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="false" width="6rem" hAlign="Center">
+									<Label text="GR Item" wrapping="false" design="Bold"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="false" width="5rem" hAlign="Center">
+									<Label text="Plant" wrapping="false" design="Bold"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="true" hAlign="Center" width="8rem">
+									<Label text="Storage location" wrapping="false" design="Bold"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">
+									<Label text="Batch" wrapping="false" design="Bold"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" width="10rem">
+									<Label text="Reason" wrapping="false" design="Bold" required="true"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" width="6rem">
+									<Label text="GR Qty" wrapping="false" design="Bold"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="true" width="8rem" hAlign="Center">
+									<Label text="Avl Qty(UOM)" wrapping="false" design="Bold"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="true" width="9rem" hAlign="Center">
+									<Label text="Act Return Qty" wrapping="false" design="Bold" required="true"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="true" width="9rem" hAlign="Center">
+									<Label text="Act Return UOM" wrapping="false" design="Bold"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="true" width="7rem" hAlign="Center">
+									<Label text="PO Number" wrapping="false" design="Bold"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="true" width="6rem" hAlign="Center">
+									<Label text="PO Item" wrapping="false" design="Bold"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="true" width="7rem" hAlign="Center">
+									<Label text="Unit Price" wrapping="false" design="Bold"/>
+								</Column>
+								<Column minScreenWidth="Small" demandPopin="false" width="7rem" hAlign="Center">
+									<Label text="Net price" wrapping="false" design="Bold"/>
+								</Column>
+							</columns>
+							<ColumnListItem type="Navigation" press="onPressInvoiceDetail">
+								<Text text="{path:'returnModel>Material',formatter:'com.incture.vendorReturns.util.Formatter.removeZero'}"/>
+								<Text text="{returnModel>GrNumber}"/>
+								<Text text="{returnModel>GrItem}"/>
+								<Text text="{returnModel>Plant}"/>
+								<Text text="{returnModel>StorageLocation}"/>
+								<Text text=""/>
+								<ComboBox items="{mReasonModel>/aReasons}" selectedKey="{returnModel>aSelectedReason}" change="onChangeReason" width="9rem"
+									enabled="{baseModel>/display}">
+									<core:Item key="{mReasonModel>reasonforId}" text="{mReasonModel>reasonText}"/>
+								</ComboBox>
+								<Text text="{returnModel>GrQty}"/>
+								<Text text="{returnModel>AvlQty} {returnModel>AvlUom}"/>
+								<Input value="{returnModel>ActQty}" change="onChangeActualqty" valueState="{returnModel>ActQtyvalueState}"/>
+								<Input value="{returnModel>ActUom}" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="valueHelpReturnActUom"/>
+								<Text text="{returnModel>PoNumber}"/>
+								<Text text="{returnModel>PoItem}"/>
+								<Text text="{returnModel>UnitPrice}"/>
+								<Text text="{returnModel>NetPrice}"/>
+							</ColumnListItem>
+						</Table>
+					</ScrollContainer>
+				</IconTabFilter>
+			</items>
+		</IconTabBar>
+	</VBox>
+</core:FragmentDefinition>

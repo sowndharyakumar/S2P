@@ -1,0 +1,58 @@
+<mvc:View controllerName="ui.incture.APTest.controller.SplitLayout" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified"
+	class="sapUiSizeCompact">
+	<App>
+		<pages>
+			<Page class="invoicePage" id="invoiceId" busyIndicatorDelay="0">
+				<customHeader>
+					<OverflowToolbar class="incturePrimaryClass">
+						<content>
+							<Button icon="sap-icon://nav-back" tooltip="{i18n>navBack}" class="inctureIconClass" press="onNavToInbox"></Button>
+							<Title text="{oInvoiceModel>/oInvoiceHeaderDetails/requestId}" class="inctureTitleClass inctureMarginLeftTitleClass"></Title>
+							<ToolbarSpacer></ToolbarSpacer>
+							<!--	<Label text="{i18n>companyCode}" design="Bold" class="inctureToolbarLabelClass"></Label>
+							<Input width="4%" class="inctureToolbarInputClass" value="{oInvoiceModel>/oInvoice/sCountryCode}" textAlign="Right"></Input>-->
+							<Label text="{i18n>invoiceAmt}" design="Bold" class="inctureToolbarLabelClass"  required="true"></Label>
+							<Text text="{path :'oInvoiceModel>/oInvoiceHeaderDetails/currency', formatter:'ui.incture.APTest.util.Formatter.currencySymbolWithValue'}"
+								tooltip="{detailPageModel>/invoiceDetailUIDto/currency}"/>
+							<Input width="9%" class="inctureToolbarInputClass" textAlign="Right" editable="{oInvoiceModel>/posted}"
+								value="{path: 'oInvoiceModel>/oInvoiceHeaderDetails/invoiceTotal', type: 'sap.ui.model.type.Float'}" change="fnInvoiceAmtChange"></Input>
+							<Label text="{i18n>grossAmt}" design="Bold" class="inctureToolbarLabelClass"></Label>
+							<Text text="{path :'oInvoiceModel>/oInvoiceHeaderDetails/currency', formatter:'ui.incture.APTest.util.Formatter.currencySymbolWithValue'}"
+								tooltip="{detailPageModel>/invoiceDetailUIDto/currency}"/>
+							<Input width="9%" enabled="{oPropertyModel>/bNonEditableField}" class="inctureToolbarInputClass" textAlign="Right"
+								value="{path: 'oInvoiceModel>/oInvoiceHeaderDetails/grossAmount', type: 'sap.ui.model.type.Float'}"></Input>
+							<Label text="{i18n>balance}" design="Bold" class="inctureToolbarLabelClass"></Label>
+							<Text text="{path :'oInvoiceModel>/oInvoiceHeaderDetails/currency', formatter:'ui.incture.APTest.util.Formatter.currencySymbolWithValue'}"
+								tooltip="{detailPageModel>/invoiceDetailUIDto/currency}"/>
+							<Input width="9%" enabled="{oPropertyModel>/bNonEditableField}" class="inctureToolbarInputClass" textAlign="Right"
+								value="{path: 'oInvoiceModel>/oInvoiceHeaderDetails/balance', type: 'sap.ui.model.type.Float'}"></Input>
+							<!--<Button icon="sap-icon://process" tooltip="{i18n>showTracker}" class="inctureIconClass"-->
+							<!--	visible="{oPropertyModel>/oConfigurableProperties/bTrackerRequired}"></Button>-->
+							<!--<Button icon="sap-icon://inspection" tooltip="{i18n>moreDetails}" class="inctureIconClass"-->
+							<!--	visible="{oPropertyModel>/oConfigurableProperties/bMoreDetailsRequired}"></Button>-->
+							<!--<Button icon="sap-icon://sys-help-2" tooltip="{i18n>helpSection}" class="inctureIconClass"-->
+							<!--	visible="{oPropertyModel>/oConfigurableProperties/bHelpSectionRequired}"></Button>-->
+						</content>
+					</OverflowToolbar>
+				</customHeader>
+				<content>
+					<l:Splitter id="idMainSplitter" width="100%">
+						<!--Fragments For Each Split Screen-->
+					</l:Splitter>
+					<!--Uploading Document Section-->
+				</content>
+				<footer>
+					<OverflowToolbar class="incturePrimaryClass">
+						<content>
+							<ToolbarSpacer></ToolbarSpacer>
+							<Button text="{i18n>save}" class="saveBtnCls" press="onSubmit" tooltip="Save" enabled="{oInvoiceModel>/posted}"></Button>
+							<Button text="{i18n>submit}" class="submitBtnCls" press="fnSubmit" tooltip="Submit" enabled="{oInvoiceModel>/posted}"></Button>
+							<Button text="{i18n>reject}" class="rejectBtnCls" press="onReject" tooltip="Reject" enabled="{oInvoiceModel>/posted}"></Button>
+						</content>
+					</OverflowToolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

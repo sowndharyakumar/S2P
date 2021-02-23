@@ -1,0 +1,339 @@
+<mvc:View controllerName="ui.incture.APTest.controller.inbox" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:fb="sap.ui.comp.filterbar" displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:t="sap.ui.table" xmlns:core="sap.ui.core"
+	xmlns:u="sap.ui.unified">
+	<Page title="" showHeader='true' showNavButton="false" id="inboxPageId">
+		<customHeader>
+			<OverflowToolbar class="incturePrimaryClass">
+				<content>
+					<!--<Image src="images/sats.jpg" height="5rem"></Image>-->
+					<!--<ToolbarSpacer></ToolbarSpacer>-->
+					<Button icon="sap-icon://nav-back" tooltip="Dashboard" class="inctureIconClass" press="onNavToDashboard"></Button>
+					<Title text="{i18n>AccountsPayableWorkbench}" class="inctureTitleClass"></Title>
+					<ToolbarSpacer/>
+					<Image src="./Image/Cherrywork.png" width="10%"/>
+				</content>
+			</OverflowToolbar>
+		</customHeader>
+		<content>
+			<OverflowToolbar>
+				<Label text="{i18n>Search}" design="Bold"></Label>
+				<ToolbarSpacer/>
+				<Button text="{i18n>CollapseSearch}" tooltip="Collapse Search" press="onPressCollapse" visible="{baseModel>/CollapseVisiblity}"/>
+				<Button text="{i18n>ExpandSearch}" tooltip="Expand Search" press="onPressOpen" visible="{baseModel>/openVisiblity}"/>
+			</OverflowToolbar>
+			<fb:FilterBar showFilterConfiguration="false" useToolbar="false" showGoOnFB="false" class="adaptFilterClass sapUiSizeCompact"
+				visible="{baseModel>/SearchVisiblity}">
+				<fb:filterItems>
+					<fb:FilterItem name="A" label="{i18n>VendorId}">
+						<fb:control>
+							<Input value="{taskDataFilterModel>/vendorId} {taskDataFilterModel>/vendorName}" id="vendorInboxId" class="filterValueStyle sapUiSizeCompact inputPopCls"
+								suggest="searchVendorId" startSuggestion="3" maxSuggestionWidth="44rem" showSuggestion="true" filterSuggests="false" maxLength="20"
+								showTableSuggestionValueHelp="false" suggestionRows="{suggestionModel>/d/results}" suggestionItemSelected="onVendorSelected"
+								change="chkSelectedVendor">
+								<suggestionColumns>
+									<Column width="66px" hAlign="Begin">
+										<Label text="Vendor Id"/>
+									</Column>
+									<Column width="160px" hAlign="Center">
+										<Label text="Vendor Name1"/>
+									</Column>
+								</suggestionColumns>
+								<suggestionRows>
+									<ColumnListItem>
+										<cells>
+											<Text text="{path:'suggestionModel>Vendor', formatter:'ui.incture.APTest.util.Formatter.removeZero'}" wrapping="true"/>
+											<Text text="{suggestionModel>Name1}" tooltip="{suggestionModel>Name1}"/>
+											<!--<Text text="{suggestionModel>Name2}" tooltip="{suggestionModel>Name2}"/>-->
+											<!--<Text text="{suggestionModel>Search_term}"/>-->
+										</cells>
+									</ColumnListItem>
+								</suggestionRows>
+							</Input>
+						</fb:control>
+					</fb:FilterItem>
+					<fb:FilterItem name="B" label="{i18n>inboxRequestID}">
+						<fb:control>
+							<Input value="{taskDataFilterModel>/filterRequestId}" class="filterValueStyle sapUiSizeCompact"/>
+						</fb:control>
+					</fb:FilterItem>
+					<fb:FilterItem name="C" label="{i18n>InvoiceNo}">
+						<fb:control>
+							<Input value="{taskDataFilterModel>/invNo}" class="filterValueStyle sapUiSizeCompact" maxSuggestionWidth="16rem" startSuggestion="3"
+								showSuggestion="true" filterSuggests="false"/>
+						</fb:control>
+					</fb:FilterItem>
+					<fb:FilterItem name="D" label="{i18n>InvoiceDateFrom}">
+						<fb:control>
+							<DatePicker id="idInvoiceFrom" displayFormat="MM/dd/yyyy" valueFormat="yyyy-MM-dd" placeholder="mm/dd/yyyy"
+								value="{taskDataFilterModel>/createdAtFrom}" class="filterValueStyle sapUiSizeCompact" tooltip="Invoice From Date"
+								change="onDateRangeChange"/>
+						</fb:control>
+					</fb:FilterItem>
+					<fb:FilterItem name="E" label="{i18n>InvoiceDateTo}">
+						<fb:control>
+							<DatePicker id="idInvoiceTo" displayFormat="MM/dd/yyyy" valueFormat="yyyy-MM-dd" placeholder="mm/dd/yyyy"
+								value="{taskDataFilterModel>/createdAtTo}" class="filterValueStyle sapUiSizeCompact" tooltip="Invoice To Date" change="onDateRangeChange"/>
+						</fb:control>
+					</fb:FilterItem>
+					<fb:FilterItem name="F" label="{i18n>AssignedTo}">
+						<fb:control>
+							<Input value="{taskDataFilterModel>/assignedTo}" tooltip="Invoice Value From" class="filterValueStyle sapUiSizeCompact"/>
+						</fb:control>
+					</fb:FilterItem>
+					<fb:FilterItem name="G" label="{i18n>DueDateFrom}">
+						<fb:control>
+							<DatePicker id="idDueFrom" displayFormat="MM/dd/yyyy" valueFormat="yyyy-MM-dd" placeholder="mm/dd/yyyy"
+								value="{taskDataFilterModel>/dueDateFrom}" class="filterValueStyle sapUiSizeCompact" tooltip="Due From Date" change="onDateRangeChange"/>
+						</fb:control>
+					</fb:FilterItem>
+					<fb:FilterItem name="H" label="{i18n>DueDateTo}">
+						<fb:control>
+							<DatePicker id="idDueTo" displayFormat="MM/dd/yyyy" valueFormat="yyyy-MM-dd" placeholder="mm/dd/yyyy"
+								value="{taskDataFilterModel>/dueDateTo}" class="filterValueStyle sapUiSizeCompact" tooltip="Due To Date" change="onDateRangeChange"/>
+						</fb:control>
+					</fb:FilterItem>
+					<fb:FilterItem name="I" label="{i18n>InvoiceValueFrom}">
+						<fb:control>
+							<Input value="{taskDataFilterModel>/invoiceTotalFrom}" tooltip="Invoice Value From" class="filterValueStyle sapUiSizeCompact"
+								liveChange="onChangeInvoiceValue"/>
+						</fb:control>
+					</fb:FilterItem>
+					<fb:FilterItem name="J" label="{i18n>InvoiceValueTo}">
+						<fb:control>
+							<Input value="{taskDataFilterModel>/invoiceTotalTo}" liveChange="onChangeInvoiceValue" class="filterValueStyle sapUiSizeCompact"
+								tooltip="Invoice Value To"/>
+						</fb:control>
+					</fb:FilterItem>
+					<fb:FilterItem name="K" label="{i18n>ProcessStatus}">
+						<fb:control>
+							<Select class="sapUiSizeCompact dropDownCss inboxDD" forceSelection="false" id="processStatusDropDown" items="{processModel>/items}"
+								selectedKey="{taskDataFilterModel>/lifecycleStatus}" width="11.6rem">
+								<core:Item key="{processModel>lifeCycleStatus}" text="{processModel>text}"/>
+							</Select>
+						</fb:control>
+					</fb:FilterItem>
+					<fb:FilterItem name="L" label="{i18n>InvoiceType}">
+						<fb:control>
+							<Select class="sapUiSizeCompact dropDownCss inboxDD" width="11.6rem" forceSelection="false" selectedKey="{taskDataFilterModel>/invoiceType}">
+								<core:Item key="INVOICE" text="Invoice"/>
+								<core:Item key="NONPO" text="Non-PO"/>
+							</Select>
+						</fb:control>
+					</fb:FilterItem>
+				</fb:filterItems>
+			</fb:FilterBar>
+			<OverflowToolbar visible="{baseModel>/SearchVisiblity}">
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://search" text="Search" type="Emphasized" press="onGo" tooltip="{i18n>Search}" class="dynamicCls sapUiSizeCompact"></Button>
+				<Button icon="sap-icon://refresh" text="Clear" press="onClearFilter" tooltip="{i18n>Clear}" class="sapUiSizeCompact"></Button>
+				<ToolbarSpacer visible="false"/>
+			</OverflowToolbar>
+			<!--<l:VerticalLayout width="100%" class="gridWrapper">-->
+			<!--<Panel class="inctureAmountGridClass incutrePanelPaddingClass" expandable="true" expanded="false" expand="onFilterExpand">-->
+			<!--	<headerToolbar>-->
+			<!--		<OverflowToolbar>-->
+			<!--			<content>-->
+			<!--				<Title text="Filter" class="taskNameStyleClass sapUiSmallMarginBegin"/>-->
+			<!--				<ToolbarSpacer></ToolbarSpacer>-->
+			<!--				<Button text="Clear" class="filterSerachButton sapUiSizeCompact borderBtnCls" press="onClearFilter" type="Accept"/>-->
+			<!--				<Button text="Go" class="filterSerachButton sapUiSizeCompact" type="Emphasized" press="onGo"/>-->
+			<!--			</content>-->
+			<!--		</OverflowToolbar>-->
+			<!--	</headerToolbar>-->
+			<!--	<l:Grid class="inboxCls">-->
+			<!--		<l:content>-->
+			<!--			<VBox class="filetrPairStyleClass">-->
+			<!--				<Text text="Vendor ID/Vendor Description" class="filterLabelStyle"/>-->
+			<!--				<Input value="{taskDataFilterModel>/vendorId} {taskDataFilterModel>/vendorName}" class="filterValueStyle sapUiSizeCompact inputPopCls"-->
+			<!--					suggest="searchVendorId" startSuggestion="3" maxSuggestionWidth="44rem" showSuggestion="true" filterSuggests="false" maxLength="20"-->
+			<!--					showTableSuggestionValueHelp="false" suggestionRows="{suggestionModel>/d/results}" suggestionItemSelected="onVendorSelected"-->
+			<!--					change="chkSelectedVendor">-->
+			<!--					<suggestionColumns>-->
+			<!--						<Column width="66px" hAlign="Begin">-->
+			<!--							<Label text="Vendor Id"/>-->
+			<!--						</Column>-->
+			<!--						<Column width="160px" hAlign="Center">-->
+			<!--							<Label text="Vendor Name1"/>-->
+			<!--						</Column>-->
+			<!--					</suggestionColumns>-->
+			<!--					<suggestionRows>-->
+			<!--						<ColumnListItem>-->
+			<!--							<cells>-->
+			<!--								<Text text="{path:'suggestionModel>Vendor', formatter:'ui.incture.APTest.util.Formatter.removeZero'}" wrapping="true"/>-->
+			<!--								<Text text="{suggestionModel>Name1}" tooltip="{suggestionModel>Name1}"/>-->
+			<!--<Text text="{suggestionModel>Name2}" tooltip="{suggestionModel>Name2}"/>-->
+			<!--<Text text="{suggestionModel>Search_term}"/>-->
+			<!--							</cells>-->
+			<!--						</ColumnListItem>-->
+			<!--					</suggestionRows>-->
+			<!--				</Input>-->
+			<!--			</VBox>-->
+			<!--			<VBox class="filetrPairStyleClass">-->
+			<!--				<Text text="Request Id" class="filterLabelStyle"/>-->
+			<!--				<Input value="{taskDataFilterModel>/filterRequestId}" class="filterValueStyle sapUiSizeCompact"/>-->
+			<!--			</VBox>-->
+			<!--			<VBox class="filetrPairStyleClass">-->
+			<!--				<Text text="Invoice Number" class="filterLabelStyle"/>-->
+			<!--				<Input value="{taskDataFilterModel>/invNo}" class="filterValueStyle sapUiSizeCompact" maxSuggestionWidth="16rem" startSuggestion="3"-->
+			<!--					showSuggestion="true" filterSuggests="false"/>-->
+			<!--			</VBox>-->
+			<!--			<VBox class="filetrPairStyleClass">-->
+			<!--				<Text text="Invoice Date From" class="filterLabelStyle"/>-->
+			<!--				<DatePicker id="idInvoiceFrom" displayFormat="MM/dd/yyyy" valueFormat="yyyy-MM-dd" placeholder="mm/dd/yyyy"-->
+			<!--					value="{taskDataFilterModel>/createdAtFrom}" class="filterValueStyle sapUiSizeCompact" tooltip="Invoice From Date"-->
+			<!--					change="onDateRangeChange"/>-->
+			<!--			</VBox>-->
+			<!--			<VBox class="filetrPairStyleClass">-->
+			<!--				<Text text="Invoice Date To" class="filterLabelStyle"/>-->
+			<!--				<DatePicker id="idInvoiceTo" displayFormat="MM/dd/yyyy" valueFormat="yyyy-MM-dd" placeholder="mm/dd/yyyy"-->
+			<!--					value="{taskDataFilterModel>/createdAtTo}" class="filterValueStyle sapUiSizeCompact" tooltip="Invoice To Date" change="onDateRangeChange"/>-->
+			<!--			</VBox>-->
+			<!--			<VBox class="filetrPairStyleClass">-->
+			<!--				<Text text="Assigned To" class="filterLabelStyle"/>-->
+			<!--				<Input value="{taskDataFilterModel>/assignedTo}" tooltip="Invoice Value From" class="filterValueStyle sapUiSizeCompact"/>-->
+			<!--			</VBox>-->
+			<!--			<VBox class="filetrPairStyleClass">-->
+			<!--				<Text text="Due Date From" class="filterLabelStyle"/>-->
+			<!--				<DatePicker id="idDueFrom" displayFormat="MM/dd/yyyy" valueFormat="yyyy-MM-dd" placeholder="mm/dd/yyyy"-->
+			<!--					value="{taskDataFilterModel>/dueDateFrom}" class="filterValueStyle sapUiSizeCompact" tooltip="Due From Date" change="onDateRangeChange"/>-->
+			<!--			</VBox>-->
+			<!--			<VBox class="filetrPairStyleClass">-->
+			<!--				<Text text="Due DateTo" class="filterLabelStyle"/>-->
+			<!--				<DatePicker id="idDueTo" displayFormat="MM/dd/yyyy" valueFormat="yyyy-MM-dd" placeholder="mm/dd/yyyy"-->
+			<!--					value="{taskDataFilterModel>/dueDateTo}" class="filterValueStyle sapUiSizeCompact" tooltip="Due To Date" change="onDateRangeChange"/>-->
+			<!--			</VBox>-->
+			<!--			<VBox class="filetrPairStyleClass">-->
+			<!--				<Text text="Invoice Value From" class="filterLabelStyle"/>-->
+			<!--				<Input value="{taskDataFilterModel>/invoiceTotalFrom}" tooltip="Invoice Value From" class="filterValueStyle sapUiSizeCompact"-->
+			<!--					liveChange="onChangeInvoiceValue"/>-->
+			<!--			</VBox>-->
+			<!--			<VBox class="filetrPairStyleClass">-->
+			<!--				<Text text="Invoice Value To" class="filterLabelStyle"/>-->
+			<!--				<Input value="{taskDataFilterModel>/invoiceTotalTo}" liveChange="onChangeInvoiceValue" class="filterValueStyle sapUiSizeCompact"-->
+			<!--					tooltip="Invoice Value To"/>-->
+			<!--			</VBox>-->
+			<!--			<VBox class="filetrPairStyleClass">-->
+			<!--				<Text text="Process Status" class="filterLabelStyle"/>-->
+			<!--				<Select class="sapUiSizeCompact dropDownCss inboxDD" forceSelection="false" id="processStatusDropDown" items="{processModel>/items}"-->
+			<!--					selectedKey="{taskDataFilterModel>/lifecycleStatus}" width="11.6rem">-->
+			<!--					<core:Item key="{processModel>lifeCycleStatus}" text="{processModel>text}"/>-->
+			<!--				</Select>-->
+			<!--			</VBox>-->
+			<!--			<VBox class="filetrPairStyleClass">-->
+			<!--				<Text text="Invoice Type" class="filterLabelStyle"/>-->
+			<!--				<Select class="sapUiSizeCompact dropDownCss inboxDD" width="11.6rem" forceSelection="false" selectedKey="{taskDataFilterModel>/invoiceType}">-->
+			<!--					<core:Item key="INVOICE" text="Invoice"/>-->
+			<!--					<core:Item key="NONPO" text="Non-PO"/>-->
+			<!--				</Select>-->
+			<!--			</VBox>-->
+			<!--			<VBox></VBox>-->
+			<!--		</l:content>-->
+			<!--	</l:Grid>-->
+			<!--</Panel>-->
+			<!--	</VBox>-->
+			<!--</VBox>-->
+			<l:Grid class="inboxCls">
+				<l:content>
+					<VBox class="hboxTableUiCls" width="100%">
+						<HBox justifyContent="SpaceBetween">
+							<Label text="List of Task(s)-{oInboxModel>/count}" design="Bold" class="sapUiTinyMarginTop listLabelCls"></Label>
+							<HBox >
+								<Button id="idForward" icon="sap-icon://forward" text="Forward" type="Emphasized" enabled="false"
+									class="inctureButtonRadius sapUiTinyMarginBeginEnd sapUiSizeCompact dynamicCls"></Button>
+								<Button id="idReject" text="Reject" enabled="false" type="Reject"
+									class="inctureButtonRadius sapUiTinyMarginBeginEnd sapUiSizeCompact borderBtnCls"></Button>
+							</HBox>
+						</HBox>
+						<HBox >
+							<Table items="{oInboxModel>/workBoxDtos}" class="filterInboxTableCls sapUiSizeCompact" id="apInboxId" sticky="ColumnHeaders" mode="None">
+								<columns>
+									<Column width="11%" hAlign="Center">
+										<Label text="{i18n>inboxRequestID}" design="Bold" wrapping="true" class="inboxTable"/>
+									</Column>
+									<Column width="22%" hAlign="Center">
+										<Label text="{i18n>vendor}" design="Bold" wrapping="true" class="inboxTable"/>
+									</Column>
+									<!--<Column width="9em" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">-->
+									<!--	<Label text="Vendor Name" design="Bold" wrapping="true" class="inboxTable"/>-->
+									<!--</Column>-->
+									<Column width="11%" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+										<Label text="{i18n>InvoiceNo}" design="Bold" wrapping="true" class="inboxTable"/>
+									</Column>
+									<Column width="11%" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+										<Label text="{i18n>InvoiceDate}" design="Bold" class="inboxTable"/>
+									</Column>
+									<Column width="11%" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+										<Label text="{i18n>InvoiceType}" design="Bold" class="inboxTable"/>
+									</Column>
+									<Column width="11%" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">
+										<Label text="{i18n>Value}" design="Bold" wrapping="true" class="inboxTable"/>
+									</Column>
+									<!--<Column width="8em" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">-->
+									<!--	<Label text="Assigned To" design="Bold" wrapping="true" class="inboxTable"/>-->
+									<!--</Column>-->
+									<!--<Column width="7em" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">-->
+									<!--	<Label text="Created At" design="Bold" class="inboxTable"/>-->
+									<!--</Column>-->
+									<Column width="11%" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">
+										<Label text="{i18n>DueDate}" design="Bold" class="inboxTable"/>
+									</Column>
+									<Column width="15%" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">
+										<Label text="{i18n>ProcessStatus}" design="Bold" wrapping="true" class="inboxTable"/>
+									</Column>
+									<Column width="15%" hAlign="Center" minScreenWidth="Desktop" demandPopin="true">
+										<Label text="{i18n>AssignedTo}" design="Bold" wrapping="true" class="inboxTable"/>
+									</Column>
+									<Column></Column>
+								</columns>
+								<items>
+									<ColumnListItem>
+										<Link text="{oInboxModel>requestId}" press="onRowSelect"/>
+										<Text text="{oInboxModel>vendorId}-{oInboxModel>vendorName}"/>
+										<Text text="{oInboxModel>extInvNum}"/>
+										<Text text="{oInboxModel>invoiceDate}"/>
+										<Text text="{oInboxModel>invoiceType}"/>
+										<Text text="{oInboxModel>invoiceTotal}"/>
+										<!--<Text text="{oInboxModel>assignedTo}"/>-->
+										<!--{path : 'oInboxModel>createdAt', formatter: 'ui.incture.APTest.util.Formatter.getDate'}-->
+										<!--<Text text=""/>-->
+										<Text text="{oInboxModel>dueDate}"/>
+										<Text text="{oInboxModel>lifecycleStatusText}"/>
+										<Text text="{oInboxModel>assignedTo}"/>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</HBox>
+						<!--<VBox id="idPageNumberDiv" justifyContent="Center" alignItems="Center">-->
+						<!--	<Label id="idCurrentPage" class="pageNumberStyleClass"/>-->
+						<!--	<HBox>-->
+						<!--		<Button id="idPrevButton" icon="sap-icon://close-command-field" class="navigateButtonClass sapUiSizeCompact" press="onScrollLeft"/>-->
+						<!--		<HBox items="{paginatedModel>/array}">-->
+						<!--			<Link text="{paginatedModel>text}" press="onPageClick" class="paginationNumbers"/>-->
+						<!--		</HBox>-->
+						<!--		<Button id="idNextButton" icon="sap-icon://open-command-field" class="navigateButtonClass sapUiSizeCompact" press="onScrollRight"/>-->
+						<!--	</HBox>-->
+						<!--</VBox>-->
+					</VBox>
+				</l:content>
+			</l:Grid>
+			<!--</l:VerticalLayout>-->
+			<!--</HBox>-->
+		</content>
+		<footer>
+			<OverflowToolbar class="incturePrimaryClassInbox">
+				<content>
+					<VBox id="idPageNumberDiv" justifyContent="Center" alignItems="Center">
+						<Label id="idCurrentPage" class="pageNumberStyleClass"/>
+						<HBox>
+							<Button id="idPrevButton" icon="sap-icon://close-command-field" class="navigateButtonClass sapUiSizeCompact" press="onScrollLeft"/>
+							<HBox items="{paginatedModel>/array}">
+								<Link text="{paginatedModel>text}" press="onPageClick" class="paginationNumbers"/>
+							</HBox>
+							<Button id="idNextButton" icon="sap-icon://open-command-field" class="navigateButtonClass sapUiSizeCompact" press="onScrollRight"/>
+						</HBox>
+					</VBox>
+				</content>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>

@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" class="sapUiSizeCompact" xmlns:core="sap.ui.core">
+	<TableSelectDialog noDataText="No Products Found" multiSelect="true" title="Select Coding Template" search="handleTemplateSearch"
+		confirm="handleClose" growing="true" growingThreshold="8" cancel="handleClose" items="{templateModel>/aNonPoTemplate}" contentHeight="100%" contentWidth="30%">
+		<columns>
+			<Column>
+				<Label text="Template Name" class="selectTemp"/>
+			</Column>
+		</columns>
+		<ColumnListItem>
+			<Text text="{templateModel>templateName}" class="selectTemp"/>
+		</ColumnListItem>
+	</TableSelectDialog>
+</core:FragmentDefinition>

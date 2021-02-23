@@ -1,0 +1,54 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout"
+	xmlns:fb="sap.ui.comp.filterbar">
+	<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="5" labelSpanM="5" columnsL="1" columnsM="1" emptySpanL="4"
+		emptySpanM="4" class="sapUiSizeCompact">
+		<f:content>
+			<Label text="PO Type" design="Bold"/>
+			<ComboBox value="{poSearchModel>/poType}" enabled="{baseModel>/editable}" items="{dropdownModel>/poType/results}" loadItems="onLoadPOType" showSecondaryValues="true">
+				<core:ListItem text="{dropdownModel>purchasingDocType}" additionalText="{dropdownModel>purchasingDocTypeDesc}"/>
+			</ComboBox>
+			<Label text="Vendor" design="Bold"/>
+			<Input showSuggestion="true" suggest="fnVendorSuggestion" showTableSuggestionValueHelp="false" class="inputPopCls"
+				value="{poSearchModel>/vendorId}" placeholder="Enter Vendor" suggestionRows="{suggestionModel>/d/results}" change="chkSelectedVendor"
+				suggestionItemSelected="fnVendorSelected" width="100%" maxSuggestionWidth="50rem" filterSuggests="false"
+				enableSuggestionsHighlighting="true" enabled="{baseModel>/editable}">
+				<suggestionColumns>
+					<Column hAlign="Begin" popinDisplay="Inline" demandPopin="true">
+						<Label text="Vendor Id"/>
+					</Column>
+					<Column hAlign="Center" popinDisplay="Inline" demandPopin="true" minScreenWidth="Tablet">
+						<Label text="Name"/>
+					</Column>
+				</suggestionColumns>
+				<suggestionRows>
+					<ColumnListItem>
+						<cells>
+							<Text text="{path:'suggestionModel>Vendor'}" wrapping="true"/>
+							<Text text="{suggestionModel>Name1}" wrapping="true"/>
+						</cells>
+					</ColumnListItem>
+				</suggestionRows>
+			</Input>
+			<Label text="Company Code" design="Bold"/>
+			<ComboBox value="{poSearchModel>/companyCode}" showSecondaryValues="true" loadItems="valueHelpCC"
+				items="{dropdownModel>/cCode/results}" enabled="{baseModel>/editable}">
+				<core:ListItem additionalText="{dropdownModel>companyName}" text="{dropdownModel>companyCode}"/>
+			</ComboBox>
+			<Label text="Purchase Org" design="Bold"/>
+			<ComboBox value="{poSearchModel>/purchaseOrg}" showSecondaryValues="true" loadItems="valueHelpPO"
+				items="{dropdownModel>/purchaseOrg/results}" enabled="{baseModel>/editable}">
+				<core:ListItem additionalText="{dropdownModel>purchasingOrgName}" text="{dropdownModel>purchasingOrg}"/>
+			</ComboBox>
+			<Label text="Purchase Group" design="Bold"/>
+			<ComboBox value="{poSearchModel>/purchaseGroup}" showSecondaryValues="true" loadItems="valueHelpPG"
+				items="{dropdownModel>/purchaseGroup/results}" enabled="{baseModel>/editable}">
+				<core:ListItem additionalText="{dropdownModel>purchasingGroupName}" text="{dropdownModel>purchasingGroup}"/>
+			</ComboBox>
+		</f:content>
+	</f:SimpleForm>
+	<OverflowToolbar>
+		<ToolbarSpacer/>
+		<Button text="{i18n>Next}" press="onPressNextInv" type="Emphasized" enabled="{baseModel>/editable}"></Button>
+	</OverflowToolbar>
+	
+</core:FragmentDefinition>

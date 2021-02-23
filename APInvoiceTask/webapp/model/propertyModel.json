@@ -1,0 +1,47 @@
+{
+	"bNonEditableField": false,
+	"invVisible": true,
+	"poVisible": false,
+	"grnVisible": false,
+	"aHiddenInvHeader": [],
+	"bHiddenInvHeader": true,
+	"bPdfOpenInNewWindow": false,
+	"bTabsScreenOpen": false,
+	"bConfirmBtnVis":false,
+	"bPdfTabRequired": false,
+	"bPdfBtn":false,
+	"sSelectedTabKey": "accAssgTab",
+	"bUnmatchedTblVis": true,
+	"oConfigurableProperties": {
+		"bSplitScreenRequired": true,
+		"sCurrencyCode": "USD",
+		"bUseCurrencySymbol": true,
+		"sCurrencyVal": "$",
+		"bTrackerRequired": true,
+		"bMoreDetailsRequired": true,
+		"bHelpSectionRequired": true,
+		"bPoNonPoRequired": true,
+		"bInvoiceHeaderExpanded": true,
+		"bEnableMoreInvHeader": true
+	},
+	"oInvHeaderFieldsConfig": {
+		"bShowCurrency": true,
+		"bShowInvRef": true,
+		"bShowUnplannedCost": true,
+		"bShowPlannedCost": true,
+		"bShowInvCharges": true,
+		"bShowDocDate": true,
+		"bShowBaselineDate": true,
+		"bShowInvTax": true,
+		"bShowPostingDate": true,
+		"bShowPaymentTerms": true,
+		"bShowPaymentMethod": true,
+		"bShowPaymentBlock": true
+	},
+	"oManualMatching": {
+		"aPODataList": [],
+		"aMatchedInvLineItem": [],
+		"aUnmatchedPOLineItem": [],
+		"aUnmatchedInvLineItem": []
+	}
+}

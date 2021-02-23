@@ -1,0 +1,16 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		title="Select Payment Term"
+		class="sapUiPopupWithPadding"
+		multiSelect= "false"
+		items="{paymentModel>/d/results}"
+		search="handlepaymentTermSearch"
+		confirm="handlepaymentTermClose"
+		cancel="handlepaymentTermClose">
+		<StandardListItem
+			title="{paymentModel>VdrPaymentTerms}"
+			description="{paymentModel>PaymentTermsDesc}" />
+	</SelectDialog>
+</core:FragmentDefinition>

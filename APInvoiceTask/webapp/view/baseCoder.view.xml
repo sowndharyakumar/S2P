@@ -1,0 +1,263 @@
+<mvc:View controllerName="ui.incture.APInvoiceTask.controller.baseCoder" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns:u="sap.ui.unified" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:layout="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml" class="sapUiSizeCompact">
+	<App id="app">
+		<pages>
+			<Page id="page" class="detailPage_css">
+				<customHeader>
+					<OverflowToolbar class="incturePrimaryClass">
+						<content>
+							<Button icon="sap-icon://nav-back" tooltip="{i18n>navBack}" class="inctureIconClass" press="onNavBack"/>
+							<Title text="{detailPageModel>/invoiceDetailUIDto/invoiceHeader/requestId}" class="inctureTitleClass inctureMarginLeftTitleClass"></Title>
+							<SegmentedButton selectedKey="invoice" selectionChange="toggleHdrLayout" id="idSegmented" class="sapUiLargeMarginEnd segmentbtn">
+								<items>
+									<SegmentedButtonItem text="Invoice" key="invoice" class="segItembtn"/>
+									<SegmentedButtonItem text="PDF Data" key="abby" class="segItembtn"/>
+								</items>
+							</SegmentedButton>
+							<ToolbarSpacer></ToolbarSpacer>
+							<Label text="{i18n>InvoiceAmount}" design="Bold" required="true" class="boldFont sapUiLargeMarginBegin lvlPositioninvoiceamt"></Label>
+							<Text
+								text="{path:'detailPageModel>/invoiceDetailUIDto/invoiceHeader/currency',formatter:'ui.incture.APInvoiceTask.util.Formatter.currencySymbolWithValue'}"></Text>
+							<Input class="margintopinFld tableItemRightAlign" change="hdrInvAmtCalu" width="120px"
+								value="{detailPageModel>/invoiceDetailUIDto/invoiceHeader/invoiceTotal}"/>
+							<Label text="{i18n>grossAmt}" design="Bold" class="inctureToolbarLabelClass"></Label>
+							<Text
+								text="{path :'detailPageModel>/invoiceDetailUIDto/invoiceHeader/currency', formatter:'ui.incture.APInvoiceTask.util.Formatter.currencySymbolWithValue'}"
+								tooltip="{detailPageModel>/invoiceDetailUIDto/invoiceHeader/currency}"/>
+							<Input width="9%" enabled="false" textAlign="Right" class="inctureToolbarInputClass"
+								value="{path: 'detailPageModel>/invoiceDetailUIDto/invoiceHeader/grossAmount', type: 'sap.ui.model.type.Float'}"></Input>
+							<Label text="{i18n>balance}" design="Bold" class="inctureToolbarLabelClass"></Label>
+							<Text
+								text="{path :'detailPageModel>/invoiceDetailUIDto/invoiceHeader/currency', formatter:'ui.incture.APInvoiceTask.util.Formatter.currencySymbolWithValue'}"
+								tooltip="{detailPageModel>/invoiceDetailUIDto/invoiceHeader/currency}"/>
+							<Input width="9%" enabled="false" textAlign="Right" class="inctureToolbarInputClass"
+								value="{path:'detailPageModel>/invoiceDetailUIDto/invoiceHeader/balance', type: 'sap.ui.model.type.Float'}"></Input>
+							<Button icon="sap-icon://process" tooltip="{i18n>showTracker}" class="inctureIconClass"></Button>
+							<Button icon="sap-icon://inspection" tooltip="{i18n>moreDetails}" class="inctureIconClass"></Button>
+							<Button icon="sap-icon://sys-help-2" tooltip="{i18n>helpSection}" class="inctureIconClass"></Button>
+						</content>
+					</OverflowToolbar>
+				</customHeader>
+				<content>
+					<layout:Splitter id="idMainSplitter" width="100%">
+						<VBox id="dataForm" class="vbox_margin_top paddingClass">
+							<VBox class="box_css background_white">
+								<VBox id="invoiceDetailTab" class="paddingClass" width="100%">
+									<Panel class="inctureAmountGridClass incutrePanelPaddingClass" expandable="true" expanded="true">
+										<layout:Grid id="grid" vSpacing="0" hSpacing="1" defaultSpan="L3 M6 S12" class="sapUiSizeCompact" width="100%">
+											<layout:content>
+												<HBox class="filetrPairStyleClass">
+													<Label text="{i18n>VendorId}" design="Bold" required="true" class="sapUiTinyMarginTop" width="6rem"/>
+													<Input filterSuggests="false" maxLength="10" value="{detailPageModel>/invoiceDetailUIDto/invoiceHeader/vendorId}"
+														class="inputCss margintopinFld suggestionBoxCss" width="10rem" type="Text" showSuggestion="true" suggest="fnVendorIdSuggest"
+														suggestionItemSelected="searchVendorAddr" change="chkSelectedVendor" suggestionItems="{searchVendorModel>/d/results}">
+														<suggestionItems class="sapUiSizeCompact">
+															<core:ListItem text="{searchVendorModel>Vendor}" class="sapUiSizeCompact" additionalText="{searchVendorModel>Name1}"/>
+														</suggestionItems>
+													</Input>
+												</HBox>
+												<HBox class="filetrPairStyleClass">
+													<Label text="{i18n>VendorName}" design="Bold" class="sapUiTinyMarginTop" width="6rem"/>
+													<Input value=" {detailPageModel>/invoiceDetailUIDto/invoiceHeader/vendorName}" width="10rem" editable="false" class="inptbackgroundclr"/>
+												</HBox>
+												<HBox class="filetrPairStyleClass">
+													<Label required="true" design="Bold" text="{i18n>InvoiceNo}" class="sapUiTinyMarginTop" width="6rem"/>
+													<Input value="{detailPageModel>/invoiceDetailUIDto/invoiceHeader/extInvNum}" width="10rem" maxLength="16"
+														class="inputCss margintopinFld suggestionBoxCss"/>
+												</HBox>
+												<HBox class="filetrPairStyleClass" id="idDate">
+													<Label design="Bold" text="{i18n>InvoiceDate}" required="true" class="sapUiTinyMarginTop" width="6rem"/>
+													<DatePicker editable="{detailPageModel>/userFldValidate}" id="InvoiceDate" placeholder="MM/DD/YYYY" valueFormat="yyyy-MM-dd"
+														displayFormat="MM/dd/YYYY" visible="{detailPageModel>/purchaseOrderVis}"
+														value="{ path:'detailPageModel>/invoiceDetailUIDto/invoiceHeader/invoiceDate'}" width="13rem"
+														class="addDetailsborder inptbackgroundclr iconbackgroundclr"/>
+												</HBox>
+												<HBox class="filetrPairStyleClass">
+													<Label text="{i18n>Approver}" design="Bold" class="boxClass" width="6rem"/>
+													<ComboBox class="dropDownCss iconbackgroundclr inptbackgroundclr" width="10rem" value="{detailPageModel>/requestUIDto/approverId}"
+														items="{approverModel>/results}" change="approverSelect" id="approverId">
+														<core:ListItem text="{approverModel>ApproverEmail}"/>
+													</ComboBox>
+												</HBox>
+												<HBox class="filetrPairStyleClass">
+													<Label design="Bold" text="{i18n>BatchId}" class="sapUiTinyMarginTop" width="6rem"/>
+													<Input value="{detailPageModel>/invoiceDetailUIDto/invoiceHeader/ocrBatchId}" width="10rem"
+														class="inputCss margintopinFld batchidborder suggestionBoxCss" editable="false"/>
+												</HBox>
+												<HBox class="filetrPairStyleClass" id="idText">
+													<Label design="Bold" text="{i18n>Text}" class="sapUiTinyMarginTop" width="6rem"/>
+													<Input class="inputCss margintopinFld suggestionBoxCss" width="10rem"/>
+												</HBox>
+												<HBox class="filetrPairStyleClass">
+													<Label text="{i18n>PostingDate}" design="Bold" class="boxClass" required="true" visible="{detailPageModel>/purchaseOrderVis}"/>
+													<DatePicker displayFormat="MM/dd/YYYY" valueFormat="yyyy-MM-dd"
+														value="{ path:'detailPageModel>/invoiceDetailUIDto/invoiceHeader/postingDate',formatter: 'ui.incture.APInvoiceTask.util.Formatter.getDate'}"
+														change="onPostingDateChange" width="13rem" class="addDetailsborder inptbackgroundclr iconbackgroundclr"/>
+												</HBox>
+												<HBox class="filetrPairStyleClass">
+													<Label text="{i18n>DueDate}" design="Bold" class="boxClass" visible="{detailPageModel>/purchaseOrderVis}"/>
+													<DatePicker class="addDetailsborder iconbackgroundclr inptbackgroundclr" editable="{detailPageModel>/userFldValidate}"
+														placeholder="MM/DD/YYYY" id="baseLineDate" value="{detailPageModel>/invoiceDetailUIDto/baseLineDate1}" valueFormat="yyyy-MM-dd"
+														displayFormat="MM/dd/YYYY" width="10rem" visible="{detailPageModel>/purchaseOrderVis}"/>
+												</HBox>
+												<HBox class="filetrPairStyleClass">
+													<Label text="{i18n>PaymentTerms}" design="Bold" class="boxClass comboClass" visible="{detailPageModel>/purchaseOrderVis}"/>
+													<ComboBox class="dropDownCss iconbackgroundclr addDetailsborder inptbackgroundclr" showSecondaryValues="true"
+														value="{detailPageModel>/invoiceDetailUIDto/invoiceHeader/paymentTerms}" items="{paymentModel>/d/results}" width="10rem">
+														<core:ListItem key="{paymentModel>PaymentTerms}" text="{paymentModel>Vendor}" additionalText="{paymentModel>CompCode}"/>
+													</ComboBox>
+												</HBox>
+												<HBox class="filetrPairStyleClass">
+													<Label text="{i18n>PaymentMethod}" design="Bold" class="boxClass" visible="{detailPageModel>/purchaseOrderVis}"/>
+													<ComboBox editable="{detailPageModel>/userFldValidate}" visible="{detailPageModel>/purchaseOrderVis}"
+														class="dropDownCss addDetailsborder iconbackgroundclr inptbackgroundclr" showSecondaryValues="true"
+														value="{detailPageModel>/invoiceDetailUIDto/paymentMethod}" items="{paymentMethodModel>/d/results}" width="10rem">
+														<core:ListItem key="{paymentMethodModel>PaymentMeth}" text="{paymentMethodModel>PaymentMethDesc}"
+															additionalText="{paymentMethodModel>VdrPaymentMeth}"/>
+													</ComboBox>
+												</HBox>
+												<HBox class="filetrPairStyleClass">
+													<Label text="{i18n>PaymentBlock}" design="Bold" class="boxClass comboClass" visible="true"/>
+													<ComboBox width="12rem" editable="{detailPageModel>/userFldValidate}" visible="true"
+														class="dropDownCss iconbackgroundclr addDetailsborder inptbackgroundclr" id="paymentBlockComBox" showSecondaryValues="true"
+														value="{detailPageModel>/invoiceDetailUIDto/paymentBlock}" items="{paymentBlockModel>/d/results}">
+														<core:ListItem key="{paymentBlockModel>VdrPaymentBlock}" text="{paymentBlockModel>PaymentBlockDesc}"
+															additionalText="{paymentBlockModel>PaymentBlock}"/>
+													</ComboBox>
+												</HBox>
+											</layout:content>
+										</layout:Grid>
+									</Panel>
+									<Toolbar class="nonPoTemplatetable">
+										<ToolbarSpacer/>
+										<Button text="{i18n>OpenPdf}" id="idOpenPDFBtn" enabled="{oInvoiceModel>/bPdfBtn}" type="Emphasized" tooltip="Open Pdf"
+											press="onPressopenpdf" class="openpdfBtn"/>
+										<Button text="{i18n>SelectTemplate}" type="Emphasized" tooltip="Select Template"
+											visible="{parts:[{ path :'detailPageModel>/hasDeliveryVendor'}, { path :'detailPageModel>/isThirdParty'}], formatter:'ui.incture.APInvoiceTask.util.formatter.reverseThirdMsg' }"
+											press="onSelectTemplate" class="sapUiSizeCompact dynamicCls selectTemplateBtn" icon="sap-icon://action"/>
+										<Button text="{i18n>SaveTemplate}" id="btnSavetemplate" type="Emphasized" press="onSaveTemplate"
+											class="sapUiSmallMarginEnd sapUiSizeCompact saveTemplateBtn" enabled="{oInvoiceModel>/bEnable}"/>
+										<Button tooltip="{i18n>AddItems}" type="Emphasized" id="addId" icon="sap-icon://add"
+											class="sapUiSizeCompact sapUiSmallMarginEnd addTemplateBtn dynamicCls" press="addItem"/>
+										<Button icon="sap-icon://excel-attachment" press="onDataExport" class="uploadTemplateBtn" tooltip="Download Excel"/>
+										<Button icon="sap-icon://upload" tooltip="Import From Excel" press="openFileExplorer" class="ImportTemplateBtn"/>
+									</Toolbar>
+									<core:Fragment fragmentName="ui.incture.APInvoiceTask.view.fragment.table" type="XML" id="prefix1"/>
+									<layout:Grid defaultSpan="L12 M12 S12" class="inctureRemovePadClass">
+										<layout:content>
+											<VBox class="vboxSTCls">
+												<HBox>
+													<Label text="{i18n>subTotal}" design="Bold"></Label>
+													<Input width="9.5rem" enabled="false"
+														value="{path: 'detailPageModel>/invoiceDetailUIDto/invoiceHeader/grossAmount', type: 'sap.ui.model.type.Float'}"
+														class="sapUiTinyMarginBegin"></Input>
+												</HBox>
+												<HBox>
+													<Label text="Tax:" design="Bold" class="sapUiTinyMarginTop"></Label>
+													<Input width="4rem" value="0.00" enabled="false" class="sapUiTinyMarginBegin"></Input>
+													<Text text="/{taxModel>/netTaxValue}" class="sapUiTinyMarginTop"></Text>
+													<Button class="tableBtnAlignMent smallPadding tableBtnIcon" press="openTaxDetails" type="Emphasized" icon="sap-icon://notes"
+														tooltip="Tax Details"></Button>
+												</HBox>
+												<HBox>
+													<Label text="{i18n>freight}" design="Bold"></Label>
+													<Input width="9.5rem" value="{path: 'detailPageModel>/invoiceDetailUIDto/invoiceHeader/shippingCost', type: 'sap.ui.model.type.Float'}"
+														enabled="false" class="sapUiTinyMarginBegin"></Input>
+												</HBox>
+												<HBox>
+													<Label text="{i18n>surCharges}" design="Bold"></Label>
+													<Input width="9.5rem" value="0.00" enabled="false" class="sapUiTinyMarginBegin"></Input>
+												</HBox>
+												<HBox>
+													<Label text="{i18n>grossAmt}" design="Bold"></Label>
+													<Input width="9.5rem" value="{path: 'detailPageModel>/invoiceDetailUIDto/invoiceHeader/grossAmount', type: 'sap.ui.model.type.Float'}"
+														enabled="false" class="sapUiTinyMarginBegin"></Input>
+												</HBox>
+											</VBox>
+										</layout:content>
+									</layout:Grid>
+									<VBox visible="true" id="nonPoAbby">
+										<Toolbar class="boxToolBar" id="additionalTabTool">
+											<Text text="Additional Details" class="incturetextDesign"/>
+										</Toolbar>
+										<VBox id="additionalTab">
+											<layout:Grid id="grid2" vSpacing="1" hSpacing="0" defaultSpan="L3 M6 S12">
+												<layout:content></layout:content>
+											</layout:Grid>
+										</VBox>
+									</VBox>
+								</VBox>
+							</VBox>
+							<VBox class=" paddingClass">
+								<VBox class="box_css" id="emailSection"></VBox>
+							</VBox>
+							<VBox class="paddingClass">
+								<VBox id="attachmentTab" class=" shadow box_css vbox_margin_top background_white ">
+									<Toolbar height="3rem" class=" borderRadius borderRadius ">
+										<Text text="Attachments" class="hdrDesign"/>
+										<ToolbarSpacer/>
+										<SearchField placeholder="Search" liveChange="onSearchAttachments" width="12%"></SearchField>
+										<u:FileUploader id="fileUploader" style="Transparent" maximumFileSize="5" fileType="{detailPageModel>/attachFileType}" icon="sap-icon://add"
+											buttonText="Add" buttonOnly="true" typeMissmatch="handleTypeMisMatch" fileSizeExceed="attachFileSizeExceed" change="onBeforeUploadStarts"
+											tooltip="Upload your file to the Sharepoint server"/>
+									</Toolbar>
+									<VBox class="shadow">
+										<VBox width="100%" class="commentTabCss" items="{detailPageModel>/docManagerDto}">
+											<Toolbar class="atachmentCls sapUiSmallMargin">
+												<FeedListItem sender="{detailPageModel>fileName}" iconDensityAware="false" activeIcon="{detailPageModel>folderName}"
+													senderPress="fnUploadDoc"></FeedListItem>
+												<ToolbarSpacer></ToolbarSpacer>
+												<Button icon="sap-icon://delete" press="fnDeleteAttachment" width="10%"/>
+											</Toolbar>
+										</VBox>
+									</VBox>
+								</VBox>
+							</VBox>
+							<VBox class="paddingClass">
+								<VBox id="commnetTab" class="box_css shadow vbox_margin_top background_white ">
+									<Toolbar height="3rem" class="borderRadius ">
+										<Text text="Comments" class="hdrDesign"/>
+										<ToolbarSpacer/>
+									</Toolbar>
+									<VBox class="shadow">
+										<VBox width="100%" class="commentTabCss">
+											<FeedInput post="onPostComment" showIcon="false" maxLength="199" value="{detailPageModel>/input}"/>
+											<List items="{detailPageModel>/invoiceDetailUIDto/commentDto}" showSeparators="Inner" growing="true" growingThreshold="4">
+												<FeedListItem sender="{detailPageModel>createdBy}" iconDensityAware="false"
+													timestamp="{path:'detailPageModel>createdAt', formatter:'ui.incture.APInvoiceTask.util.Formatter.commentDate'}"
+													text="{detailPageModel>comment}">
+													<FeedListItemAction icon="sap-icon://delete" press="fnDeleteComment" text="Delete"></FeedListItemAction>
+													<FeedListItemAction icon="sap-icon://edit" press="fnEditComment" text="Edit"></FeedListItemAction>
+												</FeedListItem>
+											</List>
+										</VBox>
+									</VBox>
+								</VBox>
+							</VBox>
+							<VBox class="paddingClass">
+								<VBox id="pdftableVbox" visible="false">
+									<core:Fragment fragmentName="ui.incture.APInvoiceTask.view.fragment.pdfTable" type="XML" id="pdftable"/>
+								</VBox>
+							</VBox>
+						</VBox>
+					</layout:Splitter>
+				</content>
+				<footer>
+					<Toolbar class="incturePrimaryClass">
+						<ToolbarSpacer></ToolbarSpacer>
+						<Button text="Save" type="Default" tooltip="Save" press="onNonPoSave" width="85px" visible="true"
+							class="sapUiTinyMarginBeginEnd saveBtnCss btnAlignMent"/>
+						<Button text="SUBMIT" tooltip="SUBMIT" type="Default" press="onNonPoSubmit" width="85px" visible="true"
+							class="btnAlignMent submitBtnCss sapUiTinyMarginEnd"/>
+						<Button text="REJECT" type="Reject" tooltip="REJECT" width="85px" press="fnNonPoReject" class="btnAlignMent rejBtnCss sapUiTinyMarginEnd"/>
+						<!--	<Button text="Forward Task" tooltip="Forward Task" type="Emphasized" press="openTaskFwdPopover" width="118px"
+							class="btnAlignMent sapUiTinyMarginEnd fwdTask" visible="true"/>
+						<Button text="Cancel" tooltip="Cancel" type="Emphasized" width="85px" press="onpressCancel" class="btnAlignMent sapUiTinyMarginEnd fwdTask"
+							visible="true"/>-->
+					</Toolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

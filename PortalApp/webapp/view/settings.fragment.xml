@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified"
+	xmlns:f="sap.ui.layout.form">
+	<Dialog class="sapUiSizeCompact sapUiContentPadding" title="{i18n>Settings}" contentWidth="24rem">
+		<VBox>
+			<MessageStrip
+				text="Keep in mind that the selected language applies only to the Demo Kit application user interface.It is available only in English."></MessageStrip>
+			<Label text="Language"></Label>
+			<Select width="10rem" selectedKey="English" id="selectId">
+				<core:Item key="English" text="English"/>
+				<core:Item key="Spanish" text="Spanish"/>
+				<core:Item key="Thai" text="Thai"/>
+			</Select>
+		</VBox>
+		<beginButton>
+			<Button text="{i18n>OK}" press="onLanguageSelection"></Button>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>Close}" press="onCloseSettings"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,101 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form" controllerName="ui.incture.APInvoiceTask.controller.Process" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page id="page" title="Open Purchase Orders" class="sapUiSizeCompact">
+		<customHeader>
+			<OverflowToolbar class="incturePrimaryClass">
+				<content>
+					<!--<Image src="images/sats.jpg" height="5rem"></Image>-->
+					<Button icon="sap-icon://nav-back" tooltip="{i18n>navBack}" class="inctureIconClass" press="onNavToDashboard"></Button>
+					<Title text="Open Purchase Orders" class="inctureTitleClass"></Title>
+					<ToolbarSpacer></ToolbarSpacer>
+					<Image src="./Image/Cherrywork.png" width="10%"/>
+				</content>
+			</OverflowToolbar>
+		</customHeader>
+		<content>
+			<l:VerticalLayout width="100%" class="gridWrapper">
+				<l:Grid containerQuery="true" defaultSpan="XL2 L3" class="sapUiLargeMarginTop">
+					<HBox class="sapUiTinyMarginBegin">
+						<Label text="PO Number" design="Bold" class="sapUiSmallMarginEnd inctureProcesslvlClass"/>
+						<Input value="{MasterListHeaderSet>/PONo}" placeholder="Enter PO Number" class="sapUiTinyMarginBegin"></Input>
+					</HBox>
+					<!--	<HBox class="sapUiTinyMarginBegin">
+						<Label text="Invoice Date" design="Bold" class="sapUiSmallMarginEnd inctureProcesslvlClass"/>
+						<DatePicker value="{MasterListHeaderSet>/PODate}" displayFormat="dd.MM.yyyy"></DatePicker>
+					</HBox>-->
+					<HBox class="sapUiTinyMarginBegin">
+						<Label text="Vendor ID" design="Bold" class="sapUiSmallMarginEnd inctureProcesslvlClass"/>
+						<Input value="{MasterListHeaderSet>/VendorId}" showSuggestion="true" placeholder="Enter Vendor Id" suggest="fnVendorIdSuggest"
+							suggestionItemSelected="searchVendorAddr" change="chkSelectedVendor" suggestionItems="{searchVendorModel>/d/results}">
+							<suggestionItems class="sapUiSizeCompact">
+								<core:ListItem text="{searchVendorModel>Vendor}" class="sapUiSizeCompact" additionalText="{searchVendorModel>Name1}"/>
+							</suggestionItems>
+						</Input>
+					</HBox>
+					<HBox class="sapUiTinyMarginBegin">
+						<Label text="Vendor Name" design="Bold" class="sapUiSmallMarginEnd inctureProcesslvlClass"/>
+						<Input value="{MasterListHeaderSet>/VendorName}" showValueHelp="false" placeholder="Enter Vendor Name" showSuggestion="true"
+							suggest="fnVendorNameSuggest" suggestionItems="{searchVendorModel>/d/results}">
+							<suggestionItems class="sapUiSizeCompact">
+								<core:ListItem text="{searchVendorModel>Name1}" class="sapUiSizeCompact"/>
+							</suggestionItems>
+						</Input>
+					</HBox>
+					<!--	<HBox class="sapUiTinyMarginBegin">
+						<Label text="Status" design="Bold" class="sapUiLargeMarginEnd inctureProcesslvlClass"/>
+						<Select selectedKey="{MasterListHeaderSet>/Status}" class="sapUiTinyMarginBegin">
+							<core:Item text="" key=""></core:Item>
+							<core:Item text="Open" key="Open"></core:Item>
+							<core:Item text="In Progress" key="InProgress"></core:Item>
+							<core:Item text="Delivered" key="Delivered"></core:Item>
+						</Select>
+					</HBox>-->
+					<HBox class="sapUiLargeMarginBegin">
+						<Button text="Search" icon="sap-icon://search" press="onPressSerachProcessPO" type="Default"
+							class="sapUiLargeMarginBegin sapUiSmallMarginEnd inctureProcessViewSearchBtn"/>
+						<Button text="Reset" icon="sap-icon://reset" press="onPressResetProcessPO" type="Reject" class="inctureProcessViewrejBtn"></Button>
+					</HBox>
+				</l:Grid>
+			</l:VerticalLayout>
+			<Table id="ID_TBL_PI_INVOICE111" alternateRowColors="true" items="{poHeaderSet>/results}" class="sapUiSizeCompact" inset="false"
+				fixedLayout="false" mode="SingleSelectLeft">
+				<headerToolbar>
+					<Toolbar>
+						<Label text="Invoice Details" design="Bold"></Label>
+						<ToolbarSpacer></ToolbarSpacer>
+						<SearchField width="30%" liveChange="onSearchPO"></SearchField>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column demandPopin="true" minScreenWidth="Tablet" popinDisplay="Inline">
+						<Label text="PO No." design="Bold"/>
+					</Column>
+					<Column demandPopin="true" minScreenWidth="Tablet" popinDisplay="Inline">
+						<Label text="Vendor Name" design="Bold"/>
+					</Column>
+					<Column demandPopin="true" minScreenWidth="Tablet" popinDisplay="Inline">
+						<Label text="Vendor Id" design="Bold"/>
+					</Column>
+					<Column demandPopin="true" minScreenWidth="Tablet" popinDisplay="Inline">
+						<Label text="PO Date" design="Bold"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<Text text="{poHeaderSet>Purch_Ord}"></Text>
+						<Text text="{poHeaderSet>Vendor}"></Text>
+						<Text text="{poHeaderSet>Vendor}"></Text>
+						<Text text="{poHeaderSet>Date}"></Text>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer></ToolbarSpacer>
+				<!--<Button text="Create Memo" press="onPressCreateMemoFrag" type="Default"></Button>-->
+				<Button text="Create Invoice" press="onPressNextProcessInvoice" type="Accept"></Button>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

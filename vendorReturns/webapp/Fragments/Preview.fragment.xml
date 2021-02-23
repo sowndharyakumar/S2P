@@ -1,0 +1,173 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar">
+	<VBox>
+		<List headerText="Attachments" items="{returnModel>/attachmentObject}">
+			<items>
+				<StandardListItem title="{returnModel>fileName}"/>
+			</items>
+		</List>
+		<VBox>
+			<List headerText="Remarks" items="{returnModel>/returnsCommentsList}" showSeparators="Inner" growing="true" growingThreshold="4">
+				<FeedListItem sender="{returnModel>createdBy}" iconDensityAware="false"
+					timestamp="{path:'returnModel>createdAt', formatter:'com.incture.vendorReturns.util.Formatter.commentDate'}" text="{returnModel>comment}"></FeedListItem>
+			</List>
+		</VBox>
+		<VBox visible="{baseModel>/grBased}">
+			<IconTabBar expandable="false" expanded="true" select="onTabSelection" showOverflowSelectList="true" id="ID_TAB_BAR_PRVIEW">
+				<items>
+					<IconTabFilter key="Return" text="Return">
+						<OverflowToolbar>
+							<Label text="{returnModel>/returnLength}"/>
+							<Label text="Amount:"/>
+							<Text text="{returnModel>/returnAmountPreviewTotal}"/>
+							<ToolbarSpacer/>
+							<Button icon="sap-icon://action-settings" press="personalizationInvDetails" tooltip="Return Personalization"></Button>
+						</OverflowToolbar>
+						<ScrollContainer class="crtMinListHeight crtScrollBar" horizontal="true" vertical="true"
+							visible="{dashBoardModel>/graphCommentListVisiblity}" height="{baseModel>/exchangeTableLength}">
+							<Table items="{returnModel>/aSelectedReturn}" alternateRowColors="true" class="sapUiSizeCompact" popinLayout="GridSmall" growing="true"
+								growingScrollToLoad="true" sticky="ColumnHeaders" mode="{baseModel>/tableSelMode}">
+								<columns>
+									<Column minScreenWidth="Small" demandPopin="true" hAlign="Center" width="6rem">
+										<Label text="{i18n>Material}" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" width="7rem">
+										<Label text="GR Number" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" width="7rem">
+										<Label text="GR Item" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" width="6rem">
+										<Label text="Plant" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="true" hAlign="Center" width="8rem">
+										<Label text="Storage location" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" width="6rem">
+										<Label text="Reason" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" width="6rem">
+										<Label text="GR Qty" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="true" hAlign="Center" width="8rem">
+										<Label text="Avl Qty(UoM)" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="true" width="9rem" hAlign="Center">
+										<Label text="Act Return Qty" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="true" width="9rem" hAlign="Center">
+										<Label text="Act Return UOM" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="true" hAlign="Center" width="7rem">
+										<Label text="PO Number" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="true" hAlign="Center" width="6rem">
+										<Label text="PO Item" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="true" hAlign="Center" width="6rem">
+										<Label text="Unit Price" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" width="6rem">
+										<Label text="Net price" wrapping="false" design="Bold"/>
+									</Column>
+								</columns>
+								<ColumnListItem type="Navigation" press="onPressInvoiceDetail">
+									<Text text="{path:'returnModel>Material',formatter:'com.incture.vendorReturns.util.Formatter.removeZero'}"/>
+									<Text text=" {returnModel>GrNumber}"/>
+									<Text text="{returnModel>GrItem}"/>
+									<Text text="{returnModel>Plant}"/>
+									<Text text="{returnModel>StorageLocation}"/>
+									<Text text="{returnModel>reasonText}"/>
+									<Text text="{returnModel>GrQty}"/>
+									<Text text="{returnModel>AvlQty} {returnModel>AvlUom}"/>
+									<Text text="{returnModel>ActQty}"/>
+									<Text text="{returnModel>ActUom}"/>
+									<Text text="{returnModel>PoNumber}"/>
+									<Text text="{returnModel>PoItem}"/>
+									<Text text="{returnModel>UnitPrice}"/>
+									<Text text="{returnModel>NetPrice}"/>
+								</ColumnListItem>
+							</Table>
+						</ScrollContainer>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</VBox>
+		<VBox visible="{baseModel>/poBased}">
+			<IconTabBar expandable="false" expanded="true" select="onTabSelection" showOverflowSelectList="true">
+				<items>
+					<IconTabFilter key="Return" text="Return">
+						<OverflowToolbar>
+							<Label text="{returnPOModel>/returnLength}"/>
+							<Label text="Amount:"/>
+							<Text text="{returnPOModel>/returnAmountPreviewTotal}"/>
+							<ToolbarSpacer/>
+							<Button icon="sap-icon://action-settings" press="personalizationInvDetails" tooltip="Return Personalization"></Button>
+						</OverflowToolbar>
+						<ScrollContainer class="crtMinListHeight crtScrollBar" horizontal="true" vertical="true"
+							visible="{dashBoardModel>/graphCommentListVisiblity}" height="{baseModel>/exchangeTableLength}">
+							<Table items="{returnPOModel>/aReturn}" alternateRowColors="true" class="sapUiSizeCompact" growing="true"
+								growingScrollToLoad="true" sticky="ColumnHeaders" mode="{baseModel>/tableSelMode}">
+								<columns>
+									<Column minScreenWidth="Small" demandPopin="true" hAlign="Center">
+										<Label text="{i18n>Material}" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">
+										<Label text="Invoice Number" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">
+										<Label text="Invoice Item" wrapping="false" design="Bold"/>
+									</Column>
+									<!--<Column minScreenWidth="Small" demandPopin="false" width="5rem" hAlign="Center">-->
+									<!--	<Label text="Plant" wrapping="false" design="Bold"/>-->
+									<!--</Column>-->
+									<!--<Column minScreenWidth="Small" demandPopin="true" hAlign="Center" width="8rem">-->
+									<!--	<Label text="Storage location" wrapping="false" design="Bold"/>-->
+									<!--</Column>-->
+									<!--<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">-->
+									<!--	<Label text="Batch" wrapping="false" design="Bold"/>-->
+									<!--</Column>-->
+									<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">
+										<Label text="Reason" wrapping="false" design="Bold" required="true"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">
+										<Label text="Qty" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="true" hAlign="Center">
+										<Label text="UOM" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="true" hAlign="Center">
+										<Label text="PO Number" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="true" hAlign="Center">
+										<Label text="PO Item" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="true" hAlign="Center">
+										<Label text="Unit Price" wrapping="false" design="Bold"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" hAlign="Center">
+										<Label text="Net price" wrapping="false" design="Bold"/>
+									</Column>
+								</columns>
+								<ColumnListItem type="Navigation" press="onPressInvoiceDetail">
+									<Text text="{returnPOModel>Material}"/>
+									<Text text="{returnPOModel>InvoiceNumber}"/>
+									<Text text="{returnPOModel>InvoiceItemNumber}"/>
+									<!--<Text text="{returnPOModel>Plant}"/>-->
+									<!--<Text text="{returnPOModel>StorageLocation}"/>-->
+									<!--<Text text=""/>-->
+									<Text text="{returnPOModel>reasonText}"/>
+									<Text text="{returnPOModel>InvoiceQty}"/>
+									<Text text="{returnPOModel>InvoiceUom}"/>
+									<Text text="{returnPOModel>PoNumber}"/>
+									<Text text="{returnPOModel>PoItem}"/>
+									<Text text="{returnPOModel>UnitPrice}"/>
+									<Text text="{returnPOModel>NetPrice}"/>
+								</ColumnListItem>
+							</Table>
+						</ScrollContainer>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</VBox>
+	</VBox>
+</core:FragmentDefinition>

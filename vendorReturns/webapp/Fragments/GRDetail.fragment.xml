@@ -1,0 +1,162 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout"
+	xmlns:fb="sap.ui.comp.filterbar">
+	<VBox>
+		<OverflowToolbar>
+			<Label text="{i18n>Search}" design="Bold"></Label>
+			<ToolbarSpacer/>
+		</OverflowToolbar>
+		<fb:FilterBar reset="onReset" search="onSearch" showFilterConfiguration="false" useToolbar="false" showGoOnFB="false">
+			<fb:filterItems>
+				<fb:FilterItem name="B" label="{i18n>Material}">
+					<fb:control>
+						<Input value="{invoiceSearchModel>/materialNo}" tooltip="{invoiceSearchModel>/materialNo}" placeholder="{i18n>EnterMaterial}"
+							editable="{baseModel>/InvMat}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="J" label="Storage location">
+					<fb:control>
+						<Input value="{invoiceSearchModel>/storageLocation}" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="valueHelpSLOC"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="D" label="GR document no.">
+					<fb:control>
+						<Input value="{invoiceSearchModel>/grNumber}" tooltip="{invoiceSearchModel>/grNumber}" placeholder="Enter Gr Number"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="I" label="Plant">
+					<fb:control>
+						<Input value="{invoiceSearchModel>/plant}" valueHelpOnly="true" showValueHelp="true"
+							valueHelpRequest="valueHelpPlant" enabled="{baseModel>/billingTypeEnable}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="E" label="GR posting date From">
+					<fb:control>
+						<DatePicker id="deliveryfrom" value="{invoiceSearchModel>/billingDateFrom}" valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd"
+							placeholder="YYYY-MM-DD" editable="{baseModel>/InvDateFrom}" maxDate="{baseModel>/maxDateFrom}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="r" label="GR posting date To" change="onBillDateSelectionTo">
+					<fb:control>
+						<DatePicker value="{invoiceSearchModel>/billingDateTo}" valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd" placeholder="YYYY-MM-DD"
+							editable="{baseModel>/InvDateTo}" maxDate="{invoiceSearchModel>/maxDateTo}"/>
+					</fb:control>
+				</fb:FilterItem>
+			</fb:filterItems>
+		</fb:FilterBar>
+		<OverflowToolbar>
+			<ToolbarSpacer/>
+			<Button icon="sap-icon://close-command-field" press="onPressPreviousRange" tooltip="{i18n>PreviousRange}" enabled="{baseModel>/datePrev}"/>
+			<Button icon="sap-icon://open-command-field" class="sapUiTinyMarginBegin" press="onPressNextRange" tooltip="{i18n>NextRange}"
+				enabled="{baseModel>/dateNext}"/>
+			<Button icon="sap-icon://search" text="{i18n>Search}" type="Emphasized" press="onSearch" tooltip="{i18n>Search}"
+				enabled="{baseModel>/display}"></Button>
+			<Button icon="sap-icon://refresh" text="{i18n>Clear}" press="onResetSearchInvoice" tooltip="{i18n>Clear}" enabled="{baseModel>/display}"></Button>
+			<ToolbarSpacer visible="false"/>
+		</OverflowToolbar>
+		<VBox visible="{baseModel>/invoiceTableVisiblity}">
+			<OverflowToolbar>
+				<Label text="{invoiceSearchModel>/invoiceItemsLength}"/>
+				<ToolbarSpacer/>
+				<!--<SearchField width="30%" search="liveSearchInvoice" liveChange="liveSearchInvoice"></SearchField>-->
+				<Button icon="sap-icon://action-settings" press="personalizationInvDetails" tooltip="{i18n>InvoicePersonalization}"
+					enabled="{baseModel>/InvSetting}"></Button>
+				<Button text="{i18n>Next}" press="onPressReturn" type="Emphasized" enabled="{baseModel>/display}"></Button>
+			</OverflowToolbar>
+			<!--<Table popinLayout="GridSmall" showNoData="false"></Table>-->
+			<ScrollContainer class="crtMinListHeight crtScrollBar" horizontal="true" vertical="true"
+				visible="{dashBoardModel>/graphCommentListVisiblity}" height="{baseModel>/invoiceTableLength}">
+				<Table items="{tableModel>/array}" mode="MultiSelect" alternateRowColors="true" selectionChange="onSelectItemsFromInvoice"
+					id="InvoiceTableId" growing="true" growingThreshold="10">
+					<columns>
+						<Column minScreenWidth="Small" demandPopin="true" width="5rem" hAlign="Center">
+							<Label text="{i18n>Material}" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" width="5rem" hAlign="Center">
+							<Label text="GR Item" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" width="6rem" hAlign="Center">
+							<Label text="GR Number" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" width="5rem" hAlign="Center">
+							<Label text="PO Item" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" width="6rem" hAlign="Center">
+							<Label text="PO Number" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" width="9rem">
+							<Label text="GR Qty(UoM)" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="true" width="8rem" hAlign="Center">
+							<Label text="Avl Qty(UoM)" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="true" width="9rem" hAlign="Right">
+							<Label text="Act Return Qty" wrapping="false" design="Bold" required="true"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="true" width="9rem" hAlign="Right">
+							<Label text="Act Return UOM" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="true" hAlign="Center" width="7rem">
+							<Label text="Unit Price" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" width="7rem">
+							<Label text="Net price" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" width="5rem" hAlign="Center">
+							<Label text="Plant" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="true" hAlign="Center" width="8rem">
+							<Label text="Storage location" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" visible="false">
+							<Label text="Batch" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="true" hAlign="Center" width="8rem">
+							<Label text="GR Doc Year" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" width="7rem">
+							<Label text="PO date" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" visible="false">
+							<Label text="GR posting date" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" width="6rem">
+							<Label text="Vendor" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" hAlign="Center" width="8rem">
+							<Label text="Company Code" wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="true" width="8rem" hAlign="Center">
+							<Label text="Purchasing Org." wrapping="false" design="Bold"/>
+						</Column>
+						<Column minScreenWidth="Small" demandPopin="false" width="9rem" hAlign="Center">
+							<Label text="Purchasing Group" wrapping="false" design="Bold"/>
+						</Column>
+					</columns>
+					<ColumnListItem>
+						<Text text="{path:'tableModel>Material',formatter:'com.incture.vendorReturns.util.Formatter.removeZero'}"/>
+						<Text text="{tableModel>GrItem}"/>
+						<Text text="{tableModel>GrNumber}"/>
+						<Text text="{tableModel>PoItem}"/>
+						<Text text="{tableModel>PoNumber}"/>
+						<Text text="{tableModel>GrQty} {tableModel>GrUom}"/>
+						<Text text="{tableModel>AvlQty} {tableModel>AvlUom}"/>
+						<Input value="{tableModel>ActQty}" change="onChangeGRActqty" valueState="{tableModel>ActQtyvalueState}"/>
+						<Input value="{tableModel>ActUom}" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="valueHelpActUom"/>
+						<Text text="{tableModel>UnitPrice}"/>
+						<Text text="{tableModel>NetPrice}"/>
+						<Text text="{tableModel>Plant}"/>
+						<Text text="{tableModel>StorageLocation}"/>
+						<Text text="{tableModel>Batch}"/>
+						<Text text="{tableModel>GrDocumentYear}"/>
+						<Text text="{tableModel>PoCreationDate}"/>
+						<Text text="{tableModel>GrPostingDate}"/>
+						<Text text="{tableModel>Vendor}"/>
+						<Text text="{tableModel>CompanyCode}"/>
+						<Text text="{tableModel>PurchasingOrg}"/>
+						<Text text="{tableModel>PurchasingGroup}"/>
+					</ColumnListItem>
+				</Table>
+			</ScrollContainer>
+		</VBox>
+	</VBox>
+</core:FragmentDefinition>

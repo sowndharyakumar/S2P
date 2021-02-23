@@ -1,0 +1,36 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.f">
+	<Dialog title="{i18n>Attachment}" contentWidth="30%">
+		<List items="{returnModel>/attachmentObject}">
+			<StandardListItem class="attachmentListClass" title="{returnModel>fileName}" iconDensityAware="false" iconInset="false" type="Active" press="fnDownloadAttachment"/>
+		</List>
+		<!--<VBox class="sapUiTinyMarginTop" visible="{baseModel>/attachmentVisiblity}">-->
+		<!--	<Text text="{i18n>attachInfo}" class="iopFontClass ipowbAttachmentTextClass sapUiTinyMarginBottom"/>-->
+		<!--	<u:FileUploader id="idTMFileUploader" tooltip="{i18n>Uploadyourfile}" change="onFileUploadChange" fileAllowed="fileAllowed"-->
+		<!--		icon="sap-icon://open-folder" multiple="true" buttonText="{i18n>SelectaFile}" sameFilenameAllowed="false" buttonOnly="true"-->
+		<!--		value="{baseModel>/attachmentValue}"/>-->
+		<!--</VBox>-->
+		<!--<Table items="{returnModel>/attachmentObject}" mode="SingleSelectMaster" alternateRowColors="true" selectionChange="onDownloadAttachment"-->
+		<!--	growing="true" growingThreshold="5" growingScrollToLoad="true" sticky="ColumnHeaders" visible="{baseModel>/attachmentTableVisiblity}">-->
+		<!--	<columns>-->
+		<!--		<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline">-->
+		<!--			<Label text="{i18n>File}" wrapping="true" design="Bold" tooltip="{i18n>File}"/>-->
+		<!--		</Column>-->
+		<!--		<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{baseModel>/attachmentDelEnable}">-->
+		<!--			<Label text="" wrapping="false" design="Bold"/>-->
+		<!--		</Column>-->
+		<!--	</columns>-->
+		<!--	<ColumnListItem>-->
+		<!--		<Text text="{returnModel>fileName}"/>-->
+		<!--		<HBox width="100%" alignItems="End">-->
+		<!--			<Button icon="sap-icon://delete" press="onRemoveAttachmennt" class="sapUiLargeMarginBegin" tooltip="Delete" />-->
+		<!--		</HBox>-->
+		<!--	</ColumnListItem>-->
+		<!--</Table>-->
+		<!--<beginButton>-->
+		<!--	<Button text="{i18n>OK}" press="okAttachment" width="25%" class="clPreCompButton" type="Default"/>-->
+		<!--</beginButton>-->
+		<endButton class="alertFrag">
+			<Button text="{i18n>cancelbtntext}" press="cancelAttachment" class="clPreCompButton" type="Default" width="25%"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog class="sapUiSizeCompact" draggable="true" showHeader="false">
+		<content>
+			<Toolbar class="inctureAttachmentFragTlbr">
+				<Label text="Are you sure you want to Reject the Task?" design="Bold"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+			<HBox class="sapUiSizeCompact">
+				<Label text="Select Reason Code" class="sapUiTinyMarginTop"/>
+				<Select items="{mRejectModel>/items}" selectedKey="{mRejectModel>/selectedKey}" class="sapUiTinyMarginBegin" change="onRejectCombo"
+					forceSelection="false" width="14rem">
+					<core:Item text="{mRejectModel>rejectionText}" key="{mRejectModel>reasonforRej}"/>
+				</Select>
+			</HBox>
+		</content>
+		<beginButton>
+			<Button text="Reject" press="onRejectConfirm"/>
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" press="onCloseReject"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

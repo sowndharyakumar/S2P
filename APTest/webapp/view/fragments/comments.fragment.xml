@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified"
+	xmlns:f="sap.ui.layout.form">
+	<Dialog class="sapUiSizeCompact" title="{i18n>Comments}">
+		<VBox class="incturePanelContainerClass">
+			<FeedInput post="onPostComment" showIcon="false" value="{oInvoiceModel>/input}" visible="{oInvoiceModel>/posted}"/>
+			<List showSeparators="Inner" growing="true" growingThreshold="4" items="{oInvoiceModel>/comments}">
+				<FeedListItem text="{oInvoiceModel>comment}"
+					timestamp="{path:'oInvoiceModel>createdAt',formatter: 'ui.incture.APTest.util.Formatter.commentDate'}"
+					sender="{path:'oInvoiceModel>user',formatter: 'ui.incture.APTest.util.Formatter.commentUser'}" iconDensityAware="false">
+					<FeedListItemAction icon="sap-icon://delete" press="fnDeleteComment" text="Delete"></FeedListItemAction>
+					<FeedListItemAction icon="sap-icon://edit" press="fnEditComment" text="Edit"></FeedListItemAction>
+				</FeedListItem>
+			</List>
+		</VBox>
+		<endButton>
+			<Button text="{i18n>Close}" press="onCloseComment"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

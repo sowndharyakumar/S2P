@@ -1,0 +1,32 @@
+/* Enter your custom styles here */
+.sapMSplitContainer {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    overflow: hidden !important;
+}
+
+.sapMFlexItemAlignAuto {
+    width: 100%;
+}
+
+.sapMSplitContainerMaster {
+    box-sizing: border-box;
+    width: 14rem;
+}
+
+.sapMPage>.sapMPageHeader+section,
+.sapMPage>.sapMPageSubHeader+section,
+.sapMPage>.sapMPageHeader+.sapUiHiddenPlaceholder+section {
+    top: 2.75rem;
+    overflow: hidden !important;
+}
+
+.overflowPage {
+    overflow: hidden !important;
+}
+
+.sap-desktop {
+    overflow: hidden !important;
+}

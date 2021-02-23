@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+	<!--Split Container Two - PDF View :: START-->
+	<VBox>
+		<OverflowToolbar>
+			<content>
+				<ToolbarSpacer></ToolbarSpacer>
+				<Button press="_removeContentArea" icon="sap-icon://decline" tooltip="Close PDF window" enabled="true"></Button>
+				<Button text="{i18n>openInNewTab}" press="fnRemovePDFScreen" icon="sap-icon://action"></Button>
+			</content>
+		</OverflowToolbar>
+		<FlexBox direction="Column" renderType="Div">
+			<!--PDF Viewer :::: Applicable for SAPUI5 version for and above 1.48-->
+			<PDFViewer source="{oPDFModel>/Source}" title="{oPDFModel>/Title}" height="{oPDFModel>/Height}" showDownloadButton="false">
+				<layoutData>
+					<FlexItemData growFactor="1"/>
+				</layoutData>
+			</PDFViewer>
+			<!--PDF IFRAME :::: Applicable for SAPUI5 version below 1.48-->
+			<!--<core:HTML id="idPdfFrame"></core:HTML>-->
+		</FlexBox>
+	</VBox>
+	<!--Split Container Two - PDF View :: END-->
+</core:FragmentDefinition>

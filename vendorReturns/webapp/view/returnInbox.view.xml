@@ -1,0 +1,111 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar"
+	controllerName="com.incture.vendorReturns.controller.returnInbox" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<Page title="Title" id="returnInbox" showHeader="false" class="sapUiSizeCompact">
+			<content>
+				<OverflowToolbar>
+					<Label text="Search" design="Bold"></Label>
+					<ToolbarSpacer/>
+					<Button text="Collapse Search" tooltip="Collapse Search" press="onPressCollapse" visible="{baseModel>/CollapseVisiblity}"/>
+					<Button text="Expand Search" tooltip="Expand Search" press="onPressOpen" visible="{baseModel>/openVisiblity}"/>
+				</OverflowToolbar>
+				<fb:FilterBar showFilterConfiguration="false" useToolbar="false" showGoOnFB="false" class="adaptFilterClass"
+					visible="{baseModel>/SearchVisiblity}">
+					<fb:filterItems>
+						<fb:FilterItem name="A" label="Request Id">
+							<fb:control>
+								<Input value="{mReturnDetails>/reqId}" placeholder="Enter Request Id"/>
+							</fb:control>
+						</fb:FilterItem>
+						<fb:FilterItem name="B" label="Vendor">
+							<fb:control>
+								<Input showSuggestion="true" suggest="fnVendorSuggestion" showTableSuggestionValueHelp="false" class="inputPopCls"
+									value="{mReturnDetails>/vendorId}" placeholder="Enter Vendor" suggestionRows="{suggestionModel>/d/results}" change="chkSelectedVendor"
+									suggestionItemSelected="fnVendorSelected" width="100%" maxSuggestionWidth="50rem" filterSuggests="false"
+									enableSuggestionsHighlighting="true">
+									<suggestionColumns>
+										<Column hAlign="Begin" popinDisplay="Inline" demandPopin="true">
+											<Label text="Vendor Id"/>
+										</Column>
+										<Column hAlign="Center" popinDisplay="Inline" demandPopin="true" minScreenWidth="Tablet">
+											<Label text="Name"/>
+										</Column>
+									</suggestionColumns>
+									<suggestionRows>
+										<ColumnListItem>
+											<cells>
+												<Text text="{path:'suggestionModel>Vendor'}" wrapping="true"/>
+												<Text text="{suggestionModel>Name1}" wrapping="true"/>
+											</cells>
+										</ColumnListItem>
+									</suggestionRows>
+								</Input>
+							</fb:control>
+						</fb:FilterItem>
+						<fb:FilterItem name="C" label="Created At">
+							<fb:control>
+								<DateRangeSelection dateValue="{mReturnDetails>/startDate}" secondDateValue="{mReturnDetails>/endDate}"></DateRangeSelection>
+							</fb:control>
+						</fb:FilterItem>
+						<fb:FilterItem name="k" label="Requestor">
+							<fb:control>
+								<Input value="{mReturnDetails>/requestor}" placeholder="Enter Requestor"/></fb:control>
+						</fb:FilterItem>
+					</fb:filterItems>
+				</fb:FilterBar>
+				<OverflowToolbar visible="{baseModel>/SearchVisiblity}">
+					<ToolbarSpacer/>
+					<Button icon="sap-icon://search" text="Search" type="Emphasized" press="onFilterDrafts" tooltip="Search"></Button>
+					<Button icon="sap-icon://refresh" text="Clear" press="onClear" tooltip="Clear"></Button>
+					<ToolbarSpacer visible="false"/>
+				</OverflowToolbar>
+				<OverflowToolbar class="sapUiSizeCompact">
+					<Text text="Return Request Details"/>
+					<ToolbarSpacer/>
+					<Button press="onCreateReturn" text="Create Return" class="sapUiSizeCompact"/>
+				</OverflowToolbar>
+				<Table items="{mReturnDetails>/results}" class="sapUiSizeCompact" growing="true" growingThreshold="10">
+					<columns>
+						<Column demandPopin="true" minScreenWidth="Small" width="14rem" popinDisplay="Inline">
+							<Label text="Request Id" design="Bold"/>
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Small" popinDisplay="Inline">
+							<Label text="Vendor" design="Bold"/>
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Small" popinDisplay="Inline">
+							<Label text="Created At" design="Bold"/>
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Small" popinDisplay="Inline">
+							<Label text="Amount" design="Bold"/>
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Small" width="14rem" popinDisplay="Inline">
+							<Label text="Requestor" design="Bold"/>
+						</Column>
+							<Column demandPopin="true" minScreenWidth="Small" popinDisplay="Inline">
+							<Label text="Return Type" design="Bold"/>
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Small" popinDisplay="Inline">
+							<Label text="Status" design="Bold"/>
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Small" popinDisplay="Inline">
+							<Label text="Action" design="Bold"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<Text text="{mReturnDetails>returnRequestId}"></Text>
+							<Text text="{mReturnDetails>vendor} {mReturnDetails>vendorName}"></Text>
+							<!--<Text text="{mReturnDetails>createdAt}"></Text>-->
+							<Text text="{path:'mReturnDetails>createdAt', formatter:'com.incture.vendorReturns.util.Formatter.dateTimeFormatReport'}"></Text>
+							<Text text="{path:'mReturnDetails>totalAmount', type: 'sap.ui.model.type.Float'} {mReturnDetails>poCurrency}"></Text>
+							<Text text="{mReturnDetails>createdBy}"></Text>
+							<Text text="{mReturnDetails>returnType}"></Text>
+							<Text text="{mReturnDetails>status}"></Text>
+							<Link text="More Details" press="onMoreDetails"></Link>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</content>
+		</Page>
+	</App>
+</mvc:View>

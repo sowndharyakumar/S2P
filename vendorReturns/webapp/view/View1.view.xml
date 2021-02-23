@@ -1,0 +1,54 @@
+<mvc:View controllerName="com.incture.vendorReturns.controller.View1" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form" class="sapUiSizeCompact" xmlns:fb="sap.ui.comp.filterbar">
+	<App>
+		<NavContainer id="ID_RETURN_NAVCON">
+			<pages>
+				<Page showHeader="false" id="ID_RETURN_PAGE" navButtonPress="OnPressSelectionNv" showNavButton="true">
+					<content>
+						<Wizard id="ID_WIZARD_RETURN" showNextButton="false" enableBranching="true">
+							<WizardStep title="Return Type" id="ID_Step_rtn" subsequentSteps="ID_WIZARD_GR_SRCH, ID_WIZARD_INV_SRCH">
+								<SegmentedButton selectedButton="None" id="segBtnId" enabled="{baseModel>/editable}">
+									<items>
+										<SegmentedButtonItem text="Returns Delivery" key="gr" press="onClickROType"/>
+										<SegmentedButtonItem text="Returns PO" key="po" press="onClickROType"/>
+									</items>
+								</SegmentedButton>
+							</WizardStep>
+							<WizardStep title="GR Details" id="ID_WIZARD_GR_SRCH" validated="true" nextStep="ID_WIZARD_RTEX">
+								<core:Fragment fragmentName="com.incture.vendorReturns.Fragments.GRDetail" type="XML"/>
+							</WizardStep>
+							<WizardStep title="Invoice Header Detail" id="ID_WIZARD_INV_SRCH" nextStep="ID_ITEM_INV_SRCH">
+								<core:Fragment fragmentName="com.incture.vendorReturns.Fragments.InvoiceDetail" type="XML"/>
+							</WizardStep>
+							<WizardStep title="Invoice Item Details" id="ID_ITEM_INV_SRCH" nextStep="ID_WIZARD_RTEXPO">
+								<core:Fragment fragmentName="com.incture.vendorReturns.Fragments.InvoiceItemDetail" type="XML"/>
+							</WizardStep>
+							<WizardStep title="Return PO" activate="onActivate" id="ID_WIZARD_RTEXPO" nextStep="ID_WIZARD_PREVIEW">
+								<core:Fragment fragmentName="com.incture.vendorReturns.Fragments.ReturnPO" type="XML"/>
+							</WizardStep>
+							<WizardStep title="Return Delivery" activate="onActivate" id="ID_WIZARD_RTEX" nextStep="ID_WIZARD_PREVIEW">
+								<core:Fragment fragmentName="com.incture.vendorReturns.Fragments.Return" type="XML"/>
+							</WizardStep>
+							<WizardStep title="{i18n>Preview}" id="ID_WIZARD_PREVIEW" activate="onActivate">
+								<core:Fragment fragmentName="com.incture.vendorReturns.Fragments.Preview" type="XML"/>
+							</WizardStep>
+						</Wizard>
+					</content>
+					<footer>
+						<OverflowToolbar>
+							<ToolbarSpacer/>
+							<Button text="{i18n>cancelbtntext}" press="handleWizardCancel" visible="{baseModel>/cancelBtnVisiblitys}" tooltip="{i18n>cancelbtntext}"
+								type="Default" class="sapUiSmallMarginBottom"/>
+							<Button text="{i18n>savedraftbtntext}" press="onPressSubmit" visible="{baseModel>/saveAsDraftBtnVisiblitys}" tooltip="{i18n>savedraftbtntext}"
+								type="Default" class="sapUiSmallMarginBottom"/>
+							<Button text="{i18n>Preview}" press="onpressPreview" tooltip="{i18n>Preview}" type="Default" visible="{baseModel>/previewBtnVisiblitys}"
+								class="sapUiSmallMarginBottom"/>
+							<Button text="{i18n>Submit}" press="onPressSubmit" tooltip="{i18n>Submit}" type="Default" enabled="{baseModel>/submitBtnEnabled}"
+								visible="{baseModel>/submitBtnVisiblitys}" class="sapUiSmallMarginBottom"/>
+						</OverflowToolbar>
+					</footer>
+				</Page>
+			</pages>
+		</NavContainer>
+	</App>
+</mvc:View>

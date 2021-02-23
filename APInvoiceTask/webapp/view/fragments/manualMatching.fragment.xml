@@ -1,0 +1,206 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified" xmlns:t="sap.ui.table"
+	id="onPressManualMatchingId">
+	<!-- MANUAL MATCHING SCREEN :: START -->
+	<!--<Dialog showHeader="false" class="sapUiSizeCompact" draggable="true">-->
+	<Panel expandable="false" expanded="true" width="100%" id="idMMPanel" class="box_css manualMatching sapUiSizeCompact"
+		visible="{oPropertyModel>/bManualMatchVis}">
+		<headerToolbar>
+			<Toolbar height="2rem" style="Clear">
+				<!--<Button icon="sap-icon://sys-back" tooltip="Back" press="fnBackToMain" class="dynamicCls" type="Emphasized" text="Back"/>-->
+				<Title text="Unmatched Items"/>
+				<ToolbarSpacer/>
+				<!--<SegmentedButton selectedKey="unmatched" class="segmentCls" selectionChange="fnMatUnMatSelection" id="idMatUnMatSB">-->
+				<!--	<items>-->
+				<!--		<SegmentedButtonItem text="Unmatched" key="unmatched"/>-->
+				<!--		<SegmentedButtonItem text="Matched" key="matched"/>-->
+				<!--	</items>-->
+				<!--</SegmentedButton>-->
+				<ToolbarSpacer/>
+				<!--<Button text="Back" type="Reject" press="fnCancelManualMatching"></Button>-->
+				<!--<Button type="Emphasized" icon="sap-icon://sys-cancel" class="dynamicCls" tooltip="Delete" press="fnCloseManualMatch"/>-->
+			</Toolbar>
+		</headerToolbar>
+		<content>
+			<l:Grid defaultSpan="L6 M12 S12">
+				<!-- INVOICE ITEMS -->
+				<VBox >
+					<!--visible="{oPropertyModel>/bUnmatchedTblVis}"-->
+					<Toolbar>
+						<content>
+							<Title text="Invoice {path: 'oPropertyModel>/oManualMatching/aUnmatchedInvLineItem', formatter: 'ui.incture.APInvoiceTask.util.Formatter.getCount'}"/>
+							<ToolbarSpacer/>
+							<Select id="idUnmatchedInvoiceSelect" width="30%" selectedKey="all" visible="false">
+								<core:Item text="All" key="all"/>
+								<core:Item text="Description" key="materialDescription"/>
+								<core:Item text="Vendor Material" key="vendorMaterialId"/>
+								<core:Item text="UPC" key="upcCode"/>
+							</Select>
+							<SearchField liveChange="fnFilterTableData" width="30%" id="idUnmatchedInvoice"/>
+						</content>
+					</Toolbar>
+					<Table inset="false" items="{oPropertyModel>/oManualMatching/aUnmatchedInvLineItem}" mode="SingleSelectMaster" id="idUMInvTbl"
+						class="tblClsNew scrollCls">
+						<columns>
+							<Column hAlign="Center">
+								<Label text="Description" design="Bold"/>
+							</Column>
+							<Column hAlign="Center">
+								<Label text="Vendor Material" design="Bold"/>
+							</Column>
+							<Column hAlign="Center">
+								<Label text="UPC" design="Bold"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{oPropertyModel>itemText}" class="fontSizeReduce"/>
+									<Text text="{oPropertyModel>vendorMaterialId}"/>
+									<Text text="{oPropertyModel>upcCode}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</VBox>
+				<!-- PO LINE ITEMS -->
+				<VBox visible="{oPropertyModel>/bUnmatchedTblVis}">
+					<Toolbar>
+						<content>
+							<Title text="Purchase Order {path: 'oPropertyModel>/oManualMatching/aUnmatchedPOLineItem', formatter: 'ui.incture.APInvoiceTask.util.Formatter.getCount'}"/>
+							<ToolbarSpacer/>
+							<Select id="idUnmatchedPOSelect" width="30%" selectedKey="all" visible="false">
+								<core:Item text="All" key="all"/>
+								<core:Item text="Description" key="sDescription"/>
+								<core:Item text="Vendor Material" key="sVendorMaterial"/>
+								<core:Item text="UPC" key="sUpc"/>
+								<core:Item text="PO No." key="poNumber"/>
+								<core:Item text="Item No." key="poItem"/>
+							</Select>
+							<SearchField liveChange="fnFilterTableData" width="30%"/>
+						</content>
+					</Toolbar>
+					<Table inset="false" id="idPoTbl" class="tblCls scrollCls" width="100%" items="{oPropertyModel>/oManualMatching/aUnmatchedPOLineItem}">
+						<columns>
+							<Column hAlign="Center">
+								<Label text="Description" design="Bold"/>
+							</Column>
+							<Column hAlign="Center">
+								<Label text="Vendor Material" design="Bold"/>
+							</Column>
+							<Column hAlign="Center">
+								<Label text="UPC" design="Bold"/>
+							</Column>
+							<Column mergeDuplicates="true" width="6rem" hAlign="Center">
+								<Label text="PO No." design="Bold"/>
+							</Column>
+							<Column hAlign="Right">
+								<Label text="Item No." design="Bold"/>
+							</Column>
+							<Column hAlign="Right">
+								<Label text="Action" design="Bold"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{oPropertyModel>shortText}" class="fontSizeReduce"/>
+									<Text text="{oPropertyModel>poVendMat}"/>
+									<!--<Text text="{oPropertyModel>sSapMaterial}" />-->
+									<Text text="{oPropertyModel>poUPC}"/>
+									<Text text="{path:'oPropertyModel>documentNumber'}"/>
+									<Text text="{path:'oPropertyModel>documentItem'}"/>
+									<Button text="Match" press="fnMatchBtnPress" tooltip="Match" type="Emphasized" class="manualBtnCls"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</VBox>
+				<!-- MATCHED TABLE -->
+				<VBox >
+					<!--visible="{= !${oPropertyModel>/bUnmatchedTblVis}}"-->
+					<Toolbar>
+						<content>
+							<Title text="Matched Line Items {path: 'oPropertyModel>/oManualMatching/aMatchedInvLineItem', formatter: 'ui.incture.APInvoiceTask.util.Formatter.getCount'}"/>
+							<ToolbarSpacer/>
+							<Button text="Unmatch" type="Emphasized" press="fnConfirmUM" enabled="{oPropertyModel>/bUnMatchBtn}" tooltip="Unmatch"></Button>
+							<SearchField liveChange="fnFilterTableData" width="30%" id="idMatchedInvoice"/>
+						</content>
+					</Toolbar>
+					<Table inset="false" items="{oPropertyModel>/oManualMatching/aMatchedInvLineItem}" selectionChange="fnSelectMatched"
+						class="tblCls scrollCls" mode="MultiSelect" id="idMatInvTbl" noDataText="No invoice line items are matched">
+						<columns>
+							<!--<Column width="2rem">-->
+							<!--	<CheckBox class="tableSelectionChkBox matchedCls" select="fnSelectMatchedAll" id="matchedChkBox"/>-->
+							<!--</Column>-->
+							<Column>
+								<Label text="Description" design="Bold" class="sapUiTinyMarginBegin"/>
+							</Column>
+							<Column>
+								<Label text="Vendor Material" design="Bold"/>
+							</Column>
+							<Column hAlign="Center" width="6rem">
+								<Label text="UPC" design="Bold"/>
+							</Column>
+							<Column>
+								<Label text="Description" design="Bold" class="poData sapUiTinyMarginBegin"/>
+							</Column>
+							<Column>
+								<Label text="Vendor Material" design="Bold" class="poData"/>
+							</Column>
+							<!--<Column width="6rem">-->
+							<!--	<Label text="SAP Material" design="Bold" class="poData"/>-->
+							<!--</Column>-->
+							<Column hAlign="Center">
+								<Label text="UPC" design="Bold" class="poData"/>
+							</Column>
+							<Column>
+								<Label text="PO Number" design="Bold" class="poData"/>
+							</Column>
+							<Column>
+								<Label text="Item No." design="Bold" class="poData"/>
+							</Column>
+							<Column>
+								<Label text="Matched By"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{oPropertyModel>itemText}" class="fontSizeReduce"/>
+									<Text text="{oPropertyModel>vendorMaterialId}"/>
+									<Text text="{oPropertyModel>upcCode}"/>
+									<Text text="{oPropertyModel>shortText}" class="poData"/>
+									<Text text="{oPropertyModel>poVendMat}" class="poData"/>
+									<!--<Text text="{oPropertyModel>poMaterialNum}" class="poData"/>-->
+									<Text text="{oPropertyModel>poUPC}" class="poData"/>
+									<Text text="{path:'oPropertyModel>matchDocNum'}" class="poData"/>
+									<Text text="{path:'oPropertyModel>matchDocItem'}" class="poData"/>
+									<HBox>
+										<Text visible="{path: 'oPropertyModel>matchedBy', formatter: 'ui.incture.APInvoiceTask.util.Formatter.getAutoType'}"
+											tooltip="{path:'oPropertyModel>matchedBy', formatter: 'ui.incture.APInvoiceTask.util.Formatter.getMatchText'}"/>
+										<!--<Text visible="{path: 'oPropertyModel>matchedBy', formatter: 'ui.incture.APInvoiceTask.util.getAutoType'}" class="mmAutoClass"-->
+										<!--	tooltip="Auto"/>-->
+									</HBox>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+					<layoutData>
+						<l:GridData span="L12 M12 S12"></l:GridData>
+					</layoutData>
+				</VBox>
+			</l:Grid>
+		</content>
+		<!--<Toolbar height="2rem" style="Clear">-->
+		<!--<Title text="Manual Matching"/>-->
+		<!--	<ToolbarSpacer/>-->
+		<!--	<Button text="Unmatch" type="Emphasized" press="fnConfirmUM"-->
+		<!--		enabled="{oPropertyModel>/bUnMatchBtn}" tooltip="Unmatch"></Button>-->
+		<!--visible="{oPropertyModel>/bConfirmBtnVis}"-->
+		<!--<Button text="OK" tooltip="OK" type="Emphasized" press="fnCloseManualMatch" class="manualBtnCls"/>-->
+		<!--<Button text="Cancel" tooltip="Cancel" type="Transparent" press="fnCloseManualMatch"/>-->
+		<!--</Toolbar>-->
+	</Panel>
+	<!--</Dialog>-->
+	<!-- MANUAL MATCHING SCREEN :: END -->
+</core:FragmentDefinition>

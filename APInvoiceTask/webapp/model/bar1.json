@@ -1,0 +1,28 @@
+{
+	"milk": [{
+		"Type": "Vendor Mismatch",
+		"count": 14,
+		"Cost": 94383.52,
+		"Consumption": 76855.15368
+	}, {
+		"Type": "PO Error",
+		"count": 8,
+		"Cost": 397952.77,
+		"Consumption": 304964.8856125
+	}, {
+		"Type": "Duplicate",
+		"count": 7,
+		"Cost": 115844.26,
+		"Consumption": 98268.9597904
+	}, {
+		"Type": "Bill to ship PO Incorrect",
+		"count": 2,
+		"Cost": 263180.86,
+		"Consumption": 176502.5521223
+	}, {
+		"Type": "Vendor Not Found",
+		"count": 1,
+		"Cost": 611658.59,
+		"Consumption": 538515.47632832
+	}]
+}

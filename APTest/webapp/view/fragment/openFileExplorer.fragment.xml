@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:Table="sap.ui.table"
+	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:u="sap.ui.unified">
+	<Dialog verticalScrolling="false" horizontalScrolling="false" draggable="true" stretch="false" title="Excel Upload" contentWidth="30%">
+		<HBox class="sapUiMediumMarginBegin">
+			<u:FileUploader id="fileUploader" name="myFileUpload" uploadUrl="upload/" tooltip="Upload your file to the local server"
+				uploadComplete="handleUploadComplete"/>
+			<Button text="Upload File" press="handleUploadPress"/>
+		</HBox>
+		<endButton>
+			<Button text="Close" type="Reject" press="closeFileExplDialog"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,180 @@
+/* Enter your custom styles here */
+
+.sapUiFormEdit .sapMText {
+    padding: 0;
+    margin-left: 0.5rem !important;
+}
+
+.linkBegin {
+    margin-left: 5rem;
+    color: black;
+}
+.v-bound{
+    width:24rem;
+}
+
+.linkCls {
+    margin-left: 1rem !important;
+    margin-top: 1rem !important;
+    margin-bottom: 0 !important;
+    color: black !important;
+    text-decoration: underline;
+}
+
+.quickLinkCls {
+    height: 10rem;
+}
+
+.sapUiFormEdit .sapMText {
+    min-height: 2rem;
+}
+
+.marginCls {
+    margin-left: -142px;
+}
+
+.inboxTableCls {
+    max-height: 21rem;
+    overflow: scroll;
+}
+.filterInboxTableCls {
+    max-height: 29rem;
+    overflow: scroll;
+}
+
+.removeSpace .sapUiFormResGridCont>div {
+    padding-bottom: 3px;
+    padding: 0;
+    background: white !important;
+    margin-left: 11px;
+    margin-right: 11px;
+    margin-top: 3px;
+    border: 1px solid #c6cbd0;;
+    border-radius: 7px;
+    /*border-bottom: 1px solid grey;*/
+    /*box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .5);*/
+}
+
+.removeSpace .sapUiRespGridMedia-Std-Desktop.sapUiRespGridHSpace0>.sapUiRespGridSpanL2 {
+    width: 15%;
+}
+
+.sapUiFormResGrid>div {
+    padding: 0 !important;
+}
+
+.sapMIBar-CTX .sapMTitle {
+    color: #e8eaec;
+    text-shadow: none;
+    font-size: 18px;
+}
+
+.sapMBarTitleStart .sapMBarPH {
+    text-align: start;
+    background: linear-gradient(to top, #539058 0%, #56bd51 50%, #14c10c 51%, #5bbb51 100%);
+}
+
+.vBoxCls {
+    border-right: 1px solid #d8cbcb;
+    border: solid 1px #c6cbd0;
+    box-sizing: border-box;
+    /*(0, 0, 0, 0.15)*/
+    box-shadow: 1px 1px 1px 1px rgba(8, 8, 8, 0.32);
+    border-radius: 0.25rem;
+    background: #fff;
+    margin-top: 5px;
+}
+
+.totalTxt.sapMLnk {
+    padding: 0;
+    text-decoration: underline;
+    font-size: 30px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    color: #1A3E66 !important;
+}
+
+.errorTxt.sapMLnk {
+    color: red !important;
+}
+
+.warningTxt.sapMLnk {
+    color: orange !important;
+}
+
+.pendingTxt.sapMLnk {
+    color: blue !important;
+}
+
+viz-title-label {
+    color: #1A3E66;
+}
+
+
+/*.sapMLabel .sapMLabelTextWrapper {*/
+
+
+/*    text-overflow: ellipsis;*/
+
+
+/*    overflow: hidden;*/
+
+
+/*    color: white;*/
+
+
+/*}*/
+
+.readyInv {
+    background: #f6d24f;
+}
+
+.readyInvView {
+    background: #e2c761;
+}
+
+.viewMoreCls {
+    top: -22px;
+    height: 22px;
+}
+
+.exception {
+    background: red;
+}
+
+.exceptionView {
+    background: #c92626;
+}
+
+.query {
+    background: deepskyblue;
+}
+
+.queryView {
+    background: #5bb0e8;
+}
+
+.pobased {
+    background: #d170a1;
+}
+
+.pobasedView {
+    background: #bb4e86;
+}
+
+.xyz {
+    background: #74388e;
+}
+
+.xyzView {
+    background: #622c79;
+}
+
+.completed {
+    background: #55d855;
+}
+
+.completedView {
+    background: #53bd42;
+}

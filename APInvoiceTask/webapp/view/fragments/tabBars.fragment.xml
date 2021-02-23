@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+	<VBox>
+		<OverflowToolbar>
+			<ToolbarSpacer></ToolbarSpacer>
+			<Button text="{i18n>close}" press="fnRemoveTabsScreen" type="Transparent"></Button>
+		</OverflowToolbar>
+		<IconTabBar expanded="true" class="inctureRemoveMarginTabClass" id="idTabsBar" applyContentPadding="false"
+			selectedKey="{oPropertyModel>/sSelectedTabKey}" select="fnTabSelection">
+			<items>
+				<IconTabFilter text="{i18n>pdf}" key="pdfTab" id="idPdfTab" visible="{oPropertyModel>/bPdfTabRequired}">
+					<core:Fragment fragmentName="ui.incture.APInvoiceTask.view.fragments.pdfView" type="XML"></core:Fragment>
+				</IconTabFilter>
+				<IconTabFilter text="{i18n>accAssg}" key="accAssgTab">
+					<core:Fragment fragmentName="ui.incture.APInvoiceTask.view.fragments.accAssignment" type="XML"></core:Fragment>
+				</IconTabFilter>
+				<IconTabFilter text="Material Description" key="matDescTab">
+					<core:Fragment fragmentName="ui.incture.APInvoiceTask.view.fragments.matDesc" type="XML"></core:Fragment>
+				</IconTabFilter>
+			</items>
+		</IconTabBar>
+	</VBox>
+</core:FragmentDefinition>

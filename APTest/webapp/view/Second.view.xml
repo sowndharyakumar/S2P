@@ -1,0 +1,125 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form"
+	controllerName="ui.incture.APTest.controller.Second" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="Create E-Invoice" showNavButton="false" navButtonPress="onPressNavFromSecondToFirst" class="sapUiSizeCompact incturePageHeader">
+		<customHeader>
+			<OverflowToolbar class="incturePrimaryClass">
+				<content>
+					<Button icon="sap-icon://nav-back" tooltip="{i18n>navBack}" class="inctureIconClass" press="onPressNavFromSecondToFirst"></Button>
+					<Title text="Create E-Invoice" class="inctureTitleClass"></Title>
+						<ToolbarSpacer/>
+					<Image src="./Image/Cherrywork.png" width="10%"/>
+				</content>
+			</OverflowToolbar>
+		</customHeader>
+		<content>
+			<f:SimpleForm minWidth="1024" layout="ResponsiveGridLayout" maxContainerCols="2" editable="true" labelSpanL="5" labelSpanM="5"
+				emptySpanL="1" emptySpanM="1" columnsL="2" columnsM="2">
+				<f:content>
+					<core:Title/>
+					<Label text="Memo Type" design="Bold"/>
+					<Input value="{poHeaderSet>/results/memoType}" enabled="false"/>
+					<Label text="PO Number" design="Bold"/>
+					<Input value="{poHeaderSet>/results/Purch_Ord}" enabled="false"></Input>
+					<Label text="Invoice Date" design="Bold" required="true"/>
+					<!--<DateRangeSelection dateValue="{MasterListHeaderSet>/InvoiceDate}" enabled="true" secondDateValue="{MasterListHeaderSet>/InvoiceDateTo}"  displayFormat="dd.MM.yyyy"></DateRangeSelection>-->
+					<DatePicker value="{poHeaderSet>/results/PODate}" valueFormat="yyyy-MM-dd"></DatePicker>
+					<Label text="Vendor ID" design="Bold"/>
+					<Input value="{poHeaderSet>/results/Vendor}" showValueHelp="true" enabled="false"></Input>
+					<core:Title/>
+					<Label text="Vendor Name" design="Bold"/>
+					<Input value="{poHeaderSet>/results/VendorName}" showValueHelp="true" enabled="false"></Input>
+					<Label text="Status" design="Bold"/>
+					<Label text="Invoice Number" design="Bold" required="true"/>
+					<Input value="{poHeaderSet>/results/invNo}"/>
+					<!--<Select selectedKey="{MasterListHeaderSet>/page1Status}" enabled="false">
+						<core:Item text="Open" key="Open"></core:Item>
+						<core:Item text="In Progress" key="InProgress"></core:Item>
+						<core:Item text="Delivered" key="Delivered"></core:Item>
+					</Select>-->
+					<!--<Label text="Total Amount" design="Bold"></Label>-->
+					<!--<Input value="{poHeaderSet>/results/totalAmount}" enabled="false"></Input>-->
+					<Label text="Selected Items Total Amount" design="Bold"></Label>
+					<Input value="{poHeaderSet>/results/totalAmount}" enabled="false"></Input>
+					<Label text="Selected Items Tax Amount" design="Bold"></Label>
+					<Input value="{poHeaderSet>/results/taxAmount}" enabled="false"></Input>
+					<!--	<Label text="Amount" design="Bold"/>-->
+					<!--<Input value="{MasterListHeaderSet>/Amount}" placeholder="From" enabled="false"></Input>-->
+					<!--	<Input value="{MasterListHeaderSet>/AmountTo}" placeholder="To" enabled="false"></Input>-->
+				</f:content>
+			</f:SimpleForm>
+			<Table id="ID_TBL_PI_INVOICE_SECON" alternateRowColors="true" items="{poItemSet>/results}" class="sapUiSizeCompact" inset="false"
+				fixedLayout="false" mode="MultiSelect" selectionChange="onSelectionChange">
+				<headerToolbar>
+					<Toolbar>
+						<Label text="Invoice Details" design="Bold"></Label>
+						<ToolbarSpacer></ToolbarSpacer>
+						<Button icon="sap-icon://attachment" tooltip="Attachment and Comments" press="onPressAttachments"/>
+						<SearchField width="30%" liveChange="onSearchItemid"></SearchField>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column hAlign="Center" width="8em">
+						<Label text="Item Id" design="Bold"/>
+					</Column>
+					<Column hAlign="Center" width="8em">
+						<Label text="Mat Code" design="Bold"/>
+					</Column>
+					<Column hAlign="Center" width="10em">
+						<Label text="Description" design="Bold"/>
+					</Column>
+					<Column hAlign="Center" width="8em">
+						<Label text="Invoice Qty" design="Bold"/>
+					</Column>
+					<Column hAlign="Center" width="6em">
+						<Label text="UOM" design="Bold"/>
+					</Column>
+					<Column hAlign="Center" width="10em">
+						<Label text="Unit Price" design="Bold"/>
+					</Column>
+					<Column hAlign="Center" width="6em">
+						<Label text="Tax Code" design="Bold"/>
+					</Column>
+					<Column hAlign="Center" width="9em">
+						<Label text="Tax Percentage" design="Bold"/>
+					</Column>
+					<Column hAlign="Center" width="9em">
+						<Label text="Net Price" design="Bold"/>
+					</Column>
+					<Column hAlign="Center">
+						<Label text="Tax Amount" design="Bold"/>
+					</Column>
+					<Column hAlign="Center" width="11em">
+						<Label text="Delivered Qty" design="Bold"/>
+					</Column>
+					<!--<Column demandPopin="true" minScreenWidth="Tablet" popinDisplay="Inline">-->
+					<!--	<Label text="UOM" design="Bold"/>-->
+					<!--</Column>-->
+				</columns>
+				<items>
+					<ColumnListItem>
+						<Text text="{poItemSet>Item}"></Text>
+						<Text text="{poItemSet>Material}"></Text>
+						<Text text="{poItemSet>Decription}"></Text>
+						<Input value="{poItemSet>Quantity}" change="onQtyChange"></Input>
+						<Input value="{poItemSet>Unit}"></Input>
+						<Input value="{poItemSet>Net_Price}" change="onUnitPriceChange"></Input>
+						<Input value="{poItemSet>taxCode}"></Input>
+						<Input value="{poItemSet>taxPer}" change="onChangeTaxPer"></Input>
+						<Text text="{poItemSet>Net_Value}"></Text>
+						<Text text="{poItemSet>taxAmount}"></Text>
+						<Text text="{poItemSet>Quantity}"></Text>
+						<Text text="{poItemSet>Unit}"></Text>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer></ToolbarSpacer>
+				<Button text="Validate" icon="sap-icon://simulate" press="onPressNextProcessValidate" type="Accept" enabled="false"></Button>
+				<Button text="Submit" icon="sap-icon://save" press="onPressNextProcessSubmitDraft" type="Accept"></Button>
+				<!--<Button text="Reject" icon="sap-icon://decline" press="onPressNextProcessREject" type="Reject"></Button>-->
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

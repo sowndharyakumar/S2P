@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:ui="sap.ui.table" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<SelectDialog title="Actual UOM" liveChange="onLiveChangeUOM" confirm="handleAddReturnUOM" cancel="handleCancelRUOM"
+		items="{mRuomModel>/results}" class="sapUiSizeCompact">
+		<StandardListItem title="{mRuomModel>unit}" type="Active" tooltip="{mRuomModel>unit}"/>
+	</SelectDialog>
+</core:FragmentDefinition>

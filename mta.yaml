@@ -1,0 +1,106 @@
+ID: mta_ReturnApproval
+_schema-version: '2.1'
+parameters:
+  deploy_mode: html5-repo
+version: 0.0.1
+modules:
+  - name: mta-returnapproval-approuter
+    type: approuter.nodejs
+    path: mta-returnapproval-approuter
+    parameters:
+      disk-quota: 256M
+      memory: 100M
+    requires:
+      - name: mta_ReturnApproval_html5_repo_runtime
+      - name: dest_mta_ReturnApproval
+      - name: uaa_mta_ReturnApproval
+    properties:
+      SEND_XFRAMEOPTIONS: false
+  - name: mta_ReturnApproval_ui_deployer
+    type: com.sap.html5.application-content
+    path: mta_ReturnApproval_ui_deployer
+    requires:
+      - name: mta_ReturnApproval_html5_repo_host
+    build-parameters:
+      requires:
+        - name: APInvoiceTask
+          artifacts:
+            - './*'
+          target-path: resources/APInvoiceTask
+        - name: vendorReturns
+          artifacts:
+            - './*'
+          target-path: resources/vendorReturns
+        - name: PortalApp
+          artifacts:
+            - './*'
+          target-path: resources/PortalApp
+        - name: APTest
+          artifacts:
+            - './*'
+          target-path: resources/APTest
+  
+  - name: APInvoiceTask
+    type: html5
+    path: APInvoiceTask
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install
+        - npm run build
+      supported-platforms: []
+      build-result: dist
+  - name: vendorReturns
+    type: html5
+    path: vendorReturns
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install
+        - npm run build
+      supported-platforms: []
+      build-result: dist
+  - name: PortalApp
+    type: html5
+    path: PortalApp
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install
+        - npm run build
+      supported-platforms: []
+      build-result: dist
+  - name: APTest
+    type: html5
+    path: APTest
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install
+        - npm run build
+      supported-platforms: []
+      build-result: dist
+resources:
+  - name: mta_ReturnApproval_html5_repo_runtime
+    parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
+    type: org.cloudfoundry.managed-service
+  - name: mta_ReturnApproval_html5_repo_host
+    parameters:
+      service-plan: app-host
+      service: html5-apps-repo
+    type: org.cloudfoundry.managed-service
+  - name: uaa_mta_ReturnApproval
+    parameters:
+      path: ./xs-security.json
+      service-plan: application
+      service: xsuaa
+    type: org.cloudfoundry.managed-service
+  - name: dest_mta_ReturnApproval
+    parameters:
+      service-plan: lite
+      service: destination
+    type: org.cloudfoundry.managed-service
+    properties:
+      SEND_XFRAMEOPTIONS: false

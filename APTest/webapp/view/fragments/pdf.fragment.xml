@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:Table="sap.ui.table"
+xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:u="sap.ui.unified">
+<VBox class="incZBtnClass">
+		<OverflowToolbar>
+			<content>
+				<ToolbarSpacer></ToolbarSpacer>
+				<Button press="_removeContentArea" icon="sap-icon://decline"
+					tooltip="Close PDF window" enabled="true" class="pdfBtnCls"></Button>
+				<Button press="fnRemovePDFScreen" icon="sap-icon://action"
+					tooltip="Open PDF in new window" enabled="true" class="pdfBtnCls"></Button>
+			</content>
+		</OverflowToolbar>
+		<core:HTML></core:HTML>
+	</VBox>
+</core:FragmentDefinition>

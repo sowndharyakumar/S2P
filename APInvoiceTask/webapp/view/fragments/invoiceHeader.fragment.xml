@@ -1,0 +1,240 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+	<VBox class="incturePanelContainerClass">
+		<!--Invoice Amount/Gross Amount/Balance :: START-->
+		<!--<l:Grid defaultSpan="L4 M12 S12" class="inctureAmountGridClass">
+			<l:content>
+				<VBox>
+					<Label text="{i18n>invoiceAmt}" design="Bold"></Label>
+					<Input></Input>
+				</VBox>
+				<VBox>
+					<Label text="{i18n>grossAmt}" design="Bold"></Label>
+					<Input enabled="{oPropertyModel>/bNonEditableField}"></Input>
+				</VBox>
+				<VBox>
+					<Label text="{i18n>balance}" design="Bold"></Label>
+					<Input enabled="{oPropertyModel>/bNonEditableField}"></Input>
+				</VBox>
+			</l:content>
+		</l:Grid>-->
+		<!--Invoice Amount/Gross Amount/Balance :: END-->
+		<!--Invoice Header Details :: START-->
+		<Panel class="inctureAmountGridClass incutrePanelPaddingClass invoiceHeaderClass invoiceHeaderMarginClass" expandable="true"
+			expanded="{oPropertyModel>/oConfigurableProperties/bInvoiceHeaderExpanded}" id="headerPanelId">
+			<headerToolbar>
+				<Toolbar>
+					<content>
+						<Label text="{i18n>invoiceHeader}" class="inctureFormHeaderClass"></Label>
+						<ToolbarSpacer></ToolbarSpacer>
+						<!--<Button icon="sap-icon://inspection" tooltip="{i18n>showMoreDetails}" class="inctureIsnpectionIconClass" press="fnMoreInvHeaderDetails"></Button>-->
+						<Button type="Emphasized" press="onDemandPDF" id="idOpenPDFBtn" text="{i18n>pdf}" enabled="{oPropertyModel>/bPdfBtn}" tooltip="Open PDF"></Button>
+						<SegmentedButton selectedKey="PO" visible="{oPropertyModel>/oConfigurableProperties/bPoNonPoRequired}">
+							<items>
+								<SegmentedButtonItem text="{i18n>textPO}" key="PO"/>
+								<SegmentedButtonItem text="{i18n>textNonPO}" key="NPO"/>
+							</items>
+						</SegmentedButton>
+					</content>
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</Toolbar>
+			</headerToolbar>
+			<!-- To be changed in case of Split Screen :: defaultSpan = L4 M12 S12 -->
+			<l:Grid defaultSpan="L3 M6 S12" id="idHeaderGridPartTwo" class="inctureGridClass">
+				<l:content>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>docType}" design="Bold" width="9rem" class="sapUiTinyMarginTop"></Label>
+						<Select forceSelection="false" width="10rem"  selectedKey="{oInvoiceModel>/oInvoiceHeaderDetails/invoiceType}" class="dropDownCss"
+							enabled="{oInvoiceModel>/posted}">
+							<items>
+								<core:Item key="INVOICE" text="INVOICE"/>
+								<core:Item key="Credit Memo" text="Credit Memo"/>
+								<core:Item key="Debit Memo" text="Debit Memo"/>
+								<core:Item key="Subsequent Credit/Debit" text="Subsequent Credit/Debit"/>
+							</items>
+						</Select>
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>vendor}" design="Bold" width="9rem" class="sapUiTinyMarginTop" required="true"></Label>
+						<!--Vendor Running Search Integration :: START-->
+						<Input showSuggestion="true" suggest="fnVendorSuggestion" showTableSuggestionValueHelp="false" class="inputPopCls"
+							value="{oInvoiceModel>/oInvoiceHeaderDetails/vendorId}-{oInvoiceModel>/oInvoiceHeaderDetails/vendorName}" editable="{oInvoiceModel>/posted}"
+							suggestionRows="{suggestionModel>/d/results}" change="chkSelectedVendor" suggestionItemSelected="fnVendorSelected" width="10rem"
+							maxSuggestionWidth="50rem" filterSuggests="false" enableSuggestionsHighlighting="true">
+							<suggestionColumns>
+								<Column hAlign="Begin" popinDisplay="Inline" demandPopin="true">
+									<Label text="{i18n>vendorId}"/>
+								</Column>
+								<Column hAlign="Center" popinDisplay="Inline" demandPopin="true" minScreenWidth="Tablet">
+									<Label text="{i18n>nameOne}"/>
+								</Column>
+								<!--<Column hAlign="Center" popinDisplay="Inline" demandPopin="true" minScreenWidth="Tablet">-->
+								<!--	<Label text="{i18n>nameTwo}"/>-->
+								<!--</Column>-->
+								<!--<Column hAlign="End" popinDisplay="Inline" demandPopin="true" minScreenWidth="Tablet">-->
+								<!--	<Label text="{i18n>nameThree}"/>-->
+								<!--</Column>-->
+								<!--<Column hAlign="End" popinDisplay="Inline" demandPopin="true" minScreenWidth="Tablet">-->
+								<!--	<Label text="{i18n>nameFour}"/>-->
+								<!--</Column>-->
+								<!--<Column hAlign="End" popinDisplay="Inline" demandPopin="true" minScreenWidth="Tablet">-->
+								<!--	<Label text="{i18n>searchTerm}"/>-->
+								<!--</Column>-->
+							</suggestionColumns>
+							<suggestionRows>
+								<ColumnListItem>
+									<cells>
+										<Text text="{path:'suggestionModel>Vendor', formatter:'ui.incture.APInvoiceTask.util.Formatter.removeZero'}" wrapping="true"/>
+										<Text text="{suggestionModel>Name1}" wrapping="true"/>
+										<!--<Text text="{suggestionModel>Name2}" wrapping="true"/>-->
+										<!--<Text text="{oVendorSuggestionModel>Name3}" wrapping="true"/>-->
+										<!--<Text text="{oVendorSuggestionModel>Name4}" wrapping="true"/>-->
+										<!--<Text text="{suggestionModel>Search_term}" wrapping="true"/>-->
+									</cells>
+								</ColumnListItem>
+							</suggestionRows>
+						</Input>
+						<!--<Button icon="sap-icon://home" tooltip="{i18n>showVendorAddress}" class="inctureIsnpectionIconClass sapUiSmallMarginLeft"></Button>-->
+						<!--<Button icon="sap-icon://inspection" tooltip="{i18n>showMoreVendorDetails}" class="inctureIsnpectionIconClass"></Button>-->
+						<!--Vendor Running Search Integration :: END-->
+					</HBox>
+					<!--<HBox class="inboxHeaderCls">-->
+					<!--	<Label text="{i18n>vendorName}" design="Bold" width="8rem" class="sapUiTinyMarginTop"></Label>-->
+					<!--	<Input width="8rem" value="{oInvoiceModel>/oInvoiceHeaderDetails/vendorName}" editable="false"></Input>-->
+					<!--</HBox>-->
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>CCode}" design="Bold" width="9rem" class="sapUiTinyMarginTop"></Label>
+						<Input width="10rem" value="{oInvoiceModel>/oInvoiceHeaderDetails/compCode}" editable="{oInvoiceModel>/posted}"></Input>
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>currency}" design="Bold" width="9rem" class="sapUiTinyMarginTop"></Label>
+						<!--<Text text="{oInvoiceModel>/oInvoiceHeaderDetails/currency}" width="10rem"/>-->
+						<Input enabled="{oPropertyModel>/bNonEditableField}" editable="{oInvoiceModel>/posted}" width="10rem" value="{oInvoiceModel>/oInvoiceHeaderDetails/currency}"></Input>
+						<layoutData>
+							<l:GridData visibleXL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowCurrency}"
+								visibleL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowCurrency}" visibleM="{oPropertyModel>/oInvHeaderFieldsConfig/bShowCurrency}"></l:GridData>
+						</layoutData>
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>invoiceRef}" design="Bold" width="9rem" class="sapUiTinyMarginTop" required="true"></Label>
+						<Input width="10rem" editable="{oInvoiceModel>/posted}" value="{oInvoiceModel>/oInvoiceHeaderDetails/extInvNum}"></Input>
+						<layoutData>
+							<l:GridData visibleXL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowInvRef}" visibleL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowInvRef}"
+								visibleM="{oPropertyModel>/oInvHeaderFieldsConfig/bShowInvRef}"></l:GridData>
+						</layoutData>
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>unplannedCost}" design="Bold" width="9rem" class="sapUiTinyMarginTop"></Label>
+						<Input width="10rem" editable="{oInvoiceModel>/posted}" value="{oInvoiceModel>/oInvoiceHeaderDetails/iUnplannedCost}"></Input>
+						<!--<CheckBox></CheckBox>-->
+						<layoutData>
+							<l:GridData visibleXL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowUnplannedCost}"
+								visibleL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowUnplannedCost}"
+								visibleM="{oPropertyModel>/oInvHeaderFieldsConfig/bShowUnplannedCost}"></l:GridData>
+						</layoutData>
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>plannedCost}" design="Bold" width="9rem" class="sapUiTinyMarginTop"></Label>
+						<!--<Text text="{oInvoiceModel>/oInvoiceHeaderDetails/iPlannedCost}" width="10rem"/>-->
+						<Input width="10rem" enabled="{oPropertyModel>/bNonEditableField}" editable="{oInvoiceModel>/posted}" value="{oInvoiceModel>/oInvoiceHeaderDetails/iPlannedCost}"></Input>
+						<layoutData>
+							<l:GridData visibleXL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPlannedCost}"
+								visibleL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPlannedCost}" visibleM="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPlannedCost}"></l:GridData>
+						</layoutData>
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>invoiceCharges}" design="Bold" width="9rem" class="sapUiTinyMarginTop"></Label>
+						<Input editable="{oInvoiceModel>/posted}" width="10rem" value="{oInvoiceModel>/oInvoiceHeaderDetails/iInvoiceCharges}"></Input>
+						<layoutData>
+							<l:GridData visibleXL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowInvCharges}"
+								visibleL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowInvCharges}" visibleM="{oPropertyModel>/oInvHeaderFieldsConfig/bShowInvCharges}"></l:GridData>
+						</layoutData>
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>docDate}" design="Bold" width="9rem" class="sapUiTinyMarginTop" required="true"></Label>
+						<DatePicker editable="{oInvoiceModel>/posted}" displayFormat="yyyy-MM-dd" width="10rem" value="{oInvoiceModel>/oInvoiceHeaderDetails/invoiceDate}" class="disablekb"></DatePicker>
+						<layoutData>
+							<l:GridData visibleXL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowDocDate}"
+								visibleL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowDocDate}" visibleM="{oPropertyModel>/oInvHeaderFieldsConfig/bShowDocDate}"></l:GridData>
+						</layoutData>
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="Baseline Date" design="Bold" width="9rem" class="sapUiTinyMarginTop"></Label>
+						<DatePicker editable="{oInvoiceModel>/posted}" displayFormat="yyyy-MM-dd" width="10rem" value="{oInvoiceModel>/oInvoiceHeaderDetails/oBaselineDate}" class="disablekb"></DatePicker>
+						<layoutData>
+							<l:GridData visibleXL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowBaselineDate}"
+								visibleL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowBaselineDate}" visibleM="{oPropertyModel>/oInvHeaderFieldsConfig/bShowBaselineDate}"></l:GridData>
+						</layoutData>
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>duedate}" design="Bold" width="9rem" class="sapUiTinyMarginTop"></Label>
+						<DatePicker editable="{oInvoiceModel>/posted}" displayFormat="yyyy-MM-dd" valueFormat="yyyy-MM-dd" width="10rem" value="{oInvoiceModel>/oInvoiceHeaderDetails/dueDate}"
+							class="disablekb"></DatePicker>
+						<layoutData>
+							<l:GridData visibleXL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowBaselineDate}"
+								visibleL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowBaselineDate}" visibleM="{oPropertyModel>/oInvHeaderFieldsConfig/bShowBaselineDate}"></l:GridData>
+						</layoutData>
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>invoiceTax}" design="Bold" width="9rem" class="sapUiTinyMarginTop"></Label>
+						<Input editable="{oInvoiceModel>/posted}" width="10rem" value="{oInvoiceModel>/oInvoiceHeaderDetails/iInvoiceTax}"></Input>
+						<layoutData>
+							<l:GridData visibleXL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowInvTax}" visibleL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowInvTax}"
+								visibleM="{oPropertyModel>/oInvHeaderFieldsConfig/bShowInvTax}"></l:GridData>
+						</layoutData>
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>postingDate}" design="Bold" width="9rem" class="sapUiTinyMarginTop" required="true"></Label>
+						<DatePicker editable="{oInvoiceModel>/posted}" width="10rem" change="onPostingDateChange"
+							value="{path:'oInvoiceModel>/oInvoiceHeaderDetails/postingDate', formatter: 'ui.incture.APInvoiceTask.util.Formatter.getDate'}"
+							displayFormat="yyyy-MM-dd" class="disablekb"></DatePicker>
+						<!--<Input width="8rem" value="{oInvoiceModel>/oInvoiceHeaderDetails/oPostingDate}"></Input>-->
+						<!--<layoutData>-->
+						<!--	<l:GridData visibleXL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPostingDate}"-->
+						<!--		visibleL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPostingDate}" visibleM="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPostingDate}"></l:GridData>-->
+						<!--</layoutData>-->
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>paymentTerms}" design="Bold" width="9rem" class="sapUiTinyMarginTop"></Label>
+						<Select enabled="{oInvoiceModel>/posted}" width="10rem" class="dropDownCss" forceSelection="false" items="{oAutomationSerModel>/paymentTerm}">
+							<items>
+								<core:ListItem text="{oAutomationSerModel>PaymentTerms}" additionalText="{oAutomationSerModel>PaymentTermsDesc}"></core:ListItem>
+							</items>
+						</Select>
+						<!--<layoutData>-->
+						<!--	<l:GridData visibleXL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPaymentTerms}"-->
+						<!--		visibleL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPaymentTerms}" visibleM="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPaymentTerms}"></l:GridData>-->
+						<!--</layoutData>-->
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>paymentMethod}" design="Bold" width="9rem" class="sapUiTinyMarginTop"></Label>
+						<Select enabled="{oInvoiceModel>/posted}" width="10rem" class="dropDownCss" forceSelection="false" items="{oAutomationSerModel>/paymentMethod}">
+							<items>
+								<core:ListItem text="{oAutomationSerModel>PaymentMethDesc}" additionalText="{oAutomationSerModel>PaymentMeth}"></core:ListItem>
+							</items>
+						</Select>
+						<!--<layoutData>-->
+						<!--	<l:GridData visibleXL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPaymentMethod}"-->
+						<!--		visibleL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPaymentMethod}"-->
+						<!--		visibleM="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPaymentMethod}"></l:GridData>-->
+						<!--</layoutData>-->
+					</HBox>
+					<HBox class="inboxHeaderCls">
+						<Label text="{i18n>paymentBlock}" design="Bold" width="9rem" class="sapUiTinyMarginTop"></Label>
+						<Select enabled="{oInvoiceModel>/posted}" width="10rem" class="dropDownCss" forceSelection="false" items="{oAutomationSerModel>/paymentBlock}">
+							<items>
+								<core:ListItem text="{oAutomationSerModel>PaymentBlockDesc}" additionalText="{oAutomationSerModel>PaymentBlock}"></core:ListItem>
+							</items>
+						</Select>
+						<!--<layoutData>-->
+						<!--	<l:GridData visibleXL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPaymentBlock}"-->
+						<!--		visibleL="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPaymentBlock}" visibleM="{oPropertyModel>/oInvHeaderFieldsConfig/bShowPaymentBlock}"></l:GridData>-->
+						<!--</layoutData>-->
+					</HBox>
+				</l:content>
+			</l:Grid>
+		</Panel>
+		<!--Invoice Header Details :: END-->
+	</VBox>
+</core:FragmentDefinition>

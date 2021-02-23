@@ -1,0 +1,183 @@
+<mvc:View controllerName="ui.incture.PortalApp.controller.View1" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:tnt="sap.tnt"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<tnt:ToolHeader class="overflowPage">
+		<!--<Button icon="sap-icon://home" type="Transparent" press=".onHomePress">-->
+		<!--	<layoutData>-->
+		<!--		<OverflowToolbarLayoutData priority="NeverOverflow"/>-->
+		<!--	</layoutData>-->
+		<!--</Button>-->
+		<IconTabHeader id="iconTabHeader" select="onIconChange">
+			<layoutData>
+				<OverflowToolbarLayoutData priority="NeverOverflow" shrinkable="true"/>
+			</layoutData>
+			<items>
+				<IconTabFilter text="Dashboard" key="Dashboard"/>
+				<IconTabFilter text="PO PR Approval" key="poApproval"/>
+				<IconTabFilter text="Vendor Onboarding" key="Onboarding"/>
+				<IconTabFilter text="Returns" key="Returns"/>
+				<IconTabFilter text="Purchase Orders" key="po"/>
+				<IconTabFilter text="Inventory" key="Invoice"/>
+				<IconTabFilter text="Invoice" key="Inventory"/>
+			</items>
+		</IconTabHeader>
+		<Button icon="sap-icon://full-screen" type="Transparent" press="onFullScreen" visible="{baseModel>/fullScreen}">
+			<layoutData>
+				<OverflowToolbarLayoutData priority="NeverOverflow"/>
+			</layoutData>
+		</Button>
+		<Button icon="sap-icon://exit-full-screen" type="Transparent" press="onExitFullScreen" visible="{baseModel>/exitFullScreen}">
+			<layoutData>
+				<OverflowToolbarLayoutData priority="NeverOverflow"/>
+			</layoutData>
+		</Button>
+		<MenuButton icon="sap-icon://hint" type="Transparent" tooltip="More Information">
+			<layoutData>
+				<OverflowToolbarLayoutData priority="NeverOverflow"/>
+			</layoutData>
+			<Menu>
+				<MenuItem text="About"/>
+				<MenuItem text="Privacy"/>
+				<MenuItem text="Language" press="fnOpenLanguageDialog"/>
+				<!--<MenuItem text="English" press="onLanguageSelection"/>-->
+				<!--<MenuItem text="Thai" press="onLanguageSelection"/>-->
+				<!--<MenuItem text="Spanish" press="onLanguageSelection"/>-->
+			</Menu>
+		</MenuButton>
+		<Button icon="sap-icon://search" type="Transparent">
+			<layoutData>
+				<OverflowToolbarLayoutData priority="NeverOverflow"/>
+			</layoutData>
+		</Button>
+		<Button icon="sap-icon://comment" type="Transparent">
+			<layoutData>
+				<OverflowToolbarLayoutData priority="NeverOverflow"/>
+			</layoutData>
+		</Button>
+	</tnt:ToolHeader>
+	<SplitApp id="SplitContDemo" initialDetail="detail" initialMaster="master" visible="{baseModel>/returns}" masterButtonText="">
+		<detailPages>
+			<Page id="detailDetail" title="Create Vendor Returns" showNavButton="true" backgroundDesign="Solid" class="sapUiStdPage">
+				<html:iframe height="90%" width="100%"
+					src="https://iprj6omz3145vkrqpproval-approuter.cfapps.eu10.hana.ondemand.com/comincturevendorReturns-1.0.0/index.html"></html:iframe>
+			</Page>
+			<Page id="detail2" title="Approve Returns" backgroundDesign="Solid" class="sapUiStdPage" showNavButton="true" navButtonText="Back"
+				navButtonPress=".onPressDetailBack">
+				<html:iframe height="90%" width="100%"
+					src="https://cw4quuwhzv0yfdhktaskapp-approuter.cfapps.eu10.hana.ondemand.com/comincZTaskApp-1.0.0/index.html"></html:iframe>
+			</Page>
+		</detailPages>
+		<masterPages>
+			<!--<Page id="master" title="Master 1" backgroundDesign="List" icon="sap-icon://action" class="sapUiStdPage">-->
+			<!--	<List>-->
+			<!--		<StandardListItem title="To Master2" type="Navigation" press=".onPressGoToMaster"/>-->
+			<!--	</List>-->
+			<!--</Page>-->
+			<Page id="master2" showHeader="false" title="Master 2" backgroundDesign="List" icon="sap-icon://action" class="sapUiStdPage"
+				showNavButton="true" navButtonPress=".onPressMasterBack">
+				<List itemPress=".onListItemPress" class="sapUiSizeCompact">
+					<!--<StandardListItem title="To Detail 1" type="Active" custom:to="detail"/>-->
+					<StandardListItem title="Create Vendor Returns" type="Active" custom:to="detailDetail"/>
+					<StandardListItem title="Approve Returns" type="Active" custom:to="detail2"/>
+				</List>
+			</Page>
+		</masterPages>
+	</SplitApp>
+	<HBox visible="{baseModel>/dashboard}" height="38rem">
+		<html:iframe height="100%" width="100%"
+			src="https://incture-technologies-hrapps-supplier-portal-supplier-po5132945f.cfapps.eu10.hana.ondemand.com/incturecomVFSDashboardCDS/index.html"></html:iframe>
+	</HBox>
+	<HBox visible="{baseModel>/Onboarding}" height="38rem">
+		<html:iframe height="100%" width="100%"
+			src="https://incture-technologies-hrapps-vendor-onboarding-sinarmasp334cfd9c.cfapps.eu10.hana.ondemand.com/"></html:iframe>
+	</HBox>
+	<HBox visible="{baseModel>/poApproval}" height="38rem">
+		<html:iframe height="100%" width="100%"
+			src="https://flpnwc-af91a028a.dispatcher.hana.ondemand.com/sites?siteId=325e21e5-af4c-46c0-8355-c052a79aa668#Home-show"></html:iframe>
+	</HBox>
+	<SplitContainer id="poId" initialDetail="one" initialMaster="master" visible="{baseModel>/po}">
+		<detailPages>
+			<Page id="one" title="Search PO" backgroundDesign="Solid" class="sapUiStdPage" showNavButton="true">
+				<html:iframe height="90%" width="100%"
+					src="https://incture-technologies-hrapps-ap-automation-mta-apcreatein7612995.cfapps.eu10.hana.ondemand.com/incturecomAPCreateInvoice-1.0.0/index.html "></html:iframe>
+			</Page>
+			<Page id="two" title="Confirmations" backgroundDesign="Solid" class="sapUiStdPage" showNavButton="true">
+				<html:iframe height="90%" width="100%"
+					src="https://incture-technologies-hrapps-supplier-portal-supplier-po5132945f.cfapps.eu10.hana.ondemand.com/incturecomUpdatePurchaseOrder1CDS/index.html"></html:iframe>
+			</Page>
+		</detailPages>
+		<masterPages>
+			<Page showHeader="false" title="Master 2" backgroundDesign="List" icon="sap-icon://action" class="sapUiStdPage" showNavButton="true"
+				navButtonPress=".onPressMasterBack">
+				<List itemPress=".onListItemPress1" class="sapUiSizeCompact">
+					<StandardListItem title="Search PO" type="Active" custom:to="one"/>
+					<StandardListItem title="Confirmations" type="Active" custom:to="two"/>
+				</List>
+			</Page>
+		</masterPages>
+	</SplitContainer>
+	<SplitContainer id="inventoryId" initialDetail="trackInvoice" initialMaster="master" visible="{baseModel>/inventory}">
+		<detailPages>
+			<Page id="trackInvoice" title="Track Invoice" backgroundDesign="Solid" class="sapUiStdPage" showNavButton="true">
+				<html:iframe height="90%" width="100%"
+					src="https://incture-technologies-hrapps-ap-automation-mta-invoicere57b4ba6a.cfapps.eu10.hana.ondemand.com/comincturecherryworkinvoiceReport-1.0.0/index.html "></html:iframe>
+			</Page>
+			<Page id="eInvoice" title="E-Invoice" backgroundDesign="Solid" class="sapUiStdPage" showNavButton="true">
+				<html:iframe height="90%" width="100%"
+					src="https://incture-technologies-hrapps-ap-automation-mta-createeinv459222b.cfapps.eu10.hana.ondemand.com/cominctureCreateEInvoice-1.0.0/index.html "></html:iframe>
+			</Page>
+			<Page id="invoiceWorkbench" title="Invoice Workbench" backgroundDesign="Solid" class="sapUiStdPage" showNavButton="true">
+				<!--<html:iframe height="90%" width="100%"-->
+				<!--	src="https://incture-technologies-hrapps-ap-automation-mta-returnapp1dab219c.cfapps.eu10.hana.ondemand.com/uiinctureAPInvoiceTask/index.html?sap-ui-language=th"></html:iframe>-->
+				<HBox visible="{baseModel>/EN}" height="40rem">
+					<html:iframe height="90%" width="100%"
+						src="https://iprj6omz3145vkrqpproval-approuter.cfapps.eu10.hana.ondemand.com/uiinctureAPTest-1.0.0/index.html?sap-ui-language=EN"></html:iframe>
+				</HBox>
+				<HBox visible="{baseModel>/ES}" height="40rem">
+					<html:iframe height="90%" width="100%"
+						src="https://iprj6omz3145vkrqpproval-approuter.cfapps.eu10.hana.ondemand.com/uiinctureAPTest-1.0.0/index.html?sap-ui-language=es"></html:iframe>
+				</HBox>
+				<HBox visible="{baseModel>/TH}" height="40rem">
+					<html:iframe height="90%" width="100%"
+						src="https://iprj6omz3145vkrqpproval-approuter.cfapps.eu10.hana.ondemand.com/uiinctureAPTest-1.0.0/index.html?sap-ui-language=th"></html:iframe>
+				</HBox>
+			</Page>
+		</detailPages>
+		<masterPages>
+			<Page showHeader="false" title="Master 2" backgroundDesign="List" icon="sap-icon://action" class="sapUiStdPage" showNavButton="true"
+				navButtonPress=".onPressMasterBack">
+				<List itemPress=".onListItemPress2" class="sapUiSizeCompact">
+					<StandardListItem title="Track Invoice" type="Active" custom:to="trackInvoice"/>
+					<StandardListItem title="E-Invoice" type="Active" custom:to="eInvoice"/>
+					<StandardListItem title="Invoice Workbench" type="Active" custom:to="invoiceWorkbench"/>
+				</List>
+			</Page>
+		</masterPages>
+	</SplitContainer>
+	<SplitContainer id="invoiceId" initialDetail="stockExpiry" initialMaster="master" visible="{baseModel>/invoice}">
+		<detailPages>
+			<Page id="stockExpiry" title="Stock Expiry" backgroundDesign="Solid" class="sapUiStdPage" showNavButton="true">
+				<html:iframe id="attachmentframe" height="90%" width="100%"
+					src="https://incture-technologies-hrapps-supplier-portal-mta-stockrepadadb02.cfapps.eu10.hana.ondemand.com/SRStockReports-1.0.0/index.html"></html:iframe>
+			</Page>
+			<!--<Page id="endingStock" title="Ending Stock" backgroundDesign="Solid" class="sapUiStdPage">-->
+			<!--	<html:iframe height="90%" width="100%"-->
+			<!--		src="https://incture-technologies-hrapps-ap-automation-mta-createeinv459222b.cfapps.eu10.hana.ondemand.com/cominctureCreateEInvoice-1.0.0/index.html"></html:iframe>-->
+			<!--</Page>-->
+			<Page id="searchVendor" title="Search Vendor" backgroundDesign="Solid" class="sapUiStdPage" showNavButton="true">
+				<html:iframe height="90%" width="100%"
+					src="https://incture-technologies-hrapps-supplier-portal-supplier-po5132945f.cfapps.eu10.hana.ondemand.com/incturecomVendorSearchCDS/index.html"></html:iframe>
+			</Page>
+		</detailPages>
+		<masterPages>
+			<Page showHeader="false" title="Master 2" backgroundDesign="List" icon="sap-icon://action" class="sapUiStdPage" showNavButton="true"
+				navButtonPress=".onPressMasterBack">
+				<List itemPress=".onListItemPress3" class="sapUiSizeCompact">
+					<StandardListItem title="Stock Expiry" type="Active" custom:to="stockExpiry"/>
+					<!--<StandardListItem title="Ending Stock" type="Active" custom:to="endingStock"/>-->
+					<StandardListItem title="Search Vendor" type="Active" custom:to="searchVendor"/>
+				</List>
+			</Page>
+		</masterPages>
+	</SplitContainer>
+</mvc:View>

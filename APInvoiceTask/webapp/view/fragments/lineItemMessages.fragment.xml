@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:l="sap.ui.layout">
+	<ResponsivePopover title="{i18n>messages}" placement="Auto" contentWidth="30%">
+		<endButton>
+			<Button text="{i18n>close}" press="fnCloseLineItemMessages"/>
+		</endButton>
+		<content>
+			<l:Grid defaultSpan="L12 M12 S12" content="{oInvLineMsgModel>/oMessageData}" class="inctureRemovePadClass inctureFixMarginClass" width="98%">
+				<HBox>
+					<core:Icon tooltip="{oInvLineMsgModel>sType}" width="1rem"
+						src="{path : 'oInvLineMsgModel>sType', formatter: 'ui.incture.APInvoiceTask.util.Formatter.getMsgIcon'}"
+						color="{path : 'oInvLineMsgModel>sType', formatter: 'ui.incture.APInvoiceTask.util.Formatter.getMessageColor'}"></core:Icon>
+					<VBox class="sapUiTinyMarginBegin">
+						<Label text="{oInvLineMsgModel>sMessage}"></Label>
+						<Text text="{oInvLineMsgModel>sDescription}" visible="{= ${oInvLineMsgModel>sDescription} !== undefined}"></Text>
+					</VBox>
+					<Button icon="sap-icon://customize" tooltip="{i18n>fixIssue}" press="fnItemMsgAccAssTab" visible="{= ${oInvLineMsgModel>sAction} !== undefined}"
+						type="Transparent" class="sapUiTinyMarginTop"></Button>
+				</HBox>
+			</l:Grid>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

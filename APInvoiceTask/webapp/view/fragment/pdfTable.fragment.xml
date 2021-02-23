@@ -1,0 +1,55 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
+	controllerName="ui.incture.APInvoiceTask.controller.baseCoder" id="pdftable">
+		<Table id="idInvoiceTableData" items="{path: 'detailPageModel>/invoiceDetailUIDto/invoiceItems'}">
+		<columns>
+			<Column width="8em" hAlign="Center" visible="true">
+				<Label text="Description" design="Bold"/>
+			</Column>
+			<Column width="7em" hAlign="Center">
+				<Label text="Ven_Mat" design="Bold"/>
+			</Column>
+			<Column width="7em" hAlign="Center">
+				<Label text="UPC" design="Bold"/>
+			</Column>
+			<Column width="6em" hAlign="Center" visible="{detailPageModel>/invoiceFldVis}">
+				<Label text="Quantity" design="Bold"/>
+			</Column>
+			<Column width="5em" hAlign="Center" visible="{detailPageModel>/invoiceFldVis}">
+				<Label text="Unit Price" design="Bold"/>
+			</Column>
+			<Column width="8em" hAlign="Center" visible="{detailPageModel>/invoiceFldVis}">
+				<Label text="Net Price" design="Bold"/>
+			</Column>
+			<Column width="4em" mergeDuplicates="true" hAlign="Center">
+				<Label text="UOM" design="Bold"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Input class="fontSizeReduce" tooltip="{detailPageModel>invItemHistoryList/materialDescription}" editable="false"
+						value="{detailPageModel>itemText}"
+						valueState="{path:'detailPageModel>descriptionMismatchFlag', formatter:'incture.com.nonPO.util.formatter.valueState'}"
+						change="coloringInInvoice" maxLength="50"/>
+					<Input maxLength="40" tooltip="{path : 'detailPageModel>poVendMat'}" value="{path : 'detailPageModel>poVendMat'}"
+						editable="false"/>
+					<Input maxLength="40" tooltip="{detailPageModel>upcCode}" value="{detailPageModel>upcCode}" editable="false"/>
+					<Input tooltip="{path:'detailPageModel>invQty', formatter:'incture.com.nonPO.util.formatter.decimalThreeValueChk'}"
+						class="tableItemRightAlign"
+						valueState="{path:'detailPageModel>quantityMismatchFlag', formatter:'incture.com.nonPO.util.formatter.valueState'}"
+						value="{detailPageModel>invQty}" editable="false" change="calculateInvoiceAmt" maxLength="13"/>
+					<Input value="{path: 'detailPageModel>price'}" class="tableItemRightAlign"
+						tooltip="{path:'detailPageModel>price', formatter:'incture.com.nonPO.util.formatter.decimalThreeValueChk'}"
+						change="calculateInvoiceAmt" editable="false" maxLength="9"/>
+					<Input class="tableItemRightAlign"
+						tooltip="{path:'detailPageModel>netWorth', formatter:'incture.com.nonPO.util.formatter.decimalChk'}"
+						value="{path:'detailPageModel>netWorth'}" change="calculateLineItemAmount" maxLength="13" editable="false"
+						valueState="{path:'detailPageModel>unitPriceMismatchFlag', formatter:'incture.com.nonPO.util.formatter.valueState'}"/>
+					<InputBase value="{detailPageModel>qtyUom}"
+						visible="{path: ' detailPageModel> twowayMatchingFlag', formatter:'incture.com.nonPO.util.formatter.lineItemValidation'}"
+						tooltip="{detailPageModel>qtyUom}" editable="false"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

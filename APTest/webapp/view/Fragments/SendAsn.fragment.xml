@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified"
+	xmlns:f="sap.ui.layout.form">
+	<Dialog class="sapUiSizeCompact" showHeader="true" title="Save Draft">
+		<beginButton>
+			<Button text="OK" press="OKCreditMemo"></Button>
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" press="cancelCreditMemo"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>
